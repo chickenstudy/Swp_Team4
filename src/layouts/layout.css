@@ -1,0 +1,23 @@
+@import url('https://fonts.googleapis.com/css2?family=Source+Sans+Pro&display=swap');
+
+#container{
+  margin: 0 auto;
+  width: 100%;
+  padding: 10px 0;
+  border-top: 2px solid rgb(242, 196, 141);
+  margin-top: 15px;
+  font-size: smaller;
+  font-family: 'Source Sans Pro', sans-serif;
+}
+#container span{
+  margin: 0 10px;
+}
+img{
+  width: 60%;
+}
+
+#container a{
+  text-decoration: none;
+  color: black;
+  
+}
