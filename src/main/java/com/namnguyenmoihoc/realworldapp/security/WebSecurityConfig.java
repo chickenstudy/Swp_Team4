@@ -37,11 +37,7 @@ public class WebSecurityConfig {
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity httpSecurity) throws Exception{
         httpSecurity.csrf().disable().authorizeRequests().
-        requestMatchers("/api/login").permitAll().
-        requestMatchers(HttpMethod.POST, "/api/register").permitAll().
-        requestMatchers(HttpMethod.PUT).permitAll().
-        requestMatchers(HttpMethod.POST, "/api/movie/create").permitAll().
-        requestMatchers("/api/**").authenticated().
+        anyRequest().permitAll().
         and().
         sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
 
