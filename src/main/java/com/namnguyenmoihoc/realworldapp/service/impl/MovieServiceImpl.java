@@ -1,14 +1,19 @@
 package com.namnguyenmoihoc.realworldapp.service.impl;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.springframework.stereotype.Service;
 
 import com.namnguyenmoihoc.realworldapp.entity.Movie;
+import com.namnguyenmoihoc.realworldapp.entity.Roles;
 import com.namnguyenmoihoc.realworldapp.model.movie.MovieDTOCreate;
 import com.namnguyenmoihoc.realworldapp.model.movie.MovieDTOResponse;
+import com.namnguyenmoihoc.realworldapp.model.roles.UserRolesDTOResponse;
 import com.namnguyenmoihoc.realworldapp.model.user.mapper.MovieMapper;
+import com.namnguyenmoihoc.realworldapp.model.user.mapper.RoleMapper;
 import com.namnguyenmoihoc.realworldapp.repository.MovieRepository;
 import com.namnguyenmoihoc.realworldapp.service.MovieService;
 
@@ -31,6 +36,19 @@ public class MovieServiceImpl implements MovieService {
         MovieDTOResponse movieDTOResponse = MovieMapper.toMovieDTOReponse(movie);
         wrapper.put("movie", movieDTOResponse);
         return wrapper;
+    }
+
+    @Override
+    public List<MovieDTOResponse> getListMovie() {
+        // TODO Auto-generated method stub
+        List<Movie> listMovie = movieRepository.findAll();
+
+        List<UserRolesDTOResponse> rolesDTO = new ArrayList<>();
+
+        for (Roles role : roles) {
+            rolesDTO.add(RoleMapper.toUserRoleDTOResponse(role));
+        }
+        return rolesDTO;
     }
 
 }
