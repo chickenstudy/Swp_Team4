@@ -9,7 +9,7 @@ function SideBar() {
   return (
     <aside className="sidebar">
       <Nav>
-        <NavLink to="/" className="nav-link" activeClassName="active">
+        <NavLink to="/dashboard" className="nav-link" activeClassName="active">
           DASHBOARD
         </NavLink>
   

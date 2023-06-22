@@ -17,8 +17,7 @@ function App() {
 
   return (
     <ApplicationContext.Provider
-      value={{ user, setUser, makeSignIn, makeSignOut }}
-    >
+      value={{ user, setUser, makeSignIn, makeSignOut }}>
       <React.Fragment>
         <BrowserRouter>
           <Routes>
@@ -56,14 +55,20 @@ function App() {
                   key={index}
                   path={route.path}
                   element={
-                    user.roleID == 1 && route.isProtected ? ( // Check if user is authenticated
-                      <Layout>
-                        <Page />
-                      </Layout>
-                    ) : (
-                      <Navigate to="/" /> // Redirect to login page if user is not authenticated
-                    )
+                    <Layout>
+                      <Page />
+                    </Layout>
                   }
+
+                  // element={
+                  //   user.roleID == 1 && route.isProtected ? ( // Check if user is authenticated
+                  //     <Layout>
+                  //       <Page />
+                  //     </Layout>
+                  //   ) : (
+                  //     <Navigate to="/" /> // Redirect to login page if user is not authenticated
+                  //   )
+                  // }
                 />
               );
             })}

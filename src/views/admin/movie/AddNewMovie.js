@@ -3,7 +3,7 @@ import { useState } from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { Link, useNavigate } from "react-router-dom";
 
-const AddNewMovie=()=> {
+const AddNewMovie = () => {
   const [id, setId] = useState("");
   const [name, setName] = useState("");
   const [poster, setPoster] = useState("");
@@ -11,16 +11,28 @@ const AddNewMovie=()=> {
   const [times, setTimes] = useState("");
   const [type, setType] = useState("");
   const [country, setCountry] = useState("");
-  const [premiereDate, setPremiereDate] = useState("");
-  const [movieContent, setMovieContent] = useState("");
- 
+  const [show_date, setShowDate] = useState("");
+  const [description, setDescription] = useState("");
+  const [banner, setBanner] = useState("");
+
   const [validation, valchange] = useState(false);
 
-  const handleImageChange = (event) => {
+  const handlePosterChange = (event) => {
     const file = event.target.files[0];
     const reader = new FileReader();
     reader.onloadend = () => {
       setPoster(reader.result);
+    };
+    if (file) {
+      reader.readAsDataURL(file);
+    }
+  };
+
+  const handleBannerChange = (event) => {
+    const file = event.target.files[0];
+    const reader = new FileReader();
+    reader.onloadend = () => {
+      setBanner(reader.result);
     };
     if (file) {
       reader.readAsDataURL(file);
@@ -34,11 +46,12 @@ const AddNewMovie=()=> {
       name,
       poster,
       trailer,
+      banner,
       times,
       type,
       country,
-      premiereDate,
-      movieContent,
+      show_date,
+      description,
     };
 
     fetch("http://localhost:8000/movie", {
@@ -85,9 +98,6 @@ const AddNewMovie=()=> {
                         onMouseDown={(e) => valchange(true)}
                         onChange={(e) => setName(e.target.value)}
                         className="form-control"></input>
-                      {name.length === 0 && validation && (
-                        <span className="text-danger">Enter name</span>
-                      )}
                     </div>
                   </div>
 
@@ -108,12 +118,34 @@ const AddNewMovie=()=> {
                         <input
                           type="file"
                           accept="image/*"
-                          onChange={handleImageChange}
-                        />
-                        {poster && <img src={poster} style={{ width: '110px'}}/>}
+                          onChange={handlePosterChange}
+                        />{" "}
+                        {poster && <p>Selected File:</p>}
                       </div>
+                        {poster && (
+                          <img src={poster} style={{ width: "110px" }} />
+                        )}
                     </div>
                   </div>
+
+                  <div className="col-lg-12">
+                    <div className="form-group">
+                      <label>Banner</label>
+                      <div>
+                        <input
+                          type="file"
+                          accept="image/*"
+                          onChange={handleBannerChange}
+                        />
+                        {banner && <p>Selected File:</p>}
+                      </div>
+                        {banner && (
+                          <img src={banner} style={{ width: "110px" }} />
+                        )}
+                    </div>
+                  </div>
+
+                  
 
                   <div className="col-lg-12">
                     <div className="form-group">
@@ -124,7 +156,7 @@ const AddNewMovie=()=> {
                         className="form-control"></input>
                     </div>
                   </div>
-                  
+
                   <div className="col-lg-12">
                     <div className="form-group">
                       <label>Times</label>
@@ -147,12 +179,13 @@ const AddNewMovie=()=> {
 
                   <div className="col-lg-12">
                     <div className="form-group">
-                      <label>Premiere Date</label>
+                      <label>Show date</label>
                       <input
-                      type="date"
-                        value={premiereDate}
-                        onChange={(e) => setPremiereDate(e.target.value)}
-                        className="form-control"/>
+                        type="date"
+                        value={show_date}
+                        onChange={(e) => setShowDate(e.target.value)}
+                        className="form-control"
+                      />
                     </div>
                   </div>
 
@@ -160,9 +193,10 @@ const AddNewMovie=()=> {
                     <div className="form-group">
                       <label>Movie Content</label>
                       <input
-                        value={movieContent}
-                        onChange={(e) => setMovieContent(e.target.value)}
-                        className="form-control"/>
+                        value={description}
+                        onChange={(e) => setDescription(e.target.value)}
+                        className="form-control"
+                      />
                     </div>
                   </div>
 
@@ -184,5 +218,5 @@ const AddNewMovie=()=> {
       </div>
     </div>
   );
-}
-export default AddNewMovie
+};
+export default AddNewMovie;
