@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.namnguyenmoihoc.realworldapp.exception.custom.CustomNotFoundException;
 import com.namnguyenmoihoc.realworldapp.model.movie.MovieDTOCreate;
 import com.namnguyenmoihoc.realworldapp.model.movie.MovieDTOResponse;
+import com.namnguyenmoihoc.realworldapp.model.movie.MovieDTOUpdate;
 import com.namnguyenmoihoc.realworldapp.model.profileAccount.ProfileDTOResponsive;
 import com.namnguyenmoihoc.realworldapp.model.roles.UserRolesDTOResponse;
 import com.namnguyenmoihoc.realworldapp.model.user.dto.UserDTOUpdateAccount;
@@ -38,16 +39,16 @@ public class MovieController {
         return movieService.getListMovie();
     }
 
-    /*
-     * @PutMapping("/updateMovie/{movieId}")
-    public Map<String, ProfileDTOResponsive> getUpdateMovie(@PathVariable int movieId,
-            @RequestBody UserDTOUpdateAccount userDTOUpdateAccount)
+
+    @PutMapping("/updateMovie/{movieId}")
+    public Map<String, MovieDTOResponse> getUpdateMovie(@PathVariable int movieId,
+            @RequestBody MovieDTOUpdate movieDTOUpdate)
             throws CustomNotFoundException {
-        System.out.println(userDTOUpdateAccount);
-        userDTOUpdateAccount.setId(userid);
-        return userService.getUpdateAccount(userDTOUpdateAccount);
+        movieDTOUpdate.setMovieid(movieId);
+        System.out.println(movieDTOUpdate);
+        return movieService.getUpdateAccount(movieDTOUpdate);
     }
-     */
+    
     
 
 
