@@ -13,8 +13,8 @@ import lombok.Setter;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class MovieDTOCreate {
-    
+public class MovieDTOResponseCreate {
+   
     private  String poster;
     private String banner;
     private String trailer;
@@ -24,6 +24,5 @@ public class MovieDTOCreate {
     private String description;
     private String type;
     private String times;
-
-
 }
+
