@@ -26,7 +26,6 @@ public class MovieServiceImpl implements MovieService {
 
     @Override
     public Map<String, MovieDTOResponse> createMovie(Map<String, MovieDTOCreate> movieDTOCreateMap) {
-        // TODO Auto-generated method stub
         MovieDTOCreate movieDTOcreate = movieDTOCreateMap.get("movie");
         Movie movie = MovieMapper.toMovie(movieDTOcreate);
            System.out.println(movieDTOcreate);
@@ -43,12 +42,12 @@ public class MovieServiceImpl implements MovieService {
         // TODO Auto-generated method stub
         List<Movie> listMovie = movieRepository.findAll();
 
-        List<UserRolesDTOResponse> rolesDTO = new ArrayList<>();
+        List<MovieDTOResponse> movieDTOResponses = new ArrayList<>();
 
-        for (Roles role : roles) {
-            rolesDTO.add(RoleMapper.toUserRoleDTOResponse(role));
+        for (Movie movie : listMovie) {
+            movieDTOResponses.add(MovieMapper.toMovieDTOReponse(movie));
         }
-        return rolesDTO;
+        return movieDTOResponses;
     }
 
 }

@@ -41,7 +41,7 @@ public class WebSecurityConfig {
         requestMatchers(HttpMethod.POST, "/api/register").permitAll().
         requestMatchers(HttpMethod.PUT).permitAll().
         requestMatchers(HttpMethod.POST, "/api/movie/create").permitAll().
-        requestMatchers("/api/**").authenticated().
+        requestMatchers("/api/**").permitAll().
         and().
         sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
 
