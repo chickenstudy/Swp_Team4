@@ -35,6 +35,7 @@ export default function SignIn() {
 
       const { data } = response;
       const user = data.user;
+      console.log(user.token);
 
       if (!user) {
         throw new Error("Incorrect email or password");
