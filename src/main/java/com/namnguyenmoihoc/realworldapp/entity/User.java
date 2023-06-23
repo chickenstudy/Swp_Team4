@@ -1,17 +1,20 @@
 package com.namnguyenmoihoc.realworldapp.entity;
 
 
+import java.sql.Blob;
 import java.util.Date;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 
 import jakarta.persistence.Id;
+import jakarta.persistence.Lob;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.extern.java.Log;
 
 @Entity
 @Data
@@ -30,7 +33,10 @@ public class User {
     private byte sex;
     private String address;
     private String username;
-    private String picture;
+
+    @Lob
+    private byte[]  picture;
+
     private String phonenumber;
     private int rolesID;
     private Date dob;

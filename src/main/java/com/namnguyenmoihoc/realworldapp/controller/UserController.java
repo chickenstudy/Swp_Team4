@@ -1,7 +1,11 @@
 package com.namnguyenmoihoc.realworldapp.controller;
 
+import java.io.IOException;
+import java.sql.SQLException;
 import java.util.List;
 import java.util.Map;
+
+import javax.sql.rowset.serial.SerialException;
 
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -34,7 +38,7 @@ public class UserController {
 
     @PostMapping("/register")
     public Map<String, UserDTOResponse> register(
-        @RequestBody Map<String, UserDTOCreateAccount> userRegisterRequestMap){
+        @RequestBody Map<String, UserDTOCreateAccount> userRegisterRequestMap) throws SerialException, SQLException, IOException{
         return userService.registerUser(userRegisterRequestMap);
     }
 

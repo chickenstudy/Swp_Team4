@@ -1,7 +1,9 @@
 package com.namnguyenmoihoc.realworldapp.model.user.dto;
 
+import java.sql.Blob;
 import java.util.Date;
 
+import jakarta.persistence.Lob;
 import lombok.Builder;
 import lombok.Data;
 import lombok.Getter;
@@ -18,6 +20,7 @@ public class UserDTOUpdateAccount {
     private String password;
     private byte sex;
     private String address;
+
     private String picture;
     private String phonenumber;
     private Date dob;
