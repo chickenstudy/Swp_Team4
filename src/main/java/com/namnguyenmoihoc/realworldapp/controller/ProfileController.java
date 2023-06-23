@@ -10,6 +10,7 @@ import com.namnguyenmoihoc.realworldapp.service.UserService;
 
 import lombok.RequiredArgsConstructor;
 
+import java.io.IOException;
 import java.util.Map;
 
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -36,7 +37,7 @@ public class ProfileController {
     @PutMapping("/{userid}")
     public Map<String, ProfileDTOResponsive> getUpdateAccount(@PathVariable int userid,
             @RequestBody UserDTOUpdateAccount userDTOUpdateAccount)
-            throws CustomNotFoundException {
+            throws CustomNotFoundException, IOException {
         System.out.println(userDTOUpdateAccount);
         userDTOUpdateAccount.setId(userid);
         return userService.getUpdateAccount(userDTOUpdateAccount);

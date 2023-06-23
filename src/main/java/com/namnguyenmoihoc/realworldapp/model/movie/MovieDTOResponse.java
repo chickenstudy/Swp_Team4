@@ -14,6 +14,7 @@ import lombok.Setter;
 @NoArgsConstructor
 @Builder
 public class MovieDTOResponse {
+    private int movieid;
     private  String poster;
     private String banner;
     private String trailer;

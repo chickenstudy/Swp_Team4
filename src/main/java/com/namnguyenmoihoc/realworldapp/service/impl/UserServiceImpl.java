@@ -1,10 +1,15 @@
 package com.namnguyenmoihoc.realworldapp.service.impl;
 
+import java.io.IOException;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
+
+import javax.sql.rowset.serial.SerialBlob;
+import javax.sql.rowset.serial.SerialException;
 
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -70,13 +75,15 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public Map<String, UserDTOResponse> registerUser(Map<String, UserDTOCreateAccount> userRegisterRequestMap) {
+    public Map<String, UserDTOResponse> registerUser(Map<String, UserDTOCreateAccount> userRegisterRequestMap) throws SerialException, SQLException, IOException {
         // TODO Auto-generated method stub
         UserDTOCreateAccount userDTOCreateAccount = userRegisterRequestMap.get("user");
 
-        if (userDTOCreateAccount.getPicture().equals("")) {
-            userDTOCreateAccount.setPicture("Nothing");
+        /* 
+        if (userDTOCreateAccount.getPicture().length() == 0 || userDTOCreateAccount.getPicture() == null) {
+            userDTOCreateAccount.setPicture(new SerialBlob(new byte[0]));
         }
+        */
 
         User user = UserMapper.toUser(userDTOCreateAccount);
         user.setPassword(passwordEncoder.encode(user.getPassword()));
@@ -152,7 +159,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public Map<String, ProfileDTOResponsive> getUpdateAccount(UserDTOUpdateAccount userDTOUpdateAccount)
-            throws CustomNotFoundException {
+            throws CustomNotFoundException, IOException {
         // TODO Auto-generated method stub
         Optional<User> userOptional = userRepository.findById(userDTOUpdateAccount.getId());
         
