@@ -1,7 +1,12 @@
+/* eslint-disable jsx-a11y/alt-text */
 import { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, Link } from "react-router-dom";
+import "./movie.css";
+import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
+import Button from "react-bootstrap/Button";
+import Carousel from "react-bootstrap/Carousel";
 
 const DetailMovie = () => {
   const { movieid } = useParams();
@@ -21,66 +26,93 @@ const DetailMovie = () => {
   }, []);
 
   return (
-    <Row>
-      <h2 className="text-center my-3">Detail Movie</h2>
-      <Col className="text-center" sm={3}>
-        <img
-          className="w-100"
-          src="https://cdn.galaxycine.vn/media/2023/5/22/300x450_1684739467824.jpg"
-          alt="First slide"
-        />
-      </Col>
-      <Col sm={9}>
-        <div className="">
-          <form className="container">
-            <h2>The Flash</h2>
-            <div className="detail-info" style={{ textAlign: "" }}>
-              <div className="detail-info-row">
-                <div className="detail-info-right">
-                <label style={{color:'gray'}}> Thể loại:&nbsp; </label>
-                  Giả tưởng, hành động
-                </div>
+    <div id="content">
+      <div className="movie_trailer detail_typeA">
+        <div className="movie-box d-block">
+          <Carousel>
+            <Carousel.Item>
+              <div className="d-flex justify-content-center ">
+                <img
+                  className="bannerImg"
+                  src="https://media.lottecinemavn.com/Media/MovieFile/MovieImg/202305/11108_105_100007.jpg"
+                />
               </div>
-
-              <div className="detail-info-row">
-                <div className="detail-info-right">
-                <label style={{color:'gray'}}> Diễn viên:&nbsp; </label>
-                Michael Keaton, Ben Affleck, Ezra Miller
-                </div>
+            </Carousel.Item>
+            <Carousel.Item>
+              <div className="d-flex justify-content-center ">
+                <img
+                  className="bannerImg"
+                  src="https://media.lottecinemavn.com/Media/MovieFile/MovieImg/202305/11108_105_100002.jpg"
+                />
               </div>
-
-              <div className="detail-info-row">
-                <div className="detail-info-right">
-                <label style={{color:'gray'}}> Quốc gia:&nbsp; </label>
-                  Mỹ
-                </div>
+            </Carousel.Item>
+            <Carousel.Item>
+              <div className="d-flex justify-content-center ">
+                <img
+                  className="bannerImg"
+                  src="https://media.lottecinemavn.com/Media/MovieFile/MovieImg/202305/11108_105_100003.jpg"
+                />
               </div>
-
-              <div className="detail-info-row">
-                <div className="detail-info-right">
-                <label style={{color:'gray'}}> :&nbsp; </label>
-                  
-                </div>
+            </Carousel.Item>
+            <Carousel.Item>
+              <div className="d-flex justify-content-center ">
+                <img
+                  className="bannerImg"
+                  src="https://media.lottecinemavn.com/Media/MovieFile/MovieImg/202305/11108_105_100005.jpg"
+                />
               </div>
-
-              <div className="detail-info-row">
-                <div className="detail-info-right">
-                <label style={{color:'gray'}}> :&nbsp; </label>
-                  
-                </div>
+            </Carousel.Item>
+            <Carousel.Item>
+              <div className="d-flex justify-content-center ">
+                <img
+                  className="bannerImg"
+                  src="https://media.lottecinemavn.com/Media/MovieFile/MovieImg/202305/11108_105_100006.jpg"
+                />
               </div>
-
-              <div className="detail-info-row">
-                <div className="detail-info-right">
-                <label style={{color:'gray'}}> :&nbsp; </label>
-                  
-                </div>
+            </Carousel.Item>
+          </Carousel>
+        </div>
+      </div>
+      <Container>
+        <Row>
+          <Col xs={2}></Col>
+          <Col className="border border-2 my-4">
+            <div className="wide-top d-flex">
+              <div className="thumb">
+                <span className="img">
+                  <img src="https://media.lottecinemavn.com/Media/MovieFile/MovieImg/202305/11108_103_100004.jpg" />
+                </span>
+                <Button
+                  href="https://www.youtube.com/watch?v=itnqEauWQZM&ab_channel=ParamountPictures"
+                  className="btn_reverse Lang-LBL0000 d-block justify-content-center my-2 rounded-0"
+                  style={{
+                    width: "175px",
+                    border: "2px solid rgb(206, 161, 11)",
+                  }}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  variant="dark"
+                >
+                  View trailer
+                </Button>
+              </div>
+              <div className="info_main">
+                <h2 className="movie_title">TRANSFORMERS</h2>
+                <p>127 phút</p>
               </div>
             </div>
-          </form>
-        </div>
-      </Col>
-    </Row>
+            <div className="summary my-4">
+              <h3>Summary</h3>
+              <p>tóm tắt phim</p>
+            </div>
+            <Link to="/listmovie" className="btn btn-danger text-end mx-3">
+              Back to list
+            </Link>
+          </Col>
+          <Col xs={2}></Col>
+        </Row>
+      </Container>
+    </div>
   );
 };
 export default DetailMovie;

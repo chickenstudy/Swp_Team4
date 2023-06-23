@@ -18,7 +18,7 @@ import Feedback from "./views/admin/feedback/Feedback";
 import AddNewMovie from "./views/admin/movie/AddNewMovie";
 import DetailMovie from "./views/admin/movie/DetailMovie";
 import Banner from "./views/admin/banner/Banner";
-
+import EditMovie from "./views/admin/movie/EditMovie";
 //---------- USER ROUTE ---------
 export const UserRoutes = [
   {
@@ -81,5 +81,6 @@ export const AdminRoutes = [
     layout: HeaderOnly,
     isProtected: true,
   },
+  { path: "/movie/editmovie/:id", component: EditMovie, layout: HeaderOnly },
   { path: "/banner", component: Banner, layout: AdminLayout },
 ];
