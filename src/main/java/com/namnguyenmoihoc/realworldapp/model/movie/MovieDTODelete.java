@@ -1,5 +1,6 @@
 package com.namnguyenmoihoc.realworldapp.model.movie;
 
+
 import java.util.Date;
 
 import lombok.AllArgsConstructor;
@@ -13,9 +14,12 @@ import lombok.Setter;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class MovieDTOCreate {
-    
-    private  String poster;
+public class MovieDTODelete {
+   
+
+    private int movieid;
+
+    private String poster;
     private String banner;
     private String trailer;
     private Date show_date;
@@ -25,5 +29,5 @@ public class MovieDTOCreate {
     private String type;
     private String times;
 
-
+    
 }
