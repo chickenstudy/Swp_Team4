@@ -19,7 +19,8 @@ import lombok.NoArgsConstructor;
 @Table(name = "movie")
 public class Movie {
     @Id
-    private int movieid;
+    
+    private int movie_id;
 
     private String author;
     private String name;
