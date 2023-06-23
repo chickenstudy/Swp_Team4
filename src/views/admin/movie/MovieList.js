@@ -1,5 +1,5 @@
-import React from "react";
-import { useEffect, useState } from "react";
+/* eslint-disable jsx-a11y/img-redundant-alt */
+import React, { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { BiEdit } from "react-icons/bi";
 import { RiDeleteBinLine } from "react-icons/ri";
@@ -10,18 +10,18 @@ const MovieList = () => {
   const [data, setData] = useState([]);
   const navigate = useNavigate();
 
-  const LoadDetail = (id) => {
-    navigate("/movie/detailmovie/" + id);
+  const loadDetail = (id) => {
+    navigate(`/movie/detailmovie/${id}`);
   };
 
-  const LoadEdit = (id) => {
-    navigate("/movie/editmovie/" + id);
+  const loadEdit = (id) => {
+    navigate(`/movie/editmovie/${id}`);
   };
 
-  const Removefunction = (id) => {
+  const removeMovie = (id) => {
     if (window.confirm("Do you want to remove?")) {
       axios
-        .delete("http://localhost:8000/movie/"+id)
+        .delete(`http://localhost:8080/api/movie/listMovie/${id}`)
         .then((res) => {
           alert("Removed successfully.");
           window.location.reload();
@@ -34,7 +34,7 @@ const MovieList = () => {
 
   useEffect(() => {
     axios
-      .get("http://localhost:8000/movie")
+      .get("http://localhost:8080/api/movie/listMovie")
       .then((res) => {
         setData(res.data);
       })
@@ -42,7 +42,7 @@ const MovieList = () => {
         console.log(err.message);
       });
   }, []);
-
+  console.log(data);
   return (
     <div className="container">
       <div className="card">
@@ -57,72 +57,59 @@ const MovieList = () => {
               Add new movie
             </Link>
           </div>
-          <table className=" table table-bordered">
+          <table className="table table-bordered">
             <thead className="bg-dark text-white">
               <tr>
-                <td>Id</td>
-                <td>Poster</td>
-                <td>Name</td>
-                <td>Type</td>
-                <td>Country</td>
-                <td>Show date</td>
-                <td className="action">Actions</td>
+                <th>Id</th>
+                <th>Poster</th>
+                <th>Name</th>
+                <th>Type</th>
+                <th>Country</th>
+                <th>Show date</th>
+                <th className="action">Actions</th>
               </tr>
             </thead>
             <tbody>
-              {data &&
-                data.map((item) => (
-                  <tr key={item.id}>
-                    <td style={{ width: "10px" }}>{item.id}</td>
-                    <td style={{ width: "80px" }}>
-                      {
-                        <img
-                          src={item.poster}
-                          alt="Image"
-                          style={{ width: "100%" }}
-                        />
-                      }
-                    </td>
-                    <td style={{ width: "130px" }}>{item.name}</td>
-                    <td style={{ width: "100px" }}>{item.type}</td>
-                    <td style={{ width: "100px" }}>{item.country}</td>
-                    <td style={{ width: "100px" }}>{item.show_date}</td>
-                    <td style={{ width: "103px" }} className="action">
-                      <div>
-                        <a
-                          onClick={() => {
-                            LoadDetail(item.id);
-                          }}>
-                          <BiDetail
-                            className="btn btn-outline-dark mx-1"
-                            size={50}
-                          />
-                        </a>
+              {data.map((item) => (
+                <tr key={item.id}>
+                  <td>{item.id}</td>
+                  <td style={{ width: "80px" }}>
+                    <img
+                      src={item.poster}
+                      alt="Image"
+                      style={{ width: "100%" }}
+                    />
+                  </td>
+                  <td>{item.name}</td>
+                  <td>{item.type}</td>
+                  <td>{item.country}</td>
+                  <td>{item.show_date}</td>
+                  <td className="action">
+                    <div>
+                      <button
+                        onClick={() => {
+                          loadDetail(item.id);
+                        }}>
+                        <BiDetail size={20} />
+                      </button>
 
-                        <a
-                          onClick={() => {
-                            LoadEdit(item.id);
-                          }}>
-                          <BiEdit
-                            className="btn btn-outline-dark mx-1"
-                            size={50}
-                          />
-                        </a>
+                      <button
+                        onClick={() => {
+                          loadEdit(item.id);
+                        }}>
+                        <BiEdit size={20} />
+                      </button>
 
-                        <a
-                          className=""
-                          onClick={() => {
-                            Removefunction(item.id);
-                          }}>
-                          <RiDeleteBinLine
-                            className="btn btn-outline-dark mx-1"
-                            size={50}
-                          />
-                        </a>
-                      </div>
-                    </td>
-                  </tr>
-                ))}
+                      <button
+                        onClick={() => {
+                          removeMovie(item.id);
+                        }}>
+                        <RiDeleteBinLine size={20} />
+                      </button>
+                    </div>
+                  </td>
+                </tr>
+              ))}
             </tbody>
           </table>
         </div>

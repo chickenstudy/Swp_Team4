@@ -40,8 +40,14 @@ export default function SignUp() {
         },
       };
 
+      console.log(data);
       axios
-        .post("http://localhost:8080/api/register", data)
+        .post("http://localhost:8080/api/register", data, {
+          headers: {
+            "Access-Control-Allow-Origin": "*",
+            "Content-Type": "application/json",
+          },
+        })
         .then((response) => {
           console.log(response);
           navigate("/");
@@ -60,18 +66,23 @@ export default function SignUp() {
       return;
     }
     if (!file.type.startsWith("image/")) {
-      setError("Please select an image file.");
+      setError("Vui lòng chọn tệp hình ảnh.");
       return;
     }
     const MAX_FILE_SIZE = 5 * 1024 * 1024; // 5 MB
     if (file.size > MAX_FILE_SIZE) {
-      setError("The selected file size exceeds the allowed limit.");
+      setError("Kích thước tệp đã chọn vượt quá giới hạn cho phép.");
       return;
     }
-    setPicture(file);
+
+    const reader = new FileReader();
+    reader.readAsDataURL(file);
+    reader.onload = () => {
+      setPicture(reader.result);
+    };
+
     setError(null);
   };
-
   const handleClose = () => setShowModal(false);
   const handleShow = () => setShowModal(true);
 

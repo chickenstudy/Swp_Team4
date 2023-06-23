@@ -42,6 +42,7 @@ const AddNewMovie = () => {
   const handlesubmit = (e) => {
     e.preventDefault();
     const data = {
+      movie:{
       name,
       poster,
       trailer,
@@ -50,10 +51,10 @@ const AddNewMovie = () => {
       type,
       country,
       show_date,
-      description,
+      description,},
     };
-
-    fetch("http://localhost:8000/movie", {
+    console.log(JSON.stringify(data));
+    fetch("http://localhost:8080/api/movie/create", {
       method: "POST",
       headers: { "content-type": "application/json" },
       body: JSON.stringify(data),
@@ -110,7 +111,7 @@ const AddNewMovie = () => {
                     </div>
                   </div>
 
-                  <div className="col-lg-12 my-1">
+                  <div className="col-lg-12 my-3">
                     <div className="form-group">
                       <label>Poster</label>
                       <div>
@@ -121,13 +122,13 @@ const AddNewMovie = () => {
                         />{" "}
                         {poster && <p>Selected File:</p>}
                       </div>
-                        {poster && (
-                          <img src={poster} style={{ width: "110px" }} />
-                        )}
+                      {poster && (
+                        <img src={poster} style={{ width: "110px" }} />
+                      )}
                     </div>
                   </div>
 
-                  <div className="col-lg-12 my-4">
+                  <div className="col-lg-12 my-3">
                     <div className="form-group">
                       <label>Banner</label>
                       <div>
@@ -138,13 +139,11 @@ const AddNewMovie = () => {
                         />
                         {banner && <p>Selected File:</p>}
                       </div>
-                        {banner && (
-                          <img src={banner} style={{ width: "110px" }} />
-                        )}
+                      {banner && (
+                        <img src={banner} style={{ width: "110px" }} />
+                      )}
                     </div>
                   </div>
-
-                  
 
                   <div className="col-lg-12 my-1">
                     <div className="form-group">
@@ -155,7 +154,6 @@ const AddNewMovie = () => {
                         className="form-control"></input>
                     </div>
                   </div>
-
                   <div className="col-lg-12 my-1">
                     <div className="form-group">
                       <label>Times</label>
@@ -199,7 +197,7 @@ const AddNewMovie = () => {
                     </div>
                   </div>
 
-                  <div className="col-lg-12 text-end my-3">
+                  <div className="col-lg-12 text-end my-4">
                     <div className="form-group">
                       <button className="btn btn-success" type="submit">
                         Save

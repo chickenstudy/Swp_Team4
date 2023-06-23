@@ -17,7 +17,8 @@ function App() {
 
   return (
     <ApplicationContext.Provider
-      value={{ user, setUser, makeSignIn, makeSignOut }}>
+      value={{ user, setUser, makeSignIn, makeSignOut }}
+    >
       <React.Fragment>
         <BrowserRouter>
           <Routes>
