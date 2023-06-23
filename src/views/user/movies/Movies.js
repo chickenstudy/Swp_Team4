@@ -33,25 +33,33 @@ export default function Movies() {
         </Link>
       </span>
       <Carousel>
+       
         <Carousel.Item>
           <img
             className="d-block w-100"
-            src="https://media.lottecinemavn.com/Media/WebAdmin/4dd36ed1cad242ec9bbb5400624a9b22.jpg"
+            src="https://media.lottecinemavn.com/Media/WebAdmin/df18effc746842f1834d34bea8081501.jpg"
             alt="First slide"
           />
         </Carousel.Item>
         <Carousel.Item>
           <img
             className="d-block w-100"
-            src="https://media.lottecinemavn.com/Media/WebAdmin/df18effc746842f1834d34bea8081501.jpg"
+            src="https://media.lottecinemavn.com/Media/WebAdmin/a49acadcb9a04f73835912cdee3c489f.jpg"
             alt="Second slide"
           />
         </Carousel.Item>
         <Carousel.Item>
           <img
             className="d-block w-100"
-            src="https://media.lottecinemavn.com/Media/WebAdmin/a49acadcb9a04f73835912cdee3c489f.jpg"
+            src="https://media.lottecinemavn.com/Media/WebAdmin/b2397436fad3439c86f005325f05fac1.jpg"
             alt="Third slide"
+          />
+        </Carousel.Item>
+        <Carousel.Item>
+          <img
+            className="d-block w-100"
+            src="https://media.lottecinemavn.com/Media/WebAdmin/5164c5f4e6964c71b3f9443471000840.jpg"
+            alt="Fourth slide"
           />
         </Carousel.Item>
       </Carousel>

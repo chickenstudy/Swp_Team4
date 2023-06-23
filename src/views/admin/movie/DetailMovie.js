@@ -13,7 +13,7 @@ const DetailMovie = () => {
   const [data, setData] = useState({});
 
   useEffect(() => {
-    fetch("http://localhost:8000/movie/" + movieid)
+    fetch("http://localhost:8080/api/movie/listMovie/" + movieid)
       .then((res) => {
         return res.json();
       })
@@ -38,38 +38,7 @@ const DetailMovie = () => {
                 />
               </div>
             </Carousel.Item>
-            <Carousel.Item>
-              <div className="d-flex justify-content-center ">
-                <img
-                  className="bannerImg"
-                  src="https://media.lottecinemavn.com/Media/MovieFile/MovieImg/202305/11108_105_100002.jpg"
-                />
-              </div>
-            </Carousel.Item>
-            <Carousel.Item>
-              <div className="d-flex justify-content-center ">
-                <img
-                  className="bannerImg"
-                  src="https://media.lottecinemavn.com/Media/MovieFile/MovieImg/202305/11108_105_100003.jpg"
-                />
-              </div>
-            </Carousel.Item>
-            <Carousel.Item>
-              <div className="d-flex justify-content-center ">
-                <img
-                  className="bannerImg"
-                  src="https://media.lottecinemavn.com/Media/MovieFile/MovieImg/202305/11108_105_100005.jpg"
-                />
-              </div>
-            </Carousel.Item>
-            <Carousel.Item>
-              <div className="d-flex justify-content-center ">
-                <img
-                  className="bannerImg"
-                  src="https://media.lottecinemavn.com/Media/MovieFile/MovieImg/202305/11108_105_100006.jpg"
-                />
-              </div>
-            </Carousel.Item>
+            
           </Carousel>
         </div>
       </div>

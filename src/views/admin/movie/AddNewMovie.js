@@ -1,6 +1,5 @@
 import React from "react";
 import { useState } from "react";
-import "bootstrap/dist/css/bootstrap.min.css";
 import { Link, useNavigate } from "react-router-dom";
 
 const AddNewMovie = () => {
@@ -43,6 +42,7 @@ const AddNewMovie = () => {
   const handlesubmit = (e) => {
     e.preventDefault();
     const data = {
+      movie:{
       name,
       poster,
       trailer,
@@ -51,10 +51,10 @@ const AddNewMovie = () => {
       type,
       country,
       show_date,
-      description,
+      description,},
     };
-
-    fetch("http://localhost:8000/movie", {
+    console.log(JSON.stringify(data));
+    fetch("http://localhost:8080/api/movie/create", {
       method: "POST",
       headers: { "content-type": "application/json" },
       body: JSON.stringify(data),
@@ -85,12 +85,11 @@ const AddNewMovie = () => {
                       <input
                         value={id}
                         disabled="disabled"
-                        className="form-control"
-                      ></input>
+                        className="form-control"></input>
                     </div>
                   </div>
 
-                  <div className="col-lg-12">
+                  <div className="col-lg-12 my-1">
                     <div className="form-group">
                       <label>Name</label>
                       <input
@@ -98,23 +97,21 @@ const AddNewMovie = () => {
                         value={name}
                         onMouseDown={(e) => valchange(true)}
                         onChange={(e) => setName(e.target.value)}
-                        className="form-control"
-                      ></input>
+                        className="form-control"></input>
                     </div>
                   </div>
 
-                  <div className="col-lg-12">
+                  <div className="col-lg-12 my-1">
                     <div className="form-group">
                       <label>Type</label>
                       <input
                         value={type}
                         onChange={(e) => setType(e.target.value)}
-                        className="form-control"
-                      ></input>
+                        className="form-control"></input>
                     </div>
                   </div>
 
-                  <div className="col-lg-12">
+                  <div className="col-lg-12 my-3">
                     <div className="form-group">
                       <label>Poster</label>
                       <div>
@@ -131,7 +128,7 @@ const AddNewMovie = () => {
                     </div>
                   </div>
 
-                  <div className="col-lg-12">
+                  <div className="col-lg-12 my-3">
                     <div className="form-group">
                       <label>Banner</label>
                       <div>
@@ -148,39 +145,36 @@ const AddNewMovie = () => {
                     </div>
                   </div>
 
-                  <div className="col-lg-12">
+                  <div className="col-lg-12 my-1">
                     <div className="form-group">
                       <label>Trailer</label>
                       <input
                         value={trailer}
                         onChange={(e) => setTrailer(e.target.value)}
-                        className="form-control"
-                      ></input>
+                        className="form-control"></input>
                     </div>
                   </div>
-                  <div className="col-lg-12">
+                  <div className="col-lg-12 my-1">
                     <div className="form-group">
                       <label>Times</label>
                       <input
                         value={times}
                         onChange={(e) => setTimes(e.target.value)}
-                        className="form-control"
-                      ></input>
+                        className="form-control"></input>
                     </div>
                   </div>
 
-                  <div className="col-lg-12">
+                  <div className="col-lg-12 my-1">
                     <div className="form-group">
                       <label>Country</label>
                       <input
                         value={country}
                         onChange={(e) => setCountry(e.target.value)}
-                        className="form-control"
-                      ></input>
+                        className="form-control"></input>
                     </div>
                   </div>
 
-                  <div className="col-lg-12">
+                  <div className="col-lg-12 my-1">
                     <div className="form-group">
                       <label>Show date</label>
                       <input
@@ -192,7 +186,7 @@ const AddNewMovie = () => {
                     </div>
                   </div>
 
-                  <div className="col-lg-12">
+                  <div className="col-lg-12 my-1">
                     <div className="form-group">
                       <label>Movie Content</label>
                       <input

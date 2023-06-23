@@ -1,15 +1,15 @@
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";
+import axios from "axios";
 
 export default function EditMovie() {
   const { movieid } = useParams();
 
   useEffect(() => {
-    fetch("http://localhost:8000/movie/" + movieid)
+    axios
+      .get(`http://localhost:8000/movie/${movieid}`)
       .then((res) => {
-        return res.json();
-      })
-      .then((resp) => {
+        const resp = res.data;
         setId(resp.id);
         setName(resp.name);
         setPoster(resp.poster);
@@ -19,8 +19,7 @@ export default function EditMovie() {
         setDescription(resp.description);
         setType(resp.type);
         setTrailer(resp.trailer);
-        setShowDate(resp.showdate);
-        activechange(resp.isactive);
+        setShowDate(resp.show_date);
       })
       .catch((err) => {
         console.log(err.message);
@@ -37,7 +36,6 @@ export default function EditMovie() {
   const [country, setCountry] = useState("");
   const [showdate, setShowDate] = useState("");
   const [description, setDescription] = useState("");
-  const [active, activechange] = useState(true);
   const [validation, valchange] = useState(false);
 
   const navigate = useNavigate();
@@ -57,11 +55,10 @@ export default function EditMovie() {
       description,
     };
 
-    fetch("http://localhost:8000/movie/" + movieid, {
-      method: "PUT",
-      headers: { "content-type": "application/json" },
-      body: JSON.stringify(data),
-    })
+    axios
+      .put(`http://localhost:8080/api/movie/updateMovie/${movieid}`, data, {
+        headers: { "content-type": "application/json" },
+      })
       .then((res) => {
         alert("Saved successfully.");
         navigate("/listmovie");
@@ -122,7 +119,6 @@ export default function EditMovie() {
                       <div className="form-group">
                         <label>Trailer</label>
                         <input
-                          value={trailer}
                           onChange={(e) => setTrailer(e.target.value)}
                           className="form-control"
                         ></input>
@@ -134,7 +130,6 @@ export default function EditMovie() {
                         <label>Poster</label>
                         <div>
                           <input
-                            value={poster}
                             type="file"
                             accept="image/*"
                             onChange={handlePosterChange}
@@ -142,12 +137,12 @@ export default function EditMovie() {
                           {poster && <p>Selected File:</p>}
                         </div>
                         {poster && (
-                          <img src={poster} style={{ width: "110px" }} />
+                          <img src={poster} style={{ width: "110px" }} alt="Poster" />
                         )}
                       </div>
                     </div>
 
-                    <div className="col-lg-12">
+                    <div className="col-lg-12 my-3">
                       <div className="form-group">
                         <label>Banner</label>
                         <div>
@@ -159,7 +154,7 @@ export default function EditMovie() {
                           {banner && <p>Selected File:</p>}
                         </div>
                         {banner && (
-                          <img src={banner} style={{ width: "110px" }} />
+                          <img src={banner} style={{ width: "110px" }} alt="Banner" />
                         )}
                       </div>
                     </div>
@@ -219,17 +214,6 @@ export default function EditMovie() {
                       </div>
                     </div>
 
-                    <div className="col-lg-12">
-                      <div className="form-check">
-                        <input
-                          checked={active}
-                          onChange={(e) => activechange(e.target.checked)}
-                          type="checkbox"
-                          className="form-check-input"
-                        ></input>
-                        <label className="form-check-label">Is Active</label>
-                      </div>
-                    </div>
                     <div className="col-lg-12">
                       <div className="form-group">
                         <button className="btn btn-success" type="submit">
