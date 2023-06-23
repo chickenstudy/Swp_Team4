@@ -36,7 +36,7 @@ public class User {
     private String username;
 
     @Lob
-    private byte[]  picture;
+    private byte[] picture;
 
     private String phonenumber;
     private int rolesID;

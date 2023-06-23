@@ -15,8 +15,8 @@ import lombok.Setter;
 @Builder
 public class MovieDTOResponse {
     private int id;
-    private  String poster;
-    private String banner;
+    private byte[] poster;
+    private byte[] banner;
     private String trailer;
     private Date show_date;
     private String country;
