@@ -5,6 +5,7 @@ import java.util.Date;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
+import jakarta.persistence.Lob;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -24,12 +25,15 @@ public class Movie {
 
     private String author;
     private String name;
-    private String poster;
+
+    @Lob
+    private byte[] poster;
     private String description;
     private String type;
     private Date show_date;
 
-    private String banner;
+    @Lob
+    private byte[] banner;
     private String trailer;
     private String country;
     private String times;

@@ -38,8 +38,9 @@ public class UserController {
 
     @PostMapping("/register")
     public Map<String, UserDTOResponse> register(
-        @RequestBody Map<String, UserDTOCreateAccount> userRegisterRequestMap) throws SerialException, SQLException, IOException{
-        return userService.registerUser(userRegisterRequestMap);
+        @RequestBody Map<String, UserDTOCreateAccount> userRegisterRequestMap) throws SQLException, IOException{
+        System.out.println(userRegisterRequestMap);
+            return userService.registerUser(userRegisterRequestMap);
     }
 
     @GetMapping("/user/role")
