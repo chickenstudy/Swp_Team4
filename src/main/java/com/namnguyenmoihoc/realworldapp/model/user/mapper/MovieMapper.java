@@ -1,8 +1,11 @@
 package com.namnguyenmoihoc.realworldapp.model.user.mapper;
 
+import org.springframework.security.access.method.P;
+
 import com.namnguyenmoihoc.realworldapp.entity.Movie;
 import com.namnguyenmoihoc.realworldapp.model.movie.MovieDTOCreate;
 import com.namnguyenmoihoc.realworldapp.model.movie.MovieDTOResponse;
+import com.namnguyenmoihoc.realworldapp.model.movie.MovieDTOResponseCreate;
 import com.namnguyenmoihoc.realworldapp.model.movie.MovieDTOUpdate;
 
 public class MovieMapper {
@@ -26,6 +29,8 @@ public class MovieMapper {
                 .times(movie.getTimes()).description(movie.getDescription()).country(movie.getCountry())
                 .show_date(movie.getShow_date()).build();
     }
+    
+       
 
     public static Movie toMovieUpdate(MovieDTOUpdate movieDTOUpdate) {
         byte[] poster = movieDTOUpdate.getPoster().getBytes();
@@ -39,4 +44,16 @@ public class MovieMapper {
                 .description(movieDTOUpdate.getDescription()).build();
         return movie;
     }
+
+    public static MovieDTOResponseCreate toMovieDTOReponseCreate(Movie movie) {
+        String poster = new String(movie.getPoster());
+        String banner = new String(movie.getBanner());
+         return MovieDTOResponseCreate.builder().name(movie.getName()).type(movie.getType())
+       .poster(poster).banner(banner).trailer(movie.getTrailer())
+       .times(movie.getTimes()).description(movie.getDescription()).country(movie.getCountry()).show_date(movie.getShow_date()).build();
+       
+    }
+
+    
+
 }
