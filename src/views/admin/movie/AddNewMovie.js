@@ -1,6 +1,5 @@
 import React from "react";
 import { useState } from "react";
-import "bootstrap/dist/css/bootstrap.min.css";
 import { Link, useNavigate } from "react-router-dom";
 
 const AddNewMovie = () => {
@@ -89,7 +88,7 @@ const AddNewMovie = () => {
                     </div>
                   </div>
 
-                  <div className="col-lg-12">
+                  <div className="col-lg-12 my-1">
                     <div className="form-group">
                       <label>Name</label>
                       <input
@@ -101,7 +100,7 @@ const AddNewMovie = () => {
                     </div>
                   </div>
 
-                  <div className="col-lg-12">
+                  <div className="col-lg-12 my-1">
                     <div className="form-group">
                       <label>Type</label>
                       <input
@@ -111,7 +110,7 @@ const AddNewMovie = () => {
                     </div>
                   </div>
 
-                  <div className="col-lg-12">
+                  <div className="col-lg-12 my-1">
                     <div className="form-group">
                       <label>Poster</label>
                       <div>
@@ -128,7 +127,7 @@ const AddNewMovie = () => {
                     </div>
                   </div>
 
-                  <div className="col-lg-12">
+                  <div className="col-lg-12 my-4">
                     <div className="form-group">
                       <label>Banner</label>
                       <div>
@@ -147,7 +146,7 @@ const AddNewMovie = () => {
 
                   
 
-                  <div className="col-lg-12">
+                  <div className="col-lg-12 my-1">
                     <div className="form-group">
                       <label>Trailer</label>
                       <input
@@ -157,7 +156,7 @@ const AddNewMovie = () => {
                     </div>
                   </div>
 
-                  <div className="col-lg-12">
+                  <div className="col-lg-12 my-1">
                     <div className="form-group">
                       <label>Times</label>
                       <input
@@ -167,7 +166,7 @@ const AddNewMovie = () => {
                     </div>
                   </div>
 
-                  <div className="col-lg-12">
+                  <div className="col-lg-12 my-1">
                     <div className="form-group">
                       <label>Country</label>
                       <input
@@ -177,7 +176,7 @@ const AddNewMovie = () => {
                     </div>
                   </div>
 
-                  <div className="col-lg-12">
+                  <div className="col-lg-12 my-1">
                     <div className="form-group">
                       <label>Show date</label>
                       <input
@@ -189,7 +188,7 @@ const AddNewMovie = () => {
                     </div>
                   </div>
 
-                  <div className="col-lg-12">
+                  <div className="col-lg-12 my-1">
                     <div className="form-group">
                       <label>Movie Content</label>
                       <input
@@ -200,7 +199,7 @@ const AddNewMovie = () => {
                     </div>
                   </div>
 
-                  <div className="col-lg-12 text-end my-4">
+                  <div className="col-lg-12 text-end my-3">
                     <div className="form-group">
                       <button className="btn btn-success" type="submit">
                         Save

@@ -1,28 +1,27 @@
-/* eslint-disable jsx-a11y/img-redundant-alt */
-/* eslint-disable jsx-a11y/anchor-is-valid */
 import React from "react";
 import { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { BiEdit } from "react-icons/bi";
 import { RiDeleteBinLine } from "react-icons/ri";
 import { BiDetail } from "react-icons/bi";
+import axios from "axios";
 
 const MovieList = () => {
-  const [data, setData] = useState(null);
+  const [data, setData] = useState([]);
   const navigate = useNavigate();
 
   const LoadDetail = (id) => {
     navigate("/movie/detailmovie/" + id);
   };
+
   const LoadEdit = (id) => {
     navigate("/movie/editmovie/" + id);
   };
 
   const Removefunction = (id) => {
     if (window.confirm("Do you want to remove?")) {
-      fetch("http://localhost:8000/movie/" + id, {
-        method: "DELETE",
-      })
+      axios
+        .delete("http://localhost:8000/movie/"+id)
         .then((res) => {
           alert("Removed successfully.");
           window.location.reload();
@@ -32,13 +31,12 @@ const MovieList = () => {
         });
     }
   };
+
   useEffect(() => {
-    fetch("http://localhost:8000/movie")
+    axios
+      .get("http://localhost:8000/movie")
       .then((res) => {
-        return res.json();
-      })
-      .then((resp) => {
-        setData(resp);
+        setData(res.data);
       })
       .catch((err) => {
         console.log(err.message);
@@ -74,7 +72,7 @@ const MovieList = () => {
             <tbody>
               {data &&
                 data.map((item) => (
-                  <tr key={item.Id}>
+                  <tr key={item.id}>
                     <td style={{ width: "10px" }}>{item.id}</td>
                     <td style={{ width: "80px" }}>
                       {
@@ -85,10 +83,10 @@ const MovieList = () => {
                         />
                       }
                     </td>
-                    <td style={{ width: "110px" }}>{item.name}</td>
+                    <td style={{ width: "130px" }}>{item.name}</td>
                     <td style={{ width: "100px" }}>{item.type}</td>
-                    <td style={{ width: "110px" }}>{item.country}</td>
-                    <td style={{ width: "110px" }}>{item.show_date}</td>
+                    <td style={{ width: "100px" }}>{item.country}</td>
+                    <td style={{ width: "100px" }}>{item.show_date}</td>
                     <td style={{ width: "103px" }} className="action">
                       <div>
                         <a
@@ -132,4 +130,5 @@ const MovieList = () => {
     </div>
   );
 };
+
 export default MovieList;

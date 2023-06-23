@@ -5,7 +5,7 @@ export default function EditMovie() {
   const { movieid } = useParams();
 
   useEffect(() => {
-    fetch("http://localhost:8000/movie/" + movieid)
+    fetch(`http://localhost:8000/movie/${movieid}`)
       .then((res) => {
         return res.json();
       })
@@ -19,8 +19,7 @@ export default function EditMovie() {
         setDescription(resp.description);
         setType(resp.type);
         setTrailer(resp.trailer);
-        setShowDate(resp.showdate);
-        activechange(resp.isactive);
+        setShowDate(resp.show_date);
       })
       .catch((err) => {
         console.log(err.message);
@@ -37,7 +36,6 @@ export default function EditMovie() {
   const [country, setCountry] = useState("");
   const [showdate, setShowDate] = useState("");
   const [description, setDescription] = useState("");
-  const [active, activechange] = useState(true);
   const [validation, valchange] = useState(false);
 
   const navigate = useNavigate();
@@ -57,7 +55,7 @@ export default function EditMovie() {
       description,
     };
 
-    fetch("http://localhost:8000/movie/" + movieid, {
+    fetch(`http://localhost:8000/movie/${movieid}`, {
       method: "PUT",
       headers: { "content-type": "application/json" },
       body: JSON.stringify(data),
@@ -121,7 +119,6 @@ export default function EditMovie() {
                       <div className="form-group">
                         <label>Trailer</label>
                         <input
-                          value={trailer}
                           onChange={(e) => setTrailer(e.target.value)}
                           className="form-control"></input>
                       </div>
@@ -132,13 +129,11 @@ export default function EditMovie() {
                         <label>Poster</label>
                         <div>
                           <input
-                            value={poster}
                             type="file"
                             accept="image/*"
                             onChange={handlePosterChange}
-                            
-                          />
-                          {poster && <p>Selected File:</p>}
+                            />
+                            {poster && <p>Selected File:</p>}
                         </div>
                           {poster && (
                             <img src={poster} style={{ width: "110px" }} />
@@ -146,7 +141,7 @@ export default function EditMovie() {
                       </div>
                     </div>
 
-                    <div className="col-lg-12">
+                    <div className="col-lg-12 my-3">
                       <div className="form-group">
                         <label>Banner</label>
                         <div>
@@ -213,16 +208,7 @@ export default function EditMovie() {
                       </div>
                     </div>
 
-                    <div className="col-lg-12">
-                      <div className="form-check">
-                        <input
-                          checked={active}
-                          onChange={(e) => activechange(e.target.checked)}
-                          type="checkbox"
-                          className="form-check-input"></input>
-                        <label className="form-check-label">Is Active</label>
-                      </div>
-                    </div>
+                   
                     <div className="col-lg-12">
                       <div className="form-group">
                         <button className="btn btn-success" type="submit">
