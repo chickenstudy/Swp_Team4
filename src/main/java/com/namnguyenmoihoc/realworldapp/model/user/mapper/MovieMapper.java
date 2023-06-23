@@ -16,7 +16,7 @@ public class MovieMapper {
 
     public static MovieDTOResponse toMovieDTOReponse(Movie movie) {
 
-        return MovieDTOResponse.builder().name(movie.getName()).type(movie.getType())
+        return MovieDTOResponse.builder().name(movie.getName()).type(movie.getType()).id(movie.getMovie_id())
        .poster(movie.getPoster()).banner(movie.getBanner()).trailer(movie.getTrailer())
        .times(movie.getTimes()).description(movie.getDescription()).country(movie.getCountry()).show_date(movie.getShow_date()).build();
     }
