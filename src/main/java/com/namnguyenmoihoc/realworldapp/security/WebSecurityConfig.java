@@ -25,25 +25,20 @@ import lombok.RequiredArgsConstructor;
 @Configuration
 @EnableWebSecurity
 @RequiredArgsConstructor
-@Deprecated(forRemoval=true)
+@Deprecated(forRemoval = true)
 public class WebSecurityConfig {
     private final JWTRequestFilter jwtRequestFilter;
 
     @Bean
-    public PasswordEncoder passwordEncoder(){
+    public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     }
-    
+
     @Bean
-    public SecurityFilterChain filterChain(HttpSecurity httpSecurity) throws Exception{
-        httpSecurity.csrf().disable().authorizeRequests().
-        requestMatchers("/api/login").permitAll().
-        requestMatchers(HttpMethod.POST, "/api/register").permitAll().
-        requestMatchers(HttpMethod.PUT).permitAll().
-        requestMatchers(HttpMethod.POST, "/api/movie/create").permitAll().
-        requestMatchers("/api/**").permitAll().
-        and().
-        sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
+    public SecurityFilterChain filterChain(HttpSecurity httpSecurity) throws Exception {
+        httpSecurity.cors().and()
+                .csrf().disable().authorizeRequests().anyRequest().permitAll().and().sessionManagement()
+                .sessionCreationPolicy(SessionCreationPolicy.STATELESS);
 
         httpSecurity.addFilterBefore(jwtRequestFilter, UsernamePasswordAuthenticationFilter.class);
         return httpSecurity.build();
