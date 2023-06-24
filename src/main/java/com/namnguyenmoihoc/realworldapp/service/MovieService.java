@@ -1,5 +1,6 @@
 package com.namnguyenmoihoc.realworldapp.service;
 
+import java.io.UnsupportedEncodingException;
 import java.util.List;
 import java.util.Map;
 
@@ -13,7 +14,7 @@ import com.namnguyenmoihoc.realworldapp.model.movie.MovieDTOUpdate;
 
 public interface MovieService {
 
-    Map<String, MovieDTOResponseCreate> createMovie(Map<String, MovieDTOCreate> movieDTOCreateMap);
+    Map<String, MovieDTOResponseCreate> createMovie(Map<String, MovieDTOCreate> movieDTOCreateMap) throws UnsupportedEncodingException;
 
     List<MovieDTOResponse> getListMovie();
 

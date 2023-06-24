@@ -17,7 +17,7 @@ public class UserMapper {
     }
 
     public static User toUser(UserDTOCreateAccount userDTOCreateAccount) {
-        byte[] image = userDTOCreateAccount.getPicture().getBytes();
+        byte[] image = Base64.getDecoder().decode(userDTOCreateAccount.getPicture());
         
         return User.builder().username(userDTOCreateAccount.getUsername()).email(userDTOCreateAccount.getEmail())
                 .password(userDTOCreateAccount.getPassword()).picture(image).address(userDTOCreateAccount.getAddress())
@@ -26,7 +26,8 @@ public class UserMapper {
     }
 
     public static User toUpdateUser(UserDTOUpdateAccount userDTOUpdateAccount) {
-        byte[] image = userDTOUpdateAccount.getPicture().getBytes();
+        byte[] image = Base64.getDecoder().decode(userDTOUpdateAccount.getPicture());
+
         if (image.length == 0) {
             image = Base64.getDecoder().decode("NoImage");
         }
@@ -40,7 +41,8 @@ public class UserMapper {
     }
 
     public static UserDTOUpdateAccount toUpdateUserResponse(User user) {
-        String image = new String(user.getPicture());
+        String image = Base64.getEncoder().encodeToString(user.getPicture());
+
         return UserDTOUpdateAccount.builder().username(user.getUsername()).email(user.getEmail())
                 .password(user.getPassword()).picture(image).address(user.getAddress()).sex(user.getSex())
                 .phonenumber(user.getPhonenumber()).dob(user.getDob()).build();
