@@ -24,15 +24,15 @@ public class MovieMapper {
 
     public static MovieDTOResponse toMovieDTOReponse(Movie movie) {
 
-        return MovieDTOResponse.builder().id(movie.getMovie_id()).name(movie.getName()).type(movie.getType()).id(movie.getMovie_id())
+        return MovieDTOResponse.builder().id(movie.getMovie_id()).name(movie.getName()).type(movie.getType())
+                .id(movie.getMovie_id())
                 .poster(movie.getPoster()).banner(movie.getBanner()).trailer(movie.getTrailer())
                 .times(movie.getTimes()).description(movie.getDescription()).country(movie.getCountry())
                 .show_date(movie.getShow_date()).build();
     }
-    
-       
 
     public static Movie toMovieUpdate(MovieDTOUpdate movieDTOUpdate) {
+        System.out.print(movieDTOUpdate.getPoster());
         byte[] poster = movieDTOUpdate.getPoster().getBytes();
         byte[] banner = movieDTOUpdate.getBanner().getBytes();
 
@@ -48,12 +48,11 @@ public class MovieMapper {
     public static MovieDTOResponseCreate toMovieDTOReponseCreate(Movie movie) {
         String poster = new String(movie.getPoster());
         String banner = new String(movie.getBanner());
-         return MovieDTOResponseCreate.builder().name(movie.getName()).type(movie.getType())
-       .poster(poster).banner(banner).trailer(movie.getTrailer())
-       .times(movie.getTimes()).description(movie.getDescription()).country(movie.getCountry()).show_date(movie.getShow_date()).build();
-       
-    }
+        return MovieDTOResponseCreate.builder().name(movie.getName()).type(movie.getType())
+                .poster(poster).banner(banner).trailer(movie.getTrailer())
+                .times(movie.getTimes()).description(movie.getDescription()).country(movie.getCountry())
+                .show_date(movie.getShow_date()).build();
 
-    
+    }
 
 }

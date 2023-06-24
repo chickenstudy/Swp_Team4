@@ -52,6 +52,4 @@ public class UserController {
     public Map<String, UserDTOResponse> getCurrentUser() throws CustomNotFoundException{
         return userService.getCurrentUser();
     }
-    
-
 }
