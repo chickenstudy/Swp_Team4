@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.namnguyenmoihoc.realworldapp.exception.custom.CustomNotFoundException;
 import com.namnguyenmoihoc.realworldapp.model.movie.MovieDTOCreate;
-import com.namnguyenmoihoc.realworldapp.model.movie.MovieDTODelete;
+
 import com.namnguyenmoihoc.realworldapp.model.movie.MovieDTOResponse;
 import com.namnguyenmoihoc.realworldapp.model.movie.MovieDTOResponseCreate;
 import com.namnguyenmoihoc.realworldapp.model.movie.MovieDTOUpdate;
@@ -46,7 +46,7 @@ public class MovieController {
 
 
     @PutMapping("/updateMovie/{movieId}")
-    public Map<String, MovieDTOResponse> getUpdateMovie(@PathVariable int movieId,
+    public Map<String, MovieDTOResponseCreate> getUpdateMovie(@PathVariable int movieId,
             @RequestBody MovieDTOUpdate movieDTOUpdate)
             throws CustomNotFoundException {
         movieDTOUpdate.setMovieid(movieId);
@@ -54,11 +54,14 @@ public class MovieController {
         return movieService.getUpdateAccount(movieDTOUpdate);
     }
     @DeleteMapping("/deletemovie/{movieid}")
-    public void getDeleteMovie(@PathVariable int movieId,
-            @RequestBody MovieDTODelete movieDTODelete) 
+    public void getDeleteMovie(@PathVariable(value = "movieid") int movieId
+            ) 
             throws CustomNotFoundException {
-                movieDTODelete.setMovieid(movieId);
-              movieService.getDeleteMovie(movieDTODelete);
+                
+              movieService.getDeleteMovie(movieId);
+    
+    
+
             }
     
 }
