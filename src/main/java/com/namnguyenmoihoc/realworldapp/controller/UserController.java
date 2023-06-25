@@ -5,7 +5,7 @@ import java.sql.SQLException;
 import java.util.List;
 import java.util.Map;
 
-import javax.sql.rowset.serial.SerialException;
+
 
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -38,8 +38,9 @@ public class UserController {
 
     @PostMapping("/register")
     public Map<String, UserDTOResponse> register(
-        @RequestBody Map<String, UserDTOCreateAccount> userRegisterRequestMap) throws SerialException, SQLException, IOException{
-        return userService.registerUser(userRegisterRequestMap);
+        @RequestBody Map<String, UserDTOCreateAccount> userRegisterRequestMap) throws SQLException, IOException, CustomNotFoundException{
+        System.out.println(userRegisterRequestMap);
+            return userService.registerUser(userRegisterRequestMap);
     }
 
     @GetMapping("/user/role")

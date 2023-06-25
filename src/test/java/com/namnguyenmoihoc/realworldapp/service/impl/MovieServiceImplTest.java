@@ -8,6 +8,7 @@ import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
+import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
@@ -39,7 +40,7 @@ public class MovieServiceImplTest {
     private MovieRepository movieRepository;
 
     @Test
-    public void testCreateMovie() {
+    public void testCreateMovie() throws UnsupportedEncodingException {
         // tạo đối tượng movieDTOCreateMap
         Map<String, MovieDTOCreate> movieDTOCreateMap = new HashMap<>();
         MovieDTOCreate movieDTOCreate = new MovieDTOCreate();
@@ -60,8 +61,8 @@ public class MovieServiceImplTest {
         movie.setName(movieDTOCreate.getName());
         movie.setDescription(movieDTOCreate.getDescription());
         movie.setCountry(movieDTOCreate.getCountry());
-        movie.setPoster(movieDTOCreate.getPoster());
-        movie.setBanner(movieDTOCreate.getBanner());
+        // movie.setPoster(movieDTOCreate.getPoster());
+        // movie.setBanner(movieDTOCreate.getBanner());
         movie.setTrailer(movieDTOCreate.getTrailer());
         movie.setType(movieDTOCreate.getType());
         movie.setTimes(movieDTOCreate.getTimes());
@@ -92,8 +93,8 @@ public class MovieServiceImplTest {
     public void testGetListMovie() {
         // Create a list of movies
         List<Movie> movies = new ArrayList<>();
-        movies.add(new Movie(1, "q", "q", "d", "d", "e", null, "3", "d", "d", "d"));
-        movies.add(new Movie(2, "o", "o", "a", "m", "g", null, "3", "d", "d", "d"));
+        movies.add(new Movie(1, "q", "q", null, "d", "e", null, null, "d", "d", "d"));
+        movies.add(new Movie(2, "o", "o", null, "m", "g", null, null, "d", "d", "d"));
 
         // Mock the movieRepository.findAll() method to return the list of movies
         when(movieRepository.findAll()).thenReturn(movies);
@@ -151,7 +152,7 @@ public class MovieServiceImplTest {
         when(movieRepository.save(any(Movie.class))).thenReturn(movie);
 
         // Call the method under test
-        Map<String, MovieDTOResponse> result = movieService.getUpdateAccount(movieDTOUpdate);
+        Map<String, MovieDTOResponseCreate> result = movieService.getUpdateAccount(movieDTOUpdate);
 
         // Verify the behavior and assertions
         verify(movieRepository).findById(movieDTOUpdate.getMovieid()); // Verify that movieRepository.findById() was
@@ -161,11 +162,11 @@ public class MovieServiceImplTest {
         assertEquals(1, result.size()); // Check the size of the result map
         assertTrue(result.containsKey("update:")); // Check if the key "update:" exists in the result map
 
-        MovieDTOResponse movieDTOResponse = result.get("update:");
+        MovieDTOResponseCreate movieDTOResponse = result.get("update:");
         assertNotNull(movieDTOResponse); // Check if the movieDTOResponse is not null
 
         // Perform additional assertions on the movieDTOResponse object
-        assertEquals(movie.getMovie_id(), movieDTOResponse.getId());
+        // assertEquals(movie.getMovie_id(), movieDTOResponse.getId());
         assertEquals(movie.getName(), movieDTOResponse.getName());
         assertEquals(movie.getDescription(), movieDTOResponse.getDescription());
         // Continue with other assertions for the remaining properties

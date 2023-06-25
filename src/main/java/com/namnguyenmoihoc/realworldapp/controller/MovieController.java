@@ -1,5 +1,6 @@
 package com.namnguyenmoihoc.realworldapp.controller;
 
+import java.io.UnsupportedEncodingException;
 import java.util.List;
 import java.util.Map;
 
@@ -31,33 +32,38 @@ public class MovieController {
 
     @PostMapping("/create")
     public Map<String, MovieDTOResponseCreate> createMovie(
-        @RequestBody Map<String , MovieDTOCreate> movieDTOCreateMap){
+            @RequestBody Map<String, MovieDTOCreate> movieDTOCreateMap) throws UnsupportedEncodingException {
+        System.out.println(movieDTOCreateMap);
         return movieService.createMovie(movieDTOCreateMap);
-    } 
+    }
 
     @GetMapping("/listMovie")
-    public List<MovieDTOResponse> getListMovie(){
+    public List<MovieDTOResponse> getListMovie() {
         return movieService.getListMovie();
     }
 
-
     @PutMapping("/updateMovie/{movieId}")
-    public Map<String, MovieDTOResponse> getUpdateMovie(@PathVariable int movieId,
+    public Map<String, MovieDTOResponseCreate> getUpdateMovie(@PathVariable int movieId,
             @RequestBody MovieDTOUpdate movieDTOUpdate)
             throws CustomNotFoundException {
         movieDTOUpdate.setMovieid(movieId);
         System.out.println(movieDTOUpdate);
         return movieService.getUpdateAccount(movieDTOUpdate);
     }
-    @DeleteMapping("/deletemovie/{movieid}")
-    public void getDeleteMovie(@PathVariable(value = "movieid") int movieId
-            ) 
-            throws CustomNotFoundException {
-                
-              movieService.getDeleteMovie(movieId);
-    
-    
 
-            }
-    
+    @DeleteMapping("/deletemovie/{movieid}")
+    public void getDeleteMovie(@PathVariable(value = "movieid") int movieId)
+            throws CustomNotFoundException {
+
+        movieService.getDeleteMovie(movieId);
+
+    }
+
+    @GetMapping("/listMovie/{movieid}")
+    public Map<String, MovieDTOResponseCreate> getListMovieByID(@PathVariable(value = "movieid") int movieId)
+            throws CustomNotFoundException {
+        return movieService.getMovieByID(movieId);
+
+    }
+
 }

@@ -15,7 +15,7 @@ import lombok.Setter;
 @Builder
 public class MovieDTOCreate {
     
-    private  String poster;
+    private String poster;
     private String banner;
     private String trailer;
     private Date show_date;
@@ -24,6 +24,4 @@ public class MovieDTOCreate {
     private String description;
     private String type;
     private String times;
-
-
 }
