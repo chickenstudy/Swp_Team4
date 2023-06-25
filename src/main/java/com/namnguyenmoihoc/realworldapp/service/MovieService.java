@@ -6,7 +6,7 @@ import java.util.Map;
 
 import com.namnguyenmoihoc.realworldapp.exception.custom.CustomNotFoundException;
 import com.namnguyenmoihoc.realworldapp.model.movie.MovieDTOCreate;
-import com.namnguyenmoihoc.realworldapp.model.movie.MovieDTODelete;
+
 import com.namnguyenmoihoc.realworldapp.model.movie.MovieDTOResponse;
 import com.namnguyenmoihoc.realworldapp.model.movie.MovieDTOResponseCreate;
 import com.namnguyenmoihoc.realworldapp.model.movie.MovieDTOUpdate;
@@ -18,7 +18,7 @@ public interface MovieService {
 
     List<MovieDTOResponse> getListMovie();
 
-    Map<String, MovieDTOResponse> getUpdateAccount(MovieDTOUpdate movieDTOUpdate) throws CustomNotFoundException;
+    Map<String, MovieDTOResponseCreate> getUpdateAccount(MovieDTOUpdate movieDTOUpdate) throws CustomNotFoundException;
 
     void getDeleteMovie(int movieId)throws CustomNotFoundException;
     

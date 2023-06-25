@@ -8,7 +8,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
-import javax.sql.rowset.serial.SerialBlob;
+
 import javax.sql.rowset.serial.SerialException;
 
 import org.springframework.security.core.context.SecurityContextHolder;
