@@ -65,7 +65,5 @@ public class MovieController {
     public Map<String, MovieDTOResponseCreate> getListMovieByID(@PathVariable(value = "movieid") int movieId)
             throws CustomNotFoundException {
         return movieService.getMovieByID(movieId);
-
     }
-
 }
