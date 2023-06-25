@@ -30,6 +30,6 @@ public interface UserService {
 
     public Map<String, ProfileDTOResponsive> getUpdateAccount(UserDTOUpdateAccount userDTOUpdateAccount) throws CustomNotFoundException, IOException;
 
-    //public Object findAll();
+    //public UserRolesDTOResponse findAll();
     
 }
