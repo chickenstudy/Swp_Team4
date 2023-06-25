@@ -52,11 +52,11 @@ public class MovieController {
         return movieService.getUpdateAccount(movieDTOUpdate);
     }
     @DeleteMapping("/deletemovie/{movieid}")
-    public void getDeleteMovie(@PathVariable int movieId,
-            @RequestBody MovieDTODelete movieDTODelete) 
+    public void getDeleteMovie(@PathVariable(value = "movieid") int movieId
+            ) 
             throws CustomNotFoundException {
-                movieDTODelete.setMovieid(movieId);
-              movieService.getDeleteMovie(movieDTODelete);
+                
+              movieService.getDeleteMovie(movieId);
     
     
 

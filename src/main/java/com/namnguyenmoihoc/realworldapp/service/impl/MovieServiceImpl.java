@@ -91,9 +91,9 @@ public class MovieServiceImpl implements MovieService {
         return wrapper;
     }
 
-    @Override
-    public void getDeleteMovie(MovieDTODelete movieDTODelete) throws CustomNotFoundException {
-        int movieId = movieDTODelete.getMovieid();
+     @Override
+    public void getDeleteMovie(int movieId) throws CustomNotFoundException {
+        
 
         Optional<Movie> movieOptional = movieRepository.findById(movieId);
 
