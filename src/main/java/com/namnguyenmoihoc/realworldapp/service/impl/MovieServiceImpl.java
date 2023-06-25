@@ -104,7 +104,7 @@ public class MovieServiceImpl implements MovieService {
     }
 
     @Override
-    public Map<String, MovieDTOResponseCreate> getMovieByID(int movieId) throws CustomNotFoundException {
+    public Map<String, MovieDTOResponse> getMovieByID(int movieId) throws CustomNotFoundException {
         Optional<Movie> movieOptional = movieRepository.findById(movieId);
 
         if (movieOptional.isEmpty()) {
@@ -112,8 +112,8 @@ public class MovieServiceImpl implements MovieService {
         }
         Movie movie = movieOptional.get();
         // MovieDTOResponseCreate.add(MovieMapper.toMovieDTOReponse(movie));
-        MovieDTOResponseCreate movieDTO = MovieMapper.toMovieDTOReponseCreate(movie);
-        Map<String, MovieDTOResponseCreate> result = new HashMap<>();
+        MovieDTOResponse movieDTO = MovieMapper.toMovieDTOReponse(movie);
+        Map<String, MovieDTOResponse> result = new HashMap<>();
         result.put("movie", movieDTO);
 
         return result;

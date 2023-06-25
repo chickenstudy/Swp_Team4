@@ -1,7 +1,5 @@
 package com.namnguyenmoihoc.realworldapp.entity;
 
-
-import java.sql.Blob;
 import java.util.Date;
 
 import jakarta.persistence.Column;
@@ -14,7 +12,6 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import lombok.extern.java.Log;
 
 @Entity
 @Data
