@@ -22,6 +22,6 @@ public interface MovieService {
 
     void getDeleteMovie(int movieId)throws CustomNotFoundException;
 
-    Map<String, MovieDTOResponseCreate> getMovieByID(int movieId) throws CustomNotFoundException;
+    Map<String, MovieDTOResponse> getMovieByID(int movieId) throws CustomNotFoundException;
     
 }

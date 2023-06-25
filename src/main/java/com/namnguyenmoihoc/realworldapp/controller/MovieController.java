@@ -60,7 +60,7 @@ public class MovieController {
     }
 
     @GetMapping("/listMovie/{movieid}")
-    public Map<String, MovieDTOResponseCreate> getListMovieByID(@PathVariable(value = "movieid") int movieId)
+    public Map<String, MovieDTOResponse> getListMovieByID(@PathVariable(value = "movieid") int movieId)
             throws CustomNotFoundException {
         return movieService.getMovieByID(movieId);
 
