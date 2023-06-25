@@ -22,7 +22,7 @@ import lombok.extern.java.Log;
 @AllArgsConstructor
 @NoArgsConstructor
 @Table(name = "account_tbl")
-public class User {
+public class Account {
     @Id
     private int id;
 

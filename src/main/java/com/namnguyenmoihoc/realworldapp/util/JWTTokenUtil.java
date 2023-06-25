@@ -7,7 +7,7 @@ import java.util.function.Function;
 
 import org.springframework.stereotype.Component;
 
-import com.namnguyenmoihoc.realworldapp.entity.User;
+import com.namnguyenmoihoc.realworldapp.entity.Account;
 import com.namnguyenmoihoc.realworldapp.model.TokenPayload;
 
 import io.jsonwebtoken.Claims;
@@ -19,7 +19,7 @@ import io.jsonwebtoken.SignatureAlgorithm;
 public class JWTTokenUtil {
     private final String secret = "NAM_HIHI";
 
-    public String generateToken(User user, long expiredDate) {
+    public String generateToken(Account user, long expiredDate) {
         Map<String, Object> claims = new HashMap<>();
 
         TokenPayload tokenPayload = TokenPayload.builder().userID(user.getId()).email(user.getEmail()).build();
@@ -45,7 +45,7 @@ public class JWTTokenUtil {
         return ClaimsResolver.apply(claims);
     }
 
-    public boolean validate(String token, User user) {
+    public boolean validate(String token, Account user) {
         TokenPayload tokenPayload = getTokenPayLoad(token);
         
         return tokenPayload.getUserID() == user.getId() && tokenPayload.getEmail().equals(user.getEmail()) && !isTokenExpired(token);

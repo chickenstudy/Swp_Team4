@@ -10,7 +10,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 
 import com.namnguyenmoihoc.realworldapp.entity.Roles;
-import com.namnguyenmoihoc.realworldapp.entity.User;
+import com.namnguyenmoihoc.realworldapp.entity.Account;
 
 
 @Repository

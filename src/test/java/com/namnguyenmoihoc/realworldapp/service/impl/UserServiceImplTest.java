@@ -23,7 +23,7 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 import com.namnguyenmoihoc.realworldapp.entity.Roles;
-import com.namnguyenmoihoc.realworldapp.entity.User;
+import com.namnguyenmoihoc.realworldapp.entity.Account;
 import com.namnguyenmoihoc.realworldapp.exception.custom.CustomNotFoundException;
 import com.namnguyenmoihoc.realworldapp.model.roles.UserRolesDTOResponse;
 import com.namnguyenmoihoc.realworldapp.model.user.dto.UserDTOCreateAccount;
@@ -120,7 +120,7 @@ public class UserServiceImplTest {
         Map<String, UserDTOCreateAccount> userDTOCreateAcountMap = new HashMap<>();
         userDTOCreateAcountMap.put("user", userDTOCreateAccount);
 
-        Optional<User> userOptional = Optional.of(User.builder().email("username@gmail.com").build());
+        Optional<Account> userOptional = Optional.of(Account.builder().email("username@gmail.com").build());
         Map<String, UserDTOResponse> expected = new HashMap<>();
 
         UserDTOResponse userDTOResponseExpected = UserDTOResponse.builder().username("user")

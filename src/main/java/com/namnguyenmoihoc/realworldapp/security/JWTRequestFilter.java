@@ -14,7 +14,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
 
-import com.namnguyenmoihoc.realworldapp.entity.User;
+import com.namnguyenmoihoc.realworldapp.entity.Account;
 import com.namnguyenmoihoc.realworldapp.model.TokenPayload;
 import com.namnguyenmoihoc.realworldapp.repository.UserRepository;
 import com.namnguyenmoihoc.realworldapp.util.JWTTokenUtil;
@@ -62,10 +62,10 @@ public class JWTRequestFilter extends OncePerRequestFilter {
         }
 
         if (tokenPayload != null && SecurityContextHolder.getContext().getAuthentication() == null) {
-            Optional<User> userOptional = userRepository.findById(tokenPayload.getUserID());
+            Optional<Account> userOptional = userRepository.findById(tokenPayload.getUserID());
 
             if (userOptional.isPresent()) {
-                User user = userOptional.get();
+                Account user = userOptional.get();
 
                 if (jwtTokenUtil.validate(token, user)) {
                     List<SimpleGrantedAuthority> authorities = new ArrayList<>();

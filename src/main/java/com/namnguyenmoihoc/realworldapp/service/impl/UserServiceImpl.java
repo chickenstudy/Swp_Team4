@@ -17,7 +17,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.namnguyenmoihoc.realworldapp.entity.Roles;
-import com.namnguyenmoihoc.realworldapp.entity.User;
+import com.namnguyenmoihoc.realworldapp.entity.Account;
 import com.namnguyenmoihoc.realworldapp.exception.custom.CustomBadRequestException;
 import com.namnguyenmoihoc.realworldapp.exception.custom.CustomNotFoundException;
 import com.namnguyenmoihoc.realworldapp.model.profileAccount.ProfileDTOResponsive;
@@ -52,14 +52,14 @@ public class UserServiceImpl implements UserService {
         // TODO Auto-generated method stub
         UserDTOLoginRequest userDTOLoginRequest = userloginRequestMap.get("user");
 
-        Optional<User> userOptional = userRepository.findByEmail(userDTOLoginRequest.getEmail());
+        Optional<Account> userOptional = userRepository.findByEmail(userDTOLoginRequest.getEmail());
         if(!userOptional.isPresent()){
             throw new CustomNotFoundException(CustomError.builder().code("404").message("Your email is not registered").build());
         }
 
         boolean isAuthen = false;
         if (userOptional.isPresent()) {
-            User user = userOptional.get();
+            Account user = userOptional.get();
             if (passwordEncoder.matches(userDTOLoginRequest.getPassword(), user.getPassword())) {
                 isAuthen = true;
                 // System.out.println("Username and password correct");
@@ -84,18 +84,18 @@ public class UserServiceImpl implements UserService {
             userDTOCreateAccount.setPicture(new SerialBlob(new byte[0]));
         }
         */
-        Optional<User> userOptional = userRepository.findByEmail(userDTOCreateAccount.getEmail());
+        Optional<Account> userOptional = userRepository.findByEmail(userDTOCreateAccount.getEmail());
         if(userOptional.isPresent()){
             throw new CustomNotFoundException(CustomError.builder().code("404").message("Your email is registed").build());
         }
 
-        User user = UserMapper.toUser(userDTOCreateAccount);
+        Account user = UserMapper.toUser(userDTOCreateAccount);
         user.setPassword(passwordEncoder.encode(user.getPassword()));
         user = userRepository.save(user);
         return buidDTOResponse(user);
     }
 
-    private Map<String, UserDTOResponse> buidDTOResponse(User user) {
+    private Map<String, UserDTOResponse> buidDTOResponse(Account user) {
         Map<String, UserDTOResponse> wrapper = new HashMap<>();
         UserDTOResponse userDTOResponse = UserMapper.toUserDTOResponse(user);
 
@@ -112,7 +112,7 @@ public class UserServiceImpl implements UserService {
         Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         if (principal instanceof UserDetails) {
             String email = ((UserDetails) principal).getUsername();
-            User user = userRepository.findByEmail(email).get();
+            Account user = userRepository.findByEmail(email).get();
             return buidDTOResponse(user);
         }
         throw new CustomNotFoundException(CustomError.builder().code("404").message("User not found.").build());
@@ -134,25 +134,25 @@ public class UserServiceImpl implements UserService {
     @Override
     public Map<String, ProfileDTOResponsive> getProfile(int userid) throws CustomNotFoundException {
         // TODO Auto-generated method stub
-        Optional<User> userOptional = userRepository.findById(userid);
+        Optional<Account> userOptional = userRepository.findById(userid);
         if (userOptional.isEmpty()) {
             throw new CustomNotFoundException(CustomError.builder().code("404").message("User not found").build());
         }
         return buidProfileResponse(userOptional.get());
     }
 
-    private Map<String, ProfileDTOResponsive> buidProfileResponse(User user) {
+    private Map<String, ProfileDTOResponsive> buidProfileResponse(Account user) {
         Map<String, ProfileDTOResponsive> wrapper = new HashMap<>();
 
         ProfileDTOResponsive profileDTOResponsive = ProfileDTOResponsive.builder().address(user.getAddress())
                 .email(user.getEmail()).phonenumber(user.getPhonenumber())
                 .picture(user.getPicture()).sex(checkSex(user)).username(user.getUsername()).dob(user.getDob()).build();
-
+        
         wrapper.put("profile", profileDTOResponsive);
         return wrapper;
     }
 
-    private String checkSex(User user) {
+    private String checkSex(Account user) {
         String sexString = "Male";
         int sex = (int)(user.getSex());
         if (sex == 0) {
@@ -165,7 +165,7 @@ public class UserServiceImpl implements UserService {
     public Map<String, ProfileDTOResponsive> getUpdateAccount(UserDTOUpdateAccount userDTOUpdateAccount)
             throws CustomNotFoundException, IOException {
         // TODO Auto-generated method stub
-        Optional<User> userOptional = userRepository.findById(userDTOUpdateAccount.getId());
+        Optional<Account> userOptional = userRepository.findById(userDTOUpdateAccount.getId());
         
         if (userOptional.isEmpty()) {
             throw new CustomNotFoundException(CustomError.builder().code("404").message("User not found").build());
@@ -173,7 +173,7 @@ public class UserServiceImpl implements UserService {
 
         //return buidProfileResponse(userOptional.get());
 
-        User user = UserMapper.toUpdateUser(userDTOUpdateAccount);
+        Account user = UserMapper.toUpdateUser(userDTOUpdateAccount);
         System.out.println("profile:");
         System.out.println(user);
         user = userRepository.save(user);
