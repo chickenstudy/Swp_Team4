@@ -63,7 +63,8 @@ public class MovieServiceImpl implements MovieService {
     public Map<String, MovieDTOResponseCreate> getUpdateAccount(MovieDTOUpdate movieDTOUpdate)
             throws CustomNotFoundException {
         // TODO Auto-generated method stub
-        Optional<Movie> movieOptional = movieRepository.findById(movieDTOUpdate.getMovieid());
+        Optional<Movie> movieOptional = movieRepository.findByMovieid(movieDTOUpdate.getMovieid());
+        System.out.println(movieOptional);
 
         if (movieOptional.isEmpty()) {
             throw new CustomNotFoundException(CustomError.builder().code("404").message("Movie not found").build());

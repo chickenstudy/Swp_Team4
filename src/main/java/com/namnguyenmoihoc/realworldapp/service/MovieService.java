@@ -14,14 +14,14 @@ import com.namnguyenmoihoc.realworldapp.model.movie.MovieDTOUpdate;
 
 public interface MovieService {
 
-    Map<String, MovieDTOResponseCreate> createMovie(Map<String, MovieDTOCreate> movieDTOCreateMap) throws UnsupportedEncodingException;
+    public Map<String, MovieDTOResponseCreate> createMovie(Map<String, MovieDTOCreate> movieDTOCreateMap) throws UnsupportedEncodingException;
 
-    List<MovieDTOResponse> getListMovie();
+    public List<MovieDTOResponse> getListMovie();
 
-    Map<String, MovieDTOResponseCreate> getUpdateAccount(MovieDTOUpdate movieDTOUpdate) throws CustomNotFoundException;
+    public Map<String, MovieDTOResponseCreate> getUpdateAccount(MovieDTOUpdate movieDTOUpdate) throws CustomNotFoundException;
 
-    void getDeleteMovie(int movieId)throws CustomNotFoundException;
+    public void getDeleteMovie(int movieId)throws CustomNotFoundException;
 
-    Map<String, MovieDTOResponse> getMovieByID(int movieId) throws CustomNotFoundException;
+    public Map<String, MovieDTOResponse> getMovieByID(int movieId) throws CustomNotFoundException;
     
 }

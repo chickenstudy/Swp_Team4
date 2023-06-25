@@ -22,7 +22,7 @@ import lombok.Setter;
 @Table(name = "movie")
 public class Movie {
     @Id
-    private int movie_id;
+    private int movieid;
 
     private String author;
     private String name;

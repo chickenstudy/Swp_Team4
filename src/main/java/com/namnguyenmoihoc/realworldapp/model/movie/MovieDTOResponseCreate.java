@@ -24,7 +24,6 @@ public class MovieDTOResponseCreate {
     private String description;
     private String type;
     private String times;
-    public static void add(MovieDTOResponse movieDTOReponse) {
-    }
+    
 }
 
