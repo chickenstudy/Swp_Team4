@@ -19,6 +19,6 @@ public interface MovieService {
 
     Map<String, MovieDTOResponse> getUpdateAccount(MovieDTOUpdate movieDTOUpdate) throws CustomNotFoundException;
 
-    void getDeleteMovie(MovieDTODelete movieDTODelete)throws CustomNotFoundException;
+    void getDeleteMovie(int movieId)throws CustomNotFoundException;
     
 }

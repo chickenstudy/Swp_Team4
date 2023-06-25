@@ -74,6 +74,7 @@ public class MovieServiceImpl implements MovieService {
         movie = movieRepository.save(movie);
         return buildMovieResponse(movie);
     }
+    
 
     private Map<String, MovieDTOResponse> buildMovieResponse(Movie movie) {
         Map<String, MovieDTOResponse> wrapper = new HashMap<>();
@@ -88,8 +89,8 @@ public class MovieServiceImpl implements MovieService {
     }
 
     @Override
-    public void getDeleteMovie(MovieDTODelete movieDTODelete) throws CustomNotFoundException {
-        int movieId = movieDTODelete.getMovieid();
+    public void getDeleteMovie(int movieId) throws CustomNotFoundException {
+        
 
         Optional<Movie> movieOptional = movieRepository.findById(movieId);
 
@@ -99,4 +100,6 @@ public class MovieServiceImpl implements MovieService {
 
         movieRepository.deleteById(movieId);
     }
+
+    
 }
