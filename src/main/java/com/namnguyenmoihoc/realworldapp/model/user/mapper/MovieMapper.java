@@ -56,6 +56,8 @@ public class MovieMapper {
                 .show_date(movie.getShow_date()).build();
     }
 
+    
+
     public static Movie toMovieUpdate(MovieDTOUpdate movieDTOUpdate) {
         byte[] poster = Base64.getDecoder().decode(movieDTOUpdate.getPoster()); // string to byte[]
         byte[] banner = Base64.getDecoder().decode(movieDTOUpdate.getPoster());

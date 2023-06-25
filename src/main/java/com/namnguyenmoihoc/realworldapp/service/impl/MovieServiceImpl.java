@@ -33,8 +33,9 @@ public class MovieServiceImpl implements MovieService {
     private final MovieRepository movieRepository;
 
     @Override
-    public Map<String, MovieDTOResponseCreate> createMovie(Map<String, MovieDTOCreate> movieDTOCreateMap) throws UnsupportedEncodingException {
-    
+    public Map<String, MovieDTOResponseCreate> createMovie(Map<String, MovieDTOCreate> movieDTOCreateMap)
+            throws UnsupportedEncodingException {
+
         MovieDTOCreate movieDTOcreate = movieDTOCreateMap.get("movie");
         Movie movie = MovieMapper.toMovie(movieDTOcreate);
         movie = movieRepository.save(movie);
@@ -90,9 +91,8 @@ public class MovieServiceImpl implements MovieService {
         return wrapper;
     }
 
-     @Override
+    @Override
     public void getDeleteMovie(int movieId) throws CustomNotFoundException {
-        
 
         Optional<Movie> movieOptional = movieRepository.findById(movieId);
 
@@ -101,5 +101,22 @@ public class MovieServiceImpl implements MovieService {
         }
 
         movieRepository.deleteById(movieId);
+    }
+
+    @Override
+    public Map<String, MovieDTOResponseCreate> getMovieByID(int movieId) throws CustomNotFoundException {
+        Optional<Movie> movieOptional = movieRepository.findById(movieId);
+
+        if (movieOptional.isEmpty()) {
+            throw new CustomNotFoundException(CustomError.builder().code("404").message("Movie not found").build());
+        }
+        Movie movie = movieOptional.get();
+        // MovieDTOResponseCreate.add(MovieMapper.toMovieDTOReponse(movie));
+        MovieDTOResponseCreate movieDTO = MovieMapper.toMovieDTOReponseCreate(movie);
+        Map<String, MovieDTOResponseCreate> result = new HashMap<>();
+        result.put("movie", movieDTO);
+
+        return result;
+
     }
 }
