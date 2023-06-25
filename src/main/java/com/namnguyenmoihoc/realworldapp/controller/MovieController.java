@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.namnguyenmoihoc.realworldapp.exception.custom.CustomNotFoundException;
 import com.namnguyenmoihoc.realworldapp.model.movie.MovieDTOCreate;
-import com.namnguyenmoihoc.realworldapp.model.movie.MovieDTODelete;
+
 import com.namnguyenmoihoc.realworldapp.model.movie.MovieDTOResponse;
 import com.namnguyenmoihoc.realworldapp.model.movie.MovieDTOResponseCreate;
 import com.namnguyenmoihoc.realworldapp.model.movie.MovieDTOUpdate;
@@ -32,34 +32,38 @@ public class MovieController {
 
     @PostMapping("/create")
     public Map<String, MovieDTOResponseCreate> createMovie(
-        @RequestBody Map<String , MovieDTOCreate> movieDTOCreateMap) throws UnsupportedEncodingException{
+            @RequestBody Map<String, MovieDTOCreate> movieDTOCreateMap) throws UnsupportedEncodingException {
         System.out.println(movieDTOCreateMap);
         return movieService.createMovie(movieDTOCreateMap);
-    } 
+    }
 
     @GetMapping("/listMovie")
-    public List<MovieDTOResponse> getListMovie(){
+    public List<MovieDTOResponse> getListMovie() {
         return movieService.getListMovie();
     }
 
-
     @PutMapping("/updateMovie/{movieId}")
-    public Map<String, MovieDTOResponse> getUpdateMovie(@PathVariable int movieId,
+    public Map<String, MovieDTOResponseCreate> getUpdateMovie(@PathVariable int movieId,
             @RequestBody MovieDTOUpdate movieDTOUpdate)
             throws CustomNotFoundException {
         movieDTOUpdate.setMovieid(movieId);
         System.out.println(movieDTOUpdate);
         return movieService.getUpdateAccount(movieDTOUpdate);
     }
-    @DeleteMapping("/deletemovie/{movieid}")
-    public void getDeleteMovie(@PathVariable int movieId,
-            @RequestBody MovieDTODelete movieDTODelete) 
-            throws CustomNotFoundException {
-                movieDTODelete.setMovieid(movieId);
-              movieService.getDeleteMovie(movieDTODelete);
-    
-    
 
-            }
-    
+    @DeleteMapping("/deletemovie/{movieid}")
+    public void getDeleteMovie(@PathVariable(value = "movieid") int movieId)
+            throws CustomNotFoundException {
+
+        movieService.getDeleteMovie(movieId);
+
+    }
+
+    @GetMapping("/listMovie/{movieid}")
+    public Map<String, MovieDTOResponseCreate> getListMovieByID(@PathVariable(value = "movieid") int movieId)
+            throws CustomNotFoundException {
+        return movieService.getMovieByID(movieId);
+
+    }
+
 }
