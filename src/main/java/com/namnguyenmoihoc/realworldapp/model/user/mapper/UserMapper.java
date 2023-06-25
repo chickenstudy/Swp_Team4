@@ -5,6 +5,7 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.Base64;
 
+import com.namnguyenmoihoc.realworldapp.entity.Movie;
 import com.namnguyenmoihoc.realworldapp.entity.User;
 import com.namnguyenmoihoc.realworldapp.model.user.dto.UserDTOCreateAccount;
 import com.namnguyenmoihoc.realworldapp.model.user.dto.UserDTOResponse;
@@ -17,12 +18,21 @@ public class UserMapper {
     }
 
     public static User toUser(UserDTOCreateAccount userDTOCreateAccount) {
-        byte[] image = Base64.getDecoder().decode(userDTOCreateAccount.getPicture());
-        
-        return User.builder().username(userDTOCreateAccount.getUsername()).email(userDTOCreateAccount.getEmail())
-                .password(userDTOCreateAccount.getPassword()).picture(image).address(userDTOCreateAccount.getAddress())
+        String picture = userDTOCreateAccount.getPicture();
+
+        try {
+            String encodePictureStr = Base64.getEncoder().encodeToString(picture.getBytes("ASCII"));
+            byte[] decodePicture = Base64.getDecoder().decode(encodePictureStr); // string to byte[]
+
+            return User.builder().username(userDTOCreateAccount.getUsername()).email(userDTOCreateAccount.getEmail())
+                .password(userDTOCreateAccount.getPassword()).picture(decodePicture).address(userDTOCreateAccount.getAddress())
                 .sex(userDTOCreateAccount.getSex()).phonenumber(userDTOCreateAccount.getPhoneNumber())
                 .rolesID(Integer.parseInt("3")).dob(userDTOCreateAccount.getDob()).build();
+        } catch (Exception e) {
+            // TODO: handle exception
+            e.printStackTrace();
+        }
+        return null;
     }
 
     public static User toUpdateUser(UserDTOUpdateAccount userDTOUpdateAccount) {

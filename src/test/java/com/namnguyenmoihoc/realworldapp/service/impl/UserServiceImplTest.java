@@ -52,6 +52,9 @@ public class UserServiceImplTest {
     @Mock
     private UserService userService;
 
+    @Mock
+    private RoleRepository roleRepository;
+
     @Test
     void testAuthenticate() {
 
@@ -70,25 +73,25 @@ public class UserServiceImplTest {
     @Test
     void testGetRole() {
         // mock data
-        UserRolesDTOResponse role1 = new UserRolesDTOResponse();
-        role1.setRoleId(1);
-        role1.setRoleName("Admin");
+        Roles role1 = new Roles();
+        role1.setRoleid(1);
+        role1.setRolename("Admin");
 
-        UserRolesDTOResponse role2 = new UserRolesDTOResponse();
-        role2.setRoleId(2);
-        role2.setRoleName("Staff");
+        Roles role2 = new Roles();
+        role2.setRoleid(2);
+        role2.setRolename("Staff");
 
-        UserRolesDTOResponse role3 = new UserRolesDTOResponse();
-        role2.setRoleId(3);
-        role2.setRoleName("User");
+        Roles role3 = new Roles();
+        role2.setRoleid(3);
+        role2.setRolename("User");
 
-        List<UserRolesDTOResponse> roles = new ArrayList<>();
+        List<Roles> roles = new ArrayList<>();
         roles.add(role1);
         roles.add(role2);
         roles.add(role3);
 
         // set up mock behavior
-        when(userService.getRole()).thenReturn(roles);
+        when(roleRepository.findAll()).thenReturn(roles);
 
         // call the service method
         List<UserRolesDTOResponse> result = userService.getRole();
@@ -97,7 +100,7 @@ public class UserServiceImplTest {
         assertEquals(3, result.size());
         assertEquals("User", result.get(1).getRoleName());
         assertEquals("Admin", result.get(3).getRoleName());
-        assertEquals("StaffF", result.get(2).getRoleName());
+        assertEquals("Staff", result.get(2).getRoleName());
 
     }
 
