@@ -20,7 +20,7 @@ public interface UserService {
 
     public Map<String, UserDTOResponse> authenticate(Map<String, UserDTOLoginRequest> userloginRequestMap) throws CustomBadRequestException, CustomNotFoundException;
 
-    public Map<String, UserDTOResponse> registerUser(Map<String, UserDTOCreateAccount> userRegisterRequestMap) throws SerialException, SQLException, IOException;
+    public Map<String, UserDTOResponse> registerUser(Map<String, UserDTOCreateAccount> userRegisterRequestMap) throws SerialException, SQLException, IOException, CustomNotFoundException;
 
     public Map<String, UserDTOResponse> getCurrentUser() throws CustomNotFoundException;
 
@@ -29,5 +29,7 @@ public interface UserService {
     public Map<String, ProfileDTOResponsive> getProfile(int userid) throws CustomNotFoundException;
 
     public Map<String, ProfileDTOResponsive> getUpdateAccount(UserDTOUpdateAccount userDTOUpdateAccount) throws CustomNotFoundException, IOException;
+
+    //public Object findAll();
     
 }

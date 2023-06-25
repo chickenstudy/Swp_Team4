@@ -1,6 +1,8 @@
 package com.namnguyenmoihoc.realworldapp.service.impl;
 
+import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
+import java.util.Base64;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -32,7 +34,7 @@ public class MovieServiceImpl implements MovieService {
     private final MovieRepository movieRepository;
 
     @Override
-    public Map<String, MovieDTOResponseCreate> createMovie(Map<String, MovieDTOCreate> movieDTOCreateMap) {
+    public Map<String, MovieDTOResponseCreate> createMovie(Map<String, MovieDTOCreate> movieDTOCreateMap) throws UnsupportedEncodingException {
     
         MovieDTOCreate movieDTOcreate = movieDTOCreateMap.get("movie");
         Movie movie = MovieMapper.toMovie(movieDTOcreate);
@@ -76,10 +78,12 @@ public class MovieServiceImpl implements MovieService {
     }
 
     private Map<String, MovieDTOResponse> buildMovieResponse(Movie movie) {
+        String poster = Base64.getEncoder().encodeToString(movie.getPoster()); // byte to string
+        String banner = Base64.getEncoder().encodeToString(movie.getBanner());
         Map<String, MovieDTOResponse> wrapper = new HashMap<>();
 
-        MovieDTOResponse movieDTOResponse = MovieDTOResponse.builder().poster(movie.getPoster()).id(movie.getMovie_id())
-                .banner(movie.getBanner()).trailer(movie.getTrailer()).show_date(movie.getShow_date())
+        MovieDTOResponse movieDTOResponse = MovieDTOResponse.builder().poster(poster).id(movie.getMovie_id())
+                .banner(banner).trailer(movie.getTrailer()).show_date(movie.getShow_date())
                 .country(movie.getCountry()).name(movie.getName()).description(movie.getDescription())
                 .type(movie.getType()).times(movie.getTimes()).build();
 

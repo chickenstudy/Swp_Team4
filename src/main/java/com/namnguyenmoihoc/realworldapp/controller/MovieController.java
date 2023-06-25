@@ -1,5 +1,6 @@
 package com.namnguyenmoihoc.realworldapp.controller;
 
+import java.io.UnsupportedEncodingException;
 import java.util.List;
 import java.util.Map;
 
@@ -33,7 +34,8 @@ public class MovieController {
 
     @PostMapping("/create")
     public Map<String, MovieDTOResponseCreate> createMovie(
-        @RequestBody Map<String , MovieDTOCreate> movieDTOCreateMap){
+        @RequestBody Map<String , MovieDTOCreate> movieDTOCreateMap) throws UnsupportedEncodingException{
+        System.out.println(movieDTOCreateMap);
         return movieService.createMovie(movieDTOCreateMap);
     } 
 
@@ -57,9 +59,6 @@ public class MovieController {
             throws CustomNotFoundException {
                 movieDTODelete.setMovieid(movieId);
               movieService.getDeleteMovie(movieDTODelete);
-    
-    
-
             }
     
 }

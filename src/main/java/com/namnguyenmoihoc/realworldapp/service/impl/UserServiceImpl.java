@@ -75,7 +75,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public Map<String, UserDTOResponse> registerUser(Map<String, UserDTOCreateAccount> userRegisterRequestMap) throws SerialException, SQLException, IOException {
+    public Map<String, UserDTOResponse> registerUser(Map<String, UserDTOCreateAccount> userRegisterRequestMap) throws SerialException, SQLException, IOException, CustomNotFoundException {
         // TODO Auto-generated method stub
         UserDTOCreateAccount userDTOCreateAccount = userRegisterRequestMap.get("user");
 
@@ -84,6 +84,10 @@ public class UserServiceImpl implements UserService {
             userDTOCreateAccount.setPicture(new SerialBlob(new byte[0]));
         }
         */
+        Optional<User> userOptional = userRepository.findByEmail(userDTOCreateAccount.getEmail());
+        if(userOptional.isPresent()){
+            throw new CustomNotFoundException(CustomError.builder().code("404").message("Your email is registed").build());
+        }
 
         User user = UserMapper.toUser(userDTOCreateAccount);
         user.setPassword(passwordEncoder.encode(user.getPassword()));

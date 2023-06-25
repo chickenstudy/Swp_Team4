@@ -38,7 +38,7 @@ public class UserController {
 
     @PostMapping("/register")
     public Map<String, UserDTOResponse> register(
-        @RequestBody Map<String, UserDTOCreateAccount> userRegisterRequestMap) throws SQLException, IOException{
+        @RequestBody Map<String, UserDTOCreateAccount> userRegisterRequestMap) throws SQLException, IOException, CustomNotFoundException{
         System.out.println(userRegisterRequestMap);
             return userService.registerUser(userRegisterRequestMap);
     }
