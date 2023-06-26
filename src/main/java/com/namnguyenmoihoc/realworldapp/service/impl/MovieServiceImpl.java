@@ -2,7 +2,7 @@ package com.namnguyenmoihoc.realworldapp.service.impl;
 
 import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
-import java.util.Base64;
+
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -70,53 +70,11 @@ public class MovieServiceImpl implements MovieService {
             throw new CustomNotFoundException(CustomError.builder().code("404").message("Movie not found").build());
         }
 
-        // return buidProfileResponse(userOptional.get());
-
         Movie movie = movieOptional.get();
-        updateMovieDetails(movie, movieDTOUpdate);
+        MovieMapper.updateMovieDetails(movie, movieDTOUpdate);
 
         movie = movieRepository.save(movie);
-        return buildMovieResponse(movie);
-    }
-
-    private void updateMovieDetails(Movie movie, MovieDTOUpdate movieDTOUpdate) {
-        String posterStr = movieDTOUpdate.getPoster();
-        String bannerStr = movieDTOUpdate.getBanner();
-        try {
-            String encodePosterStr = Base64.getEncoder().encodeToString(posterStr.getBytes("ASCII"));
-            String encodeBannerStr = Base64.getEncoder().encodeToString(bannerStr.getBytes("ASCII"));
-            byte[] decodePoster = Base64.getDecoder().decode(encodePosterStr); // string to byte[]
-            byte[] decodeBanner = Base64.getDecoder().decode(encodeBannerStr);
-
-            movie.setBanner(decodeBanner);
-            movie.setPoster(decodePoster);
-            movie.setTrailer(movieDTOUpdate.getTrailer());
-            movie.setShow_date(movieDTOUpdate.getShow_date());
-            movie.setCountry(movieDTOUpdate.getCountry());
-            movie.setName(movieDTOUpdate.getName());
-            movie.setDescription(movieDTOUpdate.getDescription());
-            movie.setType(movieDTOUpdate.getType());
-            movie.setTimes(movieDTOUpdate.getTimes());
-        } catch (Exception e) {
-
-            e.printStackTrace();
-
-        }
-
-    }
-
-    private Map<String, MovieDTOResponseCreate> buildMovieResponse(Movie movie) {
-        String poster = Base64.getEncoder().encodeToString(movie.getPoster()); // byte to string
-        String banner = Base64.getEncoder().encodeToString(movie.getBanner());
-        Map<String, MovieDTOResponseCreate> wrapper = new HashMap<>();
-
-        MovieDTOResponseCreate movieDTOResponse = MovieDTOResponseCreate.builder().poster(poster)
-                .banner(banner).trailer(movie.getTrailer()).show_date(movie.getShow_date())
-                .country(movie.getCountry()).name(movie.getName()).description(movie.getDescription())
-                .type(movie.getType()).times(movie.getTimes()).build();
-
-        wrapper.put("update:", movieDTOResponse);
-        return wrapper;
+        return MovieMapper.buildMovieResponse(movie);
     }
 
     @Override
@@ -139,7 +97,7 @@ public class MovieServiceImpl implements MovieService {
             throw new CustomNotFoundException(CustomError.builder().code("404").message("Movie not found").build());
         }
         Movie movie = movieOptional.get();
-        // MovieDTOResponseCreate.add(MovieMapper.toMovieDTOReponse(movie));
+
         MovieDTOResponse movieDTO = MovieMapper.toMovieDTOReponse(movie);
         Map<String, MovieDTOResponse> result = new HashMap<>();
         result.put("movie", movieDTO);
@@ -158,7 +116,7 @@ public class MovieServiceImpl implements MovieService {
             if (movie.getName().toLowerCase().contains(name.toLowerCase())) {
 
                 searchResults.add(MovieMapper.toMovieDTOReponse(movie));
-                
+
             }
 
         }
