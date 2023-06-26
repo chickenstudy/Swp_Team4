@@ -7,18 +7,19 @@ import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import Button from "react-bootstrap/Button";
 import Carousel from "react-bootstrap/Carousel";
+import { AiOutlineFieldTime } from "react-icons/ai";
+
+import axios from "axios";
 
 const DetailMovie = () => {
-  const { movieid } = useParams();
-  const [data, setData] = useState({});
+  const { id } = useParams();
+  const [data, setData] = useState([]);
 
   useEffect(() => {
-    fetch("http://localhost:8080/api/movie/listMovie/" + movieid)
+    axios
+      .get("http://localhost:8080/api/movie/listMovie/" + id)
       .then((res) => {
-        return res.json();
-      })
-      .then((resp) => {
-        setData(resp);
+        setData(res.data);
       })
       .catch((err) => {
         console.log(err.message);
@@ -34,11 +35,10 @@ const DetailMovie = () => {
               <div className="d-flex justify-content-center ">
                 <img
                   className="bannerImg"
-                  src="https://media.lottecinemavn.com/Media/MovieFile/MovieImg/202305/11108_105_100007.jpg"
+                  src={data?.movie?.banner}
                 />
               </div>
             </Carousel.Item>
-            
           </Carousel>
         </div>
       </div>
@@ -49,10 +49,10 @@ const DetailMovie = () => {
             <div className="wide-top d-flex">
               <div className="thumb">
                 <span className="img">
-                  <img src="https://media.lottecinemavn.com/Media/MovieFile/MovieImg/202305/11108_103_100004.jpg" />
+                  <img src={data?.movie?.poster} />
                 </span>
                 <Button
-                  href="https://www.youtube.com/watch?v=itnqEauWQZM&ab_channel=ParamountPictures"
+                  href={data?.movie?.trailer}
                   className="btn_reverse Lang-LBL0000 d-block justify-content-center my-2 rounded-0"
                   style={{
                     width: "175px",
@@ -60,23 +60,27 @@ const DetailMovie = () => {
                   }}
                   target="_blank"
                   rel="noopener noreferrer"
-                  variant="dark"
-                >
+                  variant="dark">
                   View trailer
                 </Button>
               </div>
               <div className="info_main">
-                <h2 className="movie_title">TRANSFORMERS</h2>
-                <p>127 phút</p>
+                <h2 className="movie_title">{data?.movie?.name}</h2>
+                <p><AiOutlineFieldTime size={26}/> {data?.movie?.times}</p>
+                <p><strong>Thể loại</strong> {data?.movie?.type}</p>
+                <p><strong>Quốc gia</strong> {data?.movie?.country}</p>
+                <p><strong>Ngày công chiếu </strong>{data?.movie?.show_date}</p>
               </div>
             </div>
             <div className="summary my-4">
               <h3>Summary</h3>
-              <p>tóm tắt phim</p>
+              <p className="my-2">{data?.movie?.description}</p>
             </div>
-            <Link to="/listmovie" className="btn btn-danger text-end mx-3">
-              Back to list
-            </Link>
+            <div className="text-end my-2">
+              <Link to="/listmovie" className="btn btn-danger">
+                Back to list
+              </Link>
+            </div>
           </Col>
           <Col xs={2}></Col>
         </Row>

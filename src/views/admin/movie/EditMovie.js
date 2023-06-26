@@ -3,30 +3,11 @@ import { Link, useNavigate, useParams } from "react-router-dom";
 import axios from "axios";
 
 export default function EditMovie() {
-  const { movieid } = useParams();
+  const { id } = useParams();
+  const navigate = useNavigate();
+  const [data, setData] = useState([]);
 
-  useEffect(() => {
-    axios
-      .get(`http://localhost:8000/movie/${movieid}`)
-      .then((res) => {
-        const resp = res.data;
-        setId(resp.id);
-        setName(resp.name);
-        setPoster(resp.poster);
-        setBanner(resp.banner);
-        setTimes(resp.times);
-        setCountry(resp.country);
-        setDescription(resp.description);
-        setType(resp.type);
-        setTrailer(resp.trailer);
-        setShowDate(resp.show_date);
-      })
-      .catch((err) => {
-        console.log(err.message);
-      });
-  }, []);
-
-  const [id, setId] = useState("");
+  // const [id, setId] = useState("");
   const [name, setName] = useState("");
   const [trailer, setTrailer] = useState("");
   const [poster, setPoster] = useState("");
@@ -34,13 +15,38 @@ export default function EditMovie() {
   const [times, setTimes] = useState("");
   const [type, setType] = useState("");
   const [country, setCountry] = useState("");
-  const [showdate, setShowDate] = useState("");
+  const [showDate, setShowDate] = useState("");
   const [description, setDescription] = useState("");
+
   const [validation, valchange] = useState(false);
 
-  const navigate = useNavigate();
+  useEffect(() => {
+    if (data.movie) {
+      setName(data.movie.name || "");
+      setTrailer(data.movie.trailer || "");
+      setPoster(data.movie.poster || "");
+      setBanner(data.movie.banner || "");
+      setTimes(data.movie.times || "");
+      setType(data.movie.type || "");
+      setCountry(data.movie.country || "");
+      setShowDate(data.movie.show_date || "");
+      setDescription(data.movie.description || "");
+    }
+  }, [data]);
 
-  const handlesubmit = (e) => {
+  useEffect(() => {
+    axios
+      .get("http://localhost:8080/api/movie/listMovie/" + id)
+      .then((res) => {
+        setData(res.data);
+        console.log(data);
+      })
+      .catch((err) => {
+        console.log(err.message);
+      });
+  }, []);
+
+  const handleSubmit = (e) => {
     e.preventDefault();
     const data = {
       id,
@@ -51,14 +57,12 @@ export default function EditMovie() {
       times,
       type,
       country,
-      showdate,
+      showDate,
       description,
     };
 
     axios
-      .put(`http://localhost:8080/api/movie/updateMovie/${movieid}`, data, {
-        headers: { "content-type": "application/json" },
-      })
+      .put(`http://localhost:8080/api/movie/updateMovie/${id}`, data)
       .then((res) => {
         alert("Saved successfully.");
         navigate("/listmovie");
@@ -95,7 +99,7 @@ export default function EditMovie() {
       <div>
         <div className="row">
           <div className="offset-lg-3 col-lg-6">
-            <form className="container" onSubmit={handlesubmit}>
+            <form className="container" onSubmit={handleSubmit}>
               <div className="card" style={{ textAlign: "left" }}>
                 <div className="card-title d-flex justify-content-center my-3">
                   <h2>Edit Movie</h2>
@@ -106,12 +110,10 @@ export default function EditMovie() {
                       <div className="form-group">
                         <label>Name</label>
                         <input
-                          required
                           value={name}
                           onMouseDown={(e) => valchange(true)}
                           onChange={(e) => setName(e.target.value)}
-                          className="form-control"
-                        ></input>
+                          className="form-control"></input>
                       </div>
                     </div>
 
@@ -119,9 +121,10 @@ export default function EditMovie() {
                       <div className="form-group">
                         <label>Trailer</label>
                         <input
+                          value={trailer}
                           onChange={(e) => setTrailer(e.target.value)}
                           className="form-control"
-                        ></input>
+                        />
                       </div>
                     </div>
 
@@ -134,10 +137,14 @@ export default function EditMovie() {
                             accept="image/*"
                             onChange={handlePosterChange}
                           />
-                          {poster && <p>Selected File:</p>}
+                          {<p>Selected File:</p>}
                         </div>
                         {poster && (
-                          <img src={poster} style={{ width: "110px" }} alt="Poster" />
+                          <img
+                            src={poster}
+                            style={{ width: "130px" }}
+                            alt="Poster"
+                          />
                         )}
                       </div>
                     </div>
@@ -154,7 +161,11 @@ export default function EditMovie() {
                           {banner && <p>Selected File:</p>}
                         </div>
                         {banner && (
-                          <img src={banner} style={{ width: "110px" }} alt="Banner" />
+                          <img
+                            src={banner}
+                            style={{ width: "300px" }}
+                            alt="Banner"
+                          />
                         )}
                       </div>
                     </div>
@@ -166,7 +177,7 @@ export default function EditMovie() {
                           value={times}
                           onChange={(e) => setTimes(e.target.value)}
                           className="form-control"
-                        ></input>
+                        />
                       </div>
                     </div>
 
@@ -177,7 +188,7 @@ export default function EditMovie() {
                           value={type}
                           onChange={(e) => setType(e.target.value)}
                           className="form-control"
-                        ></input>
+                        />
                       </div>
                     </div>
 
@@ -188,7 +199,7 @@ export default function EditMovie() {
                           value={country}
                           onChange={(e) => setCountry(e.target.value)}
                           className="form-control"
-                        ></input>
+                        />
                       </div>
                     </div>
 
@@ -196,21 +207,22 @@ export default function EditMovie() {
                       <div className="form-group">
                         <label>Show Date</label>
                         <input
-                          value={showdate}
+                          type="date"
+                          value={showDate}
                           onChange={(e) => setShowDate(e.target.value)}
                           className="form-control"
-                        ></input>
+                        />
                       </div>
                     </div>
 
-                    <div className="col-lg-12">
+                    <div className="col-lg-12 my-3">
                       <div className="form-group">
                         <label>Description</label>
-                        <input
+                        <textarea rows="6"
                           value={description}
                           onChange={(e) => setDescription(e.target.value)}
                           className="form-control"
-                        ></input>
+                        />
                       </div>
                     </div>
 
