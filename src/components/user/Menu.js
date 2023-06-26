@@ -5,13 +5,21 @@ import { ApplicationContext } from "../../App";
 import SignIn from "../../views/auth/SignIn";
 import SignUp from "../../views/auth/SignUp";
 import Account from "../../views/auth/Account";
+import { Container, Image } from "react-bootstrap";
+import logo from "../user/Logo_Team.jpg";
 
 export default function Menu() {
   const { user } = React.useContext(ApplicationContext);
   return (
     <div id="container" style={{ backgroundColor: "rgb(242, 196, 141)" }}>
       <div className="row">
-        <div className="col" style={{ textAlign: "center" }}>
+        <div
+          className="col"
+          style={{ textAlign: "center", paddingTop: "12px" }}
+        >
+          {/* <span>
+            <Image src={logo} style={{ width: "50px" }}></Image>
+          </span> */}
           <span>
             <Link to="/giftshop">GIFT SHOP</Link>
           </span>
@@ -28,16 +36,16 @@ export default function Menu() {
             <Link to="/promotion">PROMOTION</Link>
           </span>
         </div>
-        <div class="col-4"></div>
+        <div className="col-4" style={{ textAlign: "center" }}></div>
         <div className="col-4" style={{ textAlign: "right" }}>
           {Array.isArray(user) && user.length == 0 ? (
-            <div>
-              <SignIn></SignIn>|<SignUp></SignUp>
-            </div>
+            <Container style={{ paddingTop: "5px" }}>
+              <SignIn></SignIn> | <SignUp></SignUp>
+            </Container>
           ) : (
-            <span>
+            <Container style={{ paddingTop: "5px" }}>
               <Account></Account>
-            </span>
+            </Container>
           )}
         </div>
       </div>

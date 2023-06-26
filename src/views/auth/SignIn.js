@@ -35,7 +35,7 @@ export default function SignIn() {
 
       const { data } = response;
       const user = data.user;
-      console.log(user.token);
+      localStorage.setItem("token", data.token);
 
       if (!user) {
         throw new Error("Incorrect email or password");
@@ -92,7 +92,10 @@ export default function SignIn() {
               />
             </Form.Group>
 
-            <Form.Group controlId="formBasicPassword">
+            <Form.Group
+              controlId="formBasicPassword"
+              style={{ paddingBottom: "20px" }}
+            >
               <Form.Label>Password</Form.Label>
               <Form.Control
                 type="password"
