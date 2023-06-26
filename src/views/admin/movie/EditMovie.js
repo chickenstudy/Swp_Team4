@@ -215,10 +215,10 @@ export default function EditMovie() {
                       </div>
                     </div>
 
-                    <div className="col-lg-12">
+                    <div className="col-lg-12 my-3">
                       <div className="form-group">
                         <label>Description</label>
-                        <input
+                        <textarea rows="6"
                           value={description}
                           onChange={(e) => setDescription(e.target.value)}
                           className="form-control"

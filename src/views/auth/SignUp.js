@@ -13,8 +13,8 @@ export default function SignUp() {
   const [address, setAddress] = useState("");
   const [picture, setPicture] = useState(null);
   const [username, setUsername] = useState("");
-  const [phonenumber, setPhonenumber] = useState("");
-  const [Dob, setDob] = useState("");
+  const [phoneNumber, setPhonenumber] = useState("");
+  const [dob, setDob] = useState("");
   const [error, setError] = useState("");
   const [showModal, setShowModal] = useState(false);
 
@@ -35,19 +35,14 @@ export default function SignUp() {
           address,
           picture,
           username,
-          phonenumber,
-          Dob,
+          phoneNumber,
+          dob,
         },
       };
 
       console.log(data);
       axios
-        .post("http://localhost:8080/api/register", data, {
-          headers: {
-            "Access-Control-Allow-Origin": "*",
-            "Content-Type": "application/json",
-          },
-        })
+        .post("http://localhost:8080/api/register", data)
         .then((response) => {
           console.log(response);
           navigate("/");
@@ -185,7 +180,7 @@ export default function SignUp() {
               <Form.Control
                 type="text"
                 placeholder="Enter your phone number "
-                value={phonenumber}
+                value={phoneNumber}
                 onChange={(e) => setPhonenumber(e.target.value)}
               />
             </Form.Group>
@@ -195,7 +190,7 @@ export default function SignUp() {
               <Form.Control
                 type="date"
                 placeholder="Date of Birth"
-                value={Dob}
+                value={dob}
                 onChange={(e) => setDob(e.target.value)}
               />
             </Form.Group>
