@@ -24,7 +24,7 @@ export default function MovieCard({ title, image, description }) {
         </a>
       </span>
       <div class="list_text">
-        <dt>{title}</dt>
+      <dt style={{ borderBottom: "1px solid #ddd" }}>{title}</dt>
         <dd>{description}</dd>
       </div>
     </div>

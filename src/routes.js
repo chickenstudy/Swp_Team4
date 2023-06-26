@@ -2,7 +2,6 @@ import UserLayout from "./layouts/UserLayout";
 import HeaderOnly from "./layouts/HeaderOnly";
 import AdminLayout from "./layouts/AdminLayout";
 // ---------- USER ----------
-
 import Cinemas from "./views/user/cinemas/Cinemas";
 import Movies from "./views/user/movies/Movies";
 import Booking from "./views/user/booking/Booking";
@@ -26,13 +25,11 @@ export const UserRoutes = [
     component: Movies,
     layout: UserLayout,
   },
-
   {
     path: "/cinemas",
     component: Cinemas,
     layout: UserLayout,
   },
-
   {
     path: "/booking",
     component: Booking,

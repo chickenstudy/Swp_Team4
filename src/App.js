@@ -2,10 +2,26 @@ import React, { Fragment } from "react";
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import { UserRoutes } from "./routes";
 import { AdminRoutes } from "./routes";
+import { useEffect } from "react";
+import axios from "axios";
 
 export const ApplicationContext = React.createContext([]);
 
 function App() {
+  useEffect(() => {
+    const jwt = sessionStorage.getItem("token");
+    if (jwt != null) {
+      axios
+        .post("http://localhost:8080/api/bootstrap", {
+          headers: {
+            Authorization: `Bearer ${jwt}`,
+          },
+        })
+        .then((response) => setUser(response.data.user))
+        .catch((error) => console.log(error));
+    }
+  }, []);
+
   const [user, setUser] = React.useState([]);
 
   const makeSignIn = (user) => {
