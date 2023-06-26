@@ -111,7 +111,7 @@ const AddNewMovie = () => {
                     </div>
                   </div>
 
-                  <div className="col-lg-12 my-3">
+                  <div className="col-lg-12 my-1">
                     <div className="form-group">
                       <label>Poster</label>
                       <div>
@@ -119,16 +119,16 @@ const AddNewMovie = () => {
                           type="file"
                           accept="image/*"
                           onChange={handlePosterChange}
-                        />{" "}
+                        />
                         {poster && <p>Selected File:</p>}
                       </div>
                       {poster && (
-                        <img src={poster} style={{ width: "110px" }} />
+                        <img src={poster} style={{ width: "150px" }} />
                       )}
                     </div>
                   </div>
 
-                  <div className="col-lg-12 my-3">
+                  <div className="col-lg-12 my-1">
                     <div className="form-group">
                       <label>Banner</label>
                       <div>
@@ -140,7 +140,7 @@ const AddNewMovie = () => {
                         {banner && <p>Selected File:</p>}
                       </div>
                       {banner && (
-                        <img src={banner} style={{ width: "110px" }} />
+                        <img src={banner} style={{ width: "310px" }} />
                       )}
                     </div>
                   </div>
