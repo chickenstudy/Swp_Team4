@@ -16,15 +16,12 @@ export default function MovieCard({ title, image, description }) {
     // </Card>
     <div className="movie_box">
       <span class=" img">
-        <a href="/listmovie" >
-          <img style={{width:'100%'}}
-            src="https://media.lottecinemavn.com/Media/MovieFile/MovieImg/202306/11185_103_100001.jpg"
-            alt="Movie Poster"
-          />
+        <a href="/listmovie">
+          <img style={{ width: "100%" }} src={image} alt="Movie Poster" />
         </a>
       </span>
       <div class="list_text">
-      <dt style={{ borderBottom: "1px solid #ddd" }}>{title}</dt>
+        <dt style={{ borderBottom: "1px solid #ddd" }}>{title}</dt>
         <dd>{description}</dd>
       </div>
     </div>
