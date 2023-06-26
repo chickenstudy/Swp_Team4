@@ -13,15 +13,9 @@ export default function Menu() {
   return (
     <div id="container" style={{ backgroundColor: "rgb(242, 196, 141)" }}>
       <div className="row">
-        <div
-          className="col"
-          style={{ textAlign: "center", paddingTop: "12px" }}
-        >
-          {/* <span>
-            <Image src={logo} style={{ width: "50px" }}></Image>
-          </span> */}
+        <div className="col" style={{ textAlign: "left", paddingTop: "1px" }}>
           <span>
-            <Link to="/giftshop">GIFT SHOP</Link>
+            <Image src={logo} style={{ width: "50px" }}></Image>
           </span>
           <span>
             <Link to="/booking">BOOKING</Link>
@@ -31,9 +25,6 @@ export default function Menu() {
           </span>
           <span>
             <Link to="/cinemas">CINEMAS</Link>
-          </span>
-          <span>
-            <Link to="/promotion">PROMOTION</Link>
           </span>
         </div>
         <div className="col-4" style={{ textAlign: "center" }}></div>

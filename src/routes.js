@@ -2,10 +2,8 @@ import UserLayout from "./layouts/UserLayout";
 import HeaderOnly from "./layouts/HeaderOnly";
 import AdminLayout from "./layouts/AdminLayout";
 // ---------- USER ----------
-import GiftShop from "./views/user/giftshop/GiftShop";
 import Cinemas from "./views/user/cinemas/Cinemas";
 import Movies from "./views/user/movies/Movies";
-import Promotion from "./views/user/promotion/Promotion";
 import Booking from "./views/user/booking/Booking";
 import SubBooking from "./views/user/booking/SubBooking";
 import Showtimes from "./views/user/booking/Showtimes";
@@ -27,18 +25,8 @@ export const UserRoutes = [
     layout: UserLayout,
   },
   {
-    path: "/giftshop",
-    component: GiftShop,
-    layout: UserLayout,
-  },
-  {
     path: "/cinemas",
     component: Cinemas,
-    layout: UserLayout,
-  },
-  {
-    path: "/promotion",
-    component: Promotion,
     layout: UserLayout,
   },
   {
