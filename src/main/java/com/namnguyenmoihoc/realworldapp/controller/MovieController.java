@@ -50,7 +50,7 @@ public class MovieController {
             throws CustomNotFoundException {
         movieDTOUpdate.setMovieid(movieId);
         System.out.println(movieDTOUpdate);
-        return movieService.getUpdateAccount(movieDTOUpdate);
+        return movieService.getUpdateMovie(movieDTOUpdate);
     }
 
     @DeleteMapping("/deletemovie/{movieid}")
@@ -66,4 +66,11 @@ public class MovieController {
             throws CustomNotFoundException {
         return movieService.getMovieByID(movieId);
     }
+
+
+    @GetMapping("/searchMovie/{name}")
+    public List<MovieDTOResponse> searchMovieByName(@PathVariable(value = "name") String name)  throws CustomNotFoundException {
+        return movieService.searchMovieByName(name);
+    }
+
 }

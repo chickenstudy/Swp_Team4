@@ -18,10 +18,13 @@ public interface MovieService {
 
     public List<MovieDTOResponse> getListMovie();
 
-    public Map<String, MovieDTOResponseCreate> getUpdateAccount(MovieDTOUpdate movieDTOUpdate) throws CustomNotFoundException;
+    public Map<String, MovieDTOResponseCreate> getUpdateMovie(MovieDTOUpdate movieDTOUpdate) throws CustomNotFoundException;
 
     public void getDeleteMovie(int movieId)throws CustomNotFoundException;
 
     public Map<String, MovieDTOResponse> getMovieByID(int movieId) throws CustomNotFoundException;
+
+    public List<MovieDTOResponse> searchMovieByName(String name)throws CustomNotFoundException;
+    
     
 }

@@ -8,7 +8,7 @@ import com.namnguyenmoihoc.realworldapp.entity.Movie;
 import com.namnguyenmoihoc.realworldapp.model.movie.MovieDTOCreate;
 import com.namnguyenmoihoc.realworldapp.model.movie.MovieDTOResponse;
 import com.namnguyenmoihoc.realworldapp.model.movie.MovieDTOResponseCreate;
-import com.namnguyenmoihoc.realworldapp.model.movie.MovieDTOUpdate;
+
 
 public class MovieMapper {
     public static Movie toMovie(MovieDTOCreate movieDTOcreate) throws UnsupportedEncodingException {
@@ -56,31 +56,7 @@ public class MovieMapper {
                 .times(movie.getTimes()).description(movie.getDescription()).country(movie.getCountry())
                 .show_date(movie.getShow_date()).build();
     }
-
-    public static Movie toMovieUpdate(MovieDTOUpdate movieDTOUpdate) {
-        String posterStr = movieDTOUpdate.getPoster();
-        String bannerStr = movieDTOUpdate.getBanner();
-
-        try {
-            String encodePosterStr = Base64.getEncoder().encodeToString(posterStr.getBytes("ASCII"));
-            String encodeBannerStr = Base64.getEncoder().encodeToString(bannerStr.getBytes("ASCII"));
-            byte[] decodePoster = Base64.getDecoder().decode(encodePosterStr); // string to byte[]
-            byte[] decodeBanner = Base64.getDecoder().decode(encodeBannerStr);
-
-            Movie movie = Movie.builder().name(movieDTOUpdate.getName()).type(movieDTOUpdate.getType())
-                    .poster(decodePoster).banner(decodeBanner)
-                    .trailer(movieDTOUpdate.getTrailer())
-                    .times(movieDTOUpdate.getTimes()).country(movieDTOUpdate.getCountry())
-                    .show_date(movieDTOUpdate.getShow_date())
-                    .description(movieDTOUpdate.getDescription()).build();
-            return movie;
-        } catch (Exception e) {
-            // TODO: handle exception
-            e.printStackTrace();
-
-        }
-        return null;
-    }
+   
 
     public static MovieDTOResponseCreate toMovieDTOReponseCreate(Movie movie) {
         String poster = Base64.getEncoder().encodeToString(movie.getPoster()); // byte to string

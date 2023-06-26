@@ -48,7 +48,7 @@ public class MovieServiceImpl implements MovieService {
 
     @Override
     public List<MovieDTOResponse> getListMovie() {
-        // TODO Auto-generated method stub
+
         List<Movie> listMovie = movieRepository.findAll();
 
         List<MovieDTOResponse> movieDTOResponses = new ArrayList<>();
@@ -60,9 +60,9 @@ public class MovieServiceImpl implements MovieService {
     }
 
     @Override
-    public Map<String, MovieDTOResponseCreate> getUpdateAccount(MovieDTOUpdate movieDTOUpdate)
+    public Map<String, MovieDTOResponseCreate> getUpdateMovie(MovieDTOUpdate movieDTOUpdate)
             throws CustomNotFoundException {
-        // TODO Auto-generated method stub
+
         Optional<Movie> movieOptional = movieRepository.findByMovieid(movieDTOUpdate.getMovieid());
         System.out.println(movieOptional);
 
@@ -72,10 +72,37 @@ public class MovieServiceImpl implements MovieService {
 
         // return buidProfileResponse(userOptional.get());
 
-        Movie movie = MovieMapper.toMovieUpdate(movieDTOUpdate);
-        System.out.println("update:");
+        Movie movie = movieOptional.get();
+        updateMovieDetails(movie, movieDTOUpdate);
+
         movie = movieRepository.save(movie);
         return buildMovieResponse(movie);
+    }
+
+    private void updateMovieDetails(Movie movie, MovieDTOUpdate movieDTOUpdate) {
+        String posterStr = movieDTOUpdate.getPoster();
+        String bannerStr = movieDTOUpdate.getBanner();
+        try {
+            String encodePosterStr = Base64.getEncoder().encodeToString(posterStr.getBytes("ASCII"));
+            String encodeBannerStr = Base64.getEncoder().encodeToString(bannerStr.getBytes("ASCII"));
+            byte[] decodePoster = Base64.getDecoder().decode(encodePosterStr); // string to byte[]
+            byte[] decodeBanner = Base64.getDecoder().decode(encodeBannerStr);
+
+            movie.setBanner(decodeBanner);
+            movie.setPoster(decodePoster);
+            movie.setTrailer(movieDTOUpdate.getTrailer());
+            movie.setShow_date(movieDTOUpdate.getShow_date());
+            movie.setCountry(movieDTOUpdate.getCountry());
+            movie.setName(movieDTOUpdate.getName());
+            movie.setDescription(movieDTOUpdate.getDescription());
+            movie.setType(movieDTOUpdate.getType());
+            movie.setTimes(movieDTOUpdate.getTimes());
+        } catch (Exception e) {
+
+            e.printStackTrace();
+
+        }
+
     }
 
     private Map<String, MovieDTOResponseCreate> buildMovieResponse(Movie movie) {
@@ -118,6 +145,28 @@ public class MovieServiceImpl implements MovieService {
         result.put("movie", movieDTO);
 
         return result;
+
+    }
+
+    @Override
+    public List<MovieDTOResponse> searchMovieByName(String name) throws CustomNotFoundException {
+        List<Movie> movies = movieRepository.findAll();
+
+        List<MovieDTOResponse> searchResults = new ArrayList<>();
+
+        for (Movie movie : movies) {
+            if (movie.getName().toLowerCase().contains(name.toLowerCase())) {
+
+                searchResults.add(MovieMapper.toMovieDTOReponse(movie));
+                
+            }
+
+        }
+        if (searchResults.isEmpty()) {
+            throw new CustomNotFoundException(CustomError.builder().message("Not found movie").build());
+        }
+
+        return searchResults;
 
     }
 }
