@@ -1,6 +1,8 @@
 import React, { useState } from "react";
 import { Modal, Form, Button } from "react-bootstrap";
 import axios from "axios";
+import { Redirect } from "react-router-dom";
+
 import { useNavigate } from "react-router-dom";
 import { InputGroup, FormControl } from "react-bootstrap";
 import "../../styles/SignUp.css";
@@ -40,12 +42,14 @@ export default function SignUp() {
         },
       };
 
-      console.log(data);
       axios
         .post("http://localhost:8080/api/register", data)
         .then((response) => {
           console.log(response);
-          navigate("/");
+
+          if (response.status === 200) {
+            window.location.href = "/";
+          }
         })
         .catch((error) => {
           console.error(error);
