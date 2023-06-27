@@ -9,7 +9,7 @@ import com.namnguyenmoihoc.realworldapp.model.banner.BannerDTOCreate;
 import com.namnguyenmoihoc.realworldapp.model.banner.BannerDTOResponse;
 import com.namnguyenmoihoc.realworldapp.model.banner.BannerDTOResponseCreate;
 import com.namnguyenmoihoc.realworldapp.model.banner.BannerDTOUpdate;
-import com.namnguyenmoihoc.realworldapp.model.movie.MovieDTOResponse;
+
 
 public interface BannerService {
     Map<String, BannerDTOResponseCreate> createBanner(Map<String, BannerDTOCreate> bannerDTOCreateMap)

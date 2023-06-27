@@ -1,19 +1,19 @@
-package com.namnguyenmoihoc.realworldapp.model.user.dto;
-
+package com.namnguyenmoihoc.realworldapp.model.staff;
 
 import java.util.Date;
 
-
+import lombok.AllArgsConstructor;
 import lombok.Builder;
-import lombok.Data;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-@Data
-@Builder
 @Getter
 @Setter
-public class UserDTOUpdateAccount {
+@Builder
+@AllArgsConstructor
+@NoArgsConstructor
+public class StaffDTOCreate {
     private int id;
     private String username;
     private String email;
@@ -24,4 +24,6 @@ public class UserDTOUpdateAccount {
     private String picture;
     private String phonenumber;
     private Date dob;
+    
 }
+

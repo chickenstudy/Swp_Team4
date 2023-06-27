@@ -4,7 +4,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.namnguyenmoihoc.realworldapp.exception.custom.CustomNotFoundException;
-import com.namnguyenmoihoc.realworldapp.model.profileAccount.ProfileDTOResponsive;
+import com.namnguyenmoihoc.realworldapp.model.profileAccount.ProfileDTOResponse;
 import com.namnguyenmoihoc.realworldapp.model.user.dto.UserDTOUpdateAccount;
 import com.namnguyenmoihoc.realworldapp.service.UserService;
 
@@ -29,13 +29,13 @@ public class ProfileController {
     private final UserService userService;
 
     @GetMapping("/{userid}")
-    public Map<String, ProfileDTOResponsive> getProfile(@PathVariable("userid") int userid)
+    public Map<String, ProfileDTOResponse> getProfile(@PathVariable("userid") int userid)
             throws CustomNotFoundException {
         return userService.getProfile(userid);
     }
 
     @PutMapping("/{userid}")
-    public Map<String, ProfileDTOResponsive> getUpdateAccount(@PathVariable int userid,
+    public Map<String, ProfileDTOResponse> getUpdateAccount(@PathVariable int userid,
             @RequestBody UserDTOUpdateAccount userDTOUpdateAccount)
             throws CustomNotFoundException, IOException {
         System.out.println(userDTOUpdateAccount);

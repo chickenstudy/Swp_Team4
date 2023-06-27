@@ -9,7 +9,7 @@ import javax.sql.rowset.serial.SerialException;
 
 import com.namnguyenmoihoc.realworldapp.exception.custom.CustomBadRequestException;
 import com.namnguyenmoihoc.realworldapp.exception.custom.CustomNotFoundException;
-import com.namnguyenmoihoc.realworldapp.model.profileAccount.ProfileDTOResponsive;
+import com.namnguyenmoihoc.realworldapp.model.profileAccount.ProfileDTOResponse;
 import com.namnguyenmoihoc.realworldapp.model.roles.UserRolesDTOResponse;
 import com.namnguyenmoihoc.realworldapp.model.user.dto.UserDTOCreateAccount;
 import com.namnguyenmoihoc.realworldapp.model.user.dto.UserDTOLoginRequest;
@@ -26,9 +26,9 @@ public interface UserService {
 
     public List<UserRolesDTOResponse> getRole();
 
-    public Map<String, ProfileDTOResponsive> getProfile(int userid) throws CustomNotFoundException;
+    public Map<String, ProfileDTOResponse> getProfile(int userid) throws CustomNotFoundException;
 
-    public Map<String, ProfileDTOResponsive> getUpdateAccount(UserDTOUpdateAccount userDTOUpdateAccount) throws CustomNotFoundException, IOException;
+    public Map<String, ProfileDTOResponse> getUpdateAccount(UserDTOUpdateAccount userDTOUpdateAccount) throws CustomNotFoundException, IOException;
 
     //public UserRolesDTOResponse findAll();
     

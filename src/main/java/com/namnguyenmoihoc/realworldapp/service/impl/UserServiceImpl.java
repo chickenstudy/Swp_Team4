@@ -20,7 +20,7 @@ import com.namnguyenmoihoc.realworldapp.entity.Roles;
 import com.namnguyenmoihoc.realworldapp.entity.Account;
 import com.namnguyenmoihoc.realworldapp.exception.custom.CustomBadRequestException;
 import com.namnguyenmoihoc.realworldapp.exception.custom.CustomNotFoundException;
-import com.namnguyenmoihoc.realworldapp.model.profileAccount.ProfileDTOResponsive;
+import com.namnguyenmoihoc.realworldapp.model.profileAccount.ProfileDTOResponse;
 import com.namnguyenmoihoc.realworldapp.model.roles.UserRolesDTOResponse;
 import com.namnguyenmoihoc.realworldapp.model.user.CustomError;
 import com.namnguyenmoihoc.realworldapp.model.user.dto.UserDTOCreateAccount;
@@ -76,14 +76,10 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public Map<String, UserDTOResponse> registerUser(Map<String, UserDTOCreateAccount> userRegisterRequestMap) throws SerialException, SQLException, IOException, CustomNotFoundException {
-        // TODO Auto-generated method stub
+      
         UserDTOCreateAccount userDTOCreateAccount = userRegisterRequestMap.get("user");
 
-        /* 
-        if (userDTOCreateAccount.getPicture().length() == 0 || userDTOCreateAccount.getPicture() == null) {
-            userDTOCreateAccount.setPicture(new SerialBlob(new byte[0]));
-        }
-        */
+        
         Optional<Account> userOptional = userRepository.findByEmail(userDTOCreateAccount.getEmail());
         if(userOptional.isPresent()){
             throw new CustomNotFoundException(CustomError.builder().code("404").message("Your email is registed").build());
@@ -108,7 +104,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public Map<String, UserDTOResponse> getCurrentUser() throws CustomNotFoundException {
-        // TODO Auto-generated method stub
+      
         Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         if (principal instanceof UserDetails) {
             String email = ((UserDetails) principal).getUsername();
@@ -120,7 +116,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public List<UserRolesDTOResponse> getRole() {
-        // TODO Auto-generated method stub
+      
         List<Roles> roles = roleRepository.findAll();
 
         List<UserRolesDTOResponse> rolesDTO = new ArrayList<>();
@@ -132,7 +128,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public Map<String, ProfileDTOResponsive> getProfile(int userid) throws CustomNotFoundException {
+    public Map<String, ProfileDTOResponse> getProfile(int userid) throws CustomNotFoundException {
         // TODO Auto-generated method stub
         Optional<Account> userOptional = userRepository.findById(userid);
         if (userOptional.isEmpty()) {
@@ -141,10 +137,10 @@ public class UserServiceImpl implements UserService {
         return buidProfileResponse(userOptional.get());
     }
 
-    private Map<String, ProfileDTOResponsive> buidProfileResponse(Account user) {
-        Map<String, ProfileDTOResponsive> wrapper = new HashMap<>();
+    private Map<String, ProfileDTOResponse> buidProfileResponse(Account user) {
+        Map<String, ProfileDTOResponse> wrapper = new HashMap<>();
 
-        ProfileDTOResponsive profileDTOResponsive = ProfileDTOResponsive.builder().address(user.getAddress())
+        ProfileDTOResponse profileDTOResponsive = ProfileDTOResponse.builder().address(user.getAddress())
                 .email(user.getEmail()).phonenumber(user.getPhonenumber())
                 .picture(user.getPicture()).sex(checkSex(user)).username(user.getUsername()).dob(user.getDob()).build();
         
@@ -162,9 +158,9 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public Map<String, ProfileDTOResponsive> getUpdateAccount(UserDTOUpdateAccount userDTOUpdateAccount)
+    public Map<String, ProfileDTOResponse> getUpdateAccount(UserDTOUpdateAccount userDTOUpdateAccount)
             throws CustomNotFoundException, IOException {
-        // TODO Auto-generated method stub
+      
         Optional<Account> userOptional = userRepository.findById(userDTOUpdateAccount.getId());
         
         if (userOptional.isEmpty()) {

@@ -13,4 +13,6 @@ public interface StaffRepository extends JpaRepository<Account, Integer>{
     public Optional<Account> findById(int id);
 
     public List<Account> findByRolesID(int rolesID);
+
+    public Optional<Account> findByEmail(String email);
 }

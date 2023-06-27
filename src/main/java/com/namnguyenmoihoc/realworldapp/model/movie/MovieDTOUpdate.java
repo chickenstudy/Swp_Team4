@@ -1,5 +1,7 @@
 package com.namnguyenmoihoc.realworldapp.model.movie;
 
+
+
 import java.util.Date;
 
 import lombok.AllArgsConstructor;

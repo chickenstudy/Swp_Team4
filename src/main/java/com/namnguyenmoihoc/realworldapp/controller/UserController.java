@@ -30,8 +30,6 @@ import lombok.RequiredArgsConstructor;
 @CrossOrigin
 public class UserController {
     private final UserService userService;
-   
-
 
     @PostMapping("/login")
     public Map<String, UserDTOResponse> login(@RequestBody Map<String, UserDTOLoginRequest> userloginRequestMap)
@@ -57,11 +55,4 @@ public class UserController {
         return userService.getCurrentUser();
     }
 
-    // @PostMapping("/staff/create")
-    // public Map<String, StaffDTOReponse> createStaff(
-    //         @RequestBody Map<String, StaffDTOCreate> crateStaff)
-    //         throws SQLException, IOException, CustomNotFoundException {
-    //             return  staffService.createAccount(crateStaff);
-
-    // }
 }

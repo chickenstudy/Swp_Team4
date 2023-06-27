@@ -43,16 +43,7 @@ public class MovieMapper {
         String posterEncode = new String(movie.getPoster());
         String bannerEncode = new String(movie.getBanner());
 
-        /*
-         * byte[] posterDecode = Base64.getUrlDecoder().decode(posterEncode); // byte to
-         * string
-         * byte[] bannerDecode = Base64.getUrlDecoder().decode(bannerEncode);
-         * 
-         * String decodedStringPoster = new String(posterDecode,
-         * StandardCharsets.UTF_8);
-         * String decodedStringBanner = new String(bannerDecode,
-         * StandardCharsets.UTF_8);
-         */
+      
 
         return MovieDTOResponse.builder().id(movie.getMovieid()).name(movie.getName()).type(movie.getType())
                 .poster(posterEncode).banner(bannerEncode).trailer(movie.getTrailer())

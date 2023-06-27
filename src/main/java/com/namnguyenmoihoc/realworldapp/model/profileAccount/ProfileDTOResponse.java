@@ -13,11 +13,12 @@ import lombok.Setter;
 @Builder
 @Getter
 @Setter
-public class ProfileDTOResponsive {
+public class ProfileDTOResponse {
     private String username;
     private String email;
     private String sex;
     private String address;
+    
 
     @Lob
     private byte[] picture;
