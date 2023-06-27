@@ -3,15 +3,17 @@ package com.namnguyenmoihoc.realworldapp.model.user.mapper;
 import java.io.UnsupportedEncodingException;
 
 import java.util.Base64;
+
 import java.util.HashMap;
 import java.util.Map;
+
+
 
 import com.namnguyenmoihoc.realworldapp.entity.Movie;
 import com.namnguyenmoihoc.realworldapp.model.movie.MovieDTOCreate;
 import com.namnguyenmoihoc.realworldapp.model.movie.MovieDTOResponse;
 import com.namnguyenmoihoc.realworldapp.model.movie.MovieDTOResponseCreate;
 import com.namnguyenmoihoc.realworldapp.model.movie.MovieDTOUpdate;
-
 
 public class MovieMapper {
     public static Movie toMovie(MovieDTOCreate movieDTOcreate) throws UnsupportedEncodingException {
@@ -33,7 +35,7 @@ public class MovieMapper {
             return movie;
 
         } catch (Exception e) {
-            // TODO: handle exception
+       
             e.printStackTrace();
         }
         return null;
@@ -45,12 +47,14 @@ public class MovieMapper {
 
       
 
+       
+      
+
         return MovieDTOResponse.builder().id(movie.getMovieid()).name(movie.getName()).type(movie.getType())
                 .poster(posterEncode).banner(bannerEncode).trailer(movie.getTrailer())
                 .times(movie.getTimes()).description(movie.getDescription()).country(movie.getCountry())
                 .show_date(movie.getShow_date()).build();
     }
-   
 
     public static MovieDTOResponseCreate toMovieDTOReponseCreate(Movie movie) {
         String poster = Base64.getEncoder().encodeToString(movie.getPoster()); // byte to string
@@ -60,7 +64,8 @@ public class MovieMapper {
                 .times(movie.getTimes()).description(movie.getDescription()).country(movie.getCountry())
                 .show_date(movie.getShow_date()).build();
     }
-      public static  Map<String, MovieDTOResponseCreate> buildMovieResponse(Movie movie) {
+
+    public static Map<String, MovieDTOResponseCreate> buildMovieResponse(Movie movie) {
         String poster = Base64.getEncoder().encodeToString(movie.getPoster()); // byte to string
         String banner = Base64.getEncoder().encodeToString(movie.getBanner());
         Map<String, MovieDTOResponseCreate> wrapper = new HashMap<>();
@@ -73,7 +78,8 @@ public class MovieMapper {
         wrapper.put("update:", movieDTOResponse);
         return wrapper;
     }
-    public static  void updateMovieDetails(Movie movie, MovieDTOUpdate movieDTOUpdate) {
+
+    public static void updateMovieDetails(Movie movie, MovieDTOUpdate movieDTOUpdate) {
         String posterStr = movieDTOUpdate.getPoster();
         String bannerStr = movieDTOUpdate.getBanner();
         try {

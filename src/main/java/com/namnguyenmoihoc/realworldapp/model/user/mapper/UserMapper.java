@@ -10,7 +10,10 @@ import com.namnguyenmoihoc.realworldapp.model.user.dto.UserDTOUpdateAccount;
 
 public class UserMapper {
     public static UserDTOResponse toUserDTOResponse(Account user) {
-        return UserDTOResponse.builder().username(user.getUsername()).email(user.getEmail()).roleID(user.getRolesID())
+        
+        String decodedStringPicture = new String(user.getPicture());
+
+        return UserDTOResponse.builder().username(user.getUsername()).email(user.getEmail()).picture(decodedStringPicture).roleID(user.getRolesID())
                 .build();
     }
 
