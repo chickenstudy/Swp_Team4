@@ -28,7 +28,7 @@ export default function StaffManagement() {
     <div className="container">
       <h2 className="d-flex justify-content-center my-3">List Staff</h2>
       <div className="divbtn text-end mx-4">
-        <Link to="/" className="btn btn-success rounded-0 mb-3">
+        <Link to="/addstaff" className="btn btn-success rounded-0 mb-3">
           Add New Staff
         </Link>
       </div>

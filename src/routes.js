@@ -11,12 +11,13 @@ import SeatCinema from "./views/user/movies/SeatCinema";
 // ---------- ADMIN ----------
 import MovieList from "./views/admin/movie/MovieList";
 import Dashboard from "./views/admin/dashboard/Dashboard";
-import Staff from "./views/admin/staff/StaffManagement";
+import StaffManagement from "./views/admin/staff/StaffManagement";
 import Feedback from "./views/admin/feedback/Feedback";
 import AddNewMovie from "./views/admin/movie/AddNewMovie";
 import DetailMovie from "./views/admin/movie/DetailMovie";
 import Banner from "./views/admin/banner/Banner";
 import EditMovie from "./views/admin/movie/EditMovie";
+import AddNewStaff from "./views/admin/staff/AddNewStaff"
 //---------- USER ROUTE ---------
 export const UserRoutes = [
   {
@@ -60,7 +61,8 @@ export const AdminRoutes = [
     isProtected: true,
   },
   { path: "/listmovie", component: MovieList, layout: AdminLayout },
-  { path: "/staff", component: Staff, layout: AdminLayout },
+  { path: "/staff", component: StaffManagement, layout: AdminLayout },
+  { path: "/addstaff", component: AddNewStaff, layout: AdminLayout },
   { path: "/feedback", component: Feedback, layout: AdminLayout },
   { path: "/movie/addmovie", component: AddNewMovie, layout: HeaderOnly },
   {

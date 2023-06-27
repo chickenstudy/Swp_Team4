@@ -1,6 +1,5 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import "../../styles/Default.css";
 import { ApplicationContext } from "../../App";
 import SignIn from "../../views/auth/SignIn";
 import SignUp from "../../views/auth/SignUp";
@@ -12,7 +11,7 @@ export default function Menu() {
   const { user } = React.useContext(ApplicationContext);
   return (
     <div id="container" style={{ backgroundColor: "rgb(242, 196, 141)" }}>
-      <div className="row">
+      <div className="row" >
         <div className="col" style={{ textAlign: "left", paddingTop: "1px" }}>
           <span>
             <Image src={logo} style={{ width: "50px" }}></Image>

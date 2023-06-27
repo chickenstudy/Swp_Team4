@@ -22,3 +22,7 @@
   font-size: 18px;
   color: #ffffff;
 }
+
+.movie_box{
+  border: 1px solid #ddd;
+}

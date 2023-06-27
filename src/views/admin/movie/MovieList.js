@@ -44,7 +44,6 @@ const MovieList = () => {
       });
   }, []);
 
-  console.log(data);
   return (
     <div className="container">
       <div className="card">
@@ -74,7 +73,7 @@ const MovieList = () => {
             <tbody>
               {data &&
                 data.map((item) => (
-                  <tr key={item.Id}>
+                  <tr key={item.id}>
                     <td style={{ width: "10px" }}>{item.id}</td>
                     <td style={{ width: "100px" }}>
                       {
