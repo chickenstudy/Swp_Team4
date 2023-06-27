@@ -1,17 +1,25 @@
 package com.namnguyenmoihoc.realworldapp.model.user.mapper;
 
 import java.io.UnsupportedEncodingException;
-
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.time.Instant;
+import java.time.LocalDate;
+import java.time.ZoneId;
+import java.time.format.DateTimeFormatter;
 import java.util.Base64;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
+
+import org.springframework.cglib.core.Local;
 
 import com.namnguyenmoihoc.realworldapp.entity.Movie;
 import com.namnguyenmoihoc.realworldapp.model.movie.MovieDTOCreate;
 import com.namnguyenmoihoc.realworldapp.model.movie.MovieDTOResponse;
 import com.namnguyenmoihoc.realworldapp.model.movie.MovieDTOResponseCreate;
 import com.namnguyenmoihoc.realworldapp.model.movie.MovieDTOUpdate;
-
 
 public class MovieMapper {
     public static Movie toMovie(MovieDTOCreate movieDTOcreate) throws UnsupportedEncodingException {
@@ -54,12 +62,15 @@ public class MovieMapper {
          * StandardCharsets.UTF_8);
          */
 
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+        String formattedDate = dateFormat.format(movie.getShow_date());
+        System.out.println(formattedDate);
+
         return MovieDTOResponse.builder().id(movie.getMovieid()).name(movie.getName()).type(movie.getType())
                 .poster(posterEncode).banner(bannerEncode).trailer(movie.getTrailer())
                 .times(movie.getTimes()).description(movie.getDescription()).country(movie.getCountry())
-                .show_date(movie.getShow_date()).build();
+                .show_date(formattedDate).build();
     }
-   
 
     public static MovieDTOResponseCreate toMovieDTOReponseCreate(Movie movie) {
         String poster = Base64.getEncoder().encodeToString(movie.getPoster()); // byte to string
@@ -69,7 +80,8 @@ public class MovieMapper {
                 .times(movie.getTimes()).description(movie.getDescription()).country(movie.getCountry())
                 .show_date(movie.getShow_date()).build();
     }
-      public static  Map<String, MovieDTOResponseCreate> buildMovieResponse(Movie movie) {
+
+    public static Map<String, MovieDTOResponseCreate> buildMovieResponse(Movie movie) {
         String poster = Base64.getEncoder().encodeToString(movie.getPoster()); // byte to string
         String banner = Base64.getEncoder().encodeToString(movie.getBanner());
         Map<String, MovieDTOResponseCreate> wrapper = new HashMap<>();
@@ -82,7 +94,8 @@ public class MovieMapper {
         wrapper.put("update:", movieDTOResponse);
         return wrapper;
     }
-    public static  void updateMovieDetails(Movie movie, MovieDTOUpdate movieDTOUpdate) {
+
+    public static void updateMovieDetails(Movie movie, MovieDTOUpdate movieDTOUpdate) {
         String posterStr = movieDTOUpdate.getPoster();
         String bannerStr = movieDTOUpdate.getBanner();
         try {
