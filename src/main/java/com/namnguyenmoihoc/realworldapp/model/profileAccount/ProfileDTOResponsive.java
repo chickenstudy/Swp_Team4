@@ -1,6 +1,6 @@
 package com.namnguyenmoihoc.realworldapp.model.profileAccount;
 
-import java.sql.Blob;
+
 import java.util.Date;
 
 import jakarta.persistence.Lob;

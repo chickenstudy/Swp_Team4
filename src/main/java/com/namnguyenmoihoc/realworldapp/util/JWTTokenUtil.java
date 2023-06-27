@@ -11,7 +11,7 @@ import com.namnguyenmoihoc.realworldapp.entity.Account;
 import com.namnguyenmoihoc.realworldapp.model.TokenPayload;
 
 import io.jsonwebtoken.Claims;
-import io.jsonwebtoken.Jwt;
+
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 

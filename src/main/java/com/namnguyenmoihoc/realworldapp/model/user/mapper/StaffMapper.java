@@ -2,7 +2,7 @@ package com.namnguyenmoihoc.realworldapp.model.user.mapper;
 
 import com.namnguyenmoihoc.realworldapp.entity.Account;
 import com.namnguyenmoihoc.realworldapp.model.profileAccount.ProfileDTOResponsive;
-import com.namnguyenmoihoc.realworldapp.model.staff.StaffDTOResponse;
+
 
 public class StaffMapper {
     public static ProfileDTOResponsive toStaffResponse(Account staff){
