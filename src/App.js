@@ -17,7 +17,10 @@ function App() {
             Authorization: `Bearer ${jwt}`,
           },
         })
-        .then((response) => setUser(response.data.user))
+        .then((response) => {
+          setUser(response.data.user);
+          localStorage.setItem("token", response.data.token);
+        })
         .catch((error) => console.log(error));
     }
   }, []);
@@ -27,6 +30,7 @@ function App() {
   const makeSignIn = (user) => {
     setUser(user);
   };
+  console.log(user);
   const makeSignOut = () => {
     setUser([]);
   };

@@ -14,7 +14,7 @@ import { Container } from "react-bootstrap";
 import { Link } from "react-router-dom";
 
 function Account() {
-  const { makeSignOut } = useContext(ApplicationContext);
+  const { user, makeSignOut } = useContext(ApplicationContext);
 
   const [anchorElNav, setAnchorElNav] = React.useState(null);
   const [anchorElUser, setAnchorElUser] = React.useState(null);
@@ -38,11 +38,12 @@ function Account() {
 
   return (
     <Container sx={{ flexGrow: 0 }}>
-      <Tooltip title="Nguyễn Việt Thái ">
+      <Tooltip title={user.username}>
         <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
           <Avatar
             alt="A hihi "
-            src="https://www.ldg.com.vn/media/uploads/uploads/16210423-gai-xinh-bikini-do-0001-0001.jpg"
+            // src="https://www.ldg.com.vn/media/uploads/uploads/16210423-gai-xinh-bikini-do-0001-0001.jpg"
+            src={user.picture}
           />
         </IconButton>
       </Tooltip>
