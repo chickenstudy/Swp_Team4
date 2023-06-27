@@ -9,5 +9,6 @@ public class UserDTOResponse {
     private String email;
     private String username;
     private int roleID;
+    private String picture;
     private String token;
 }
