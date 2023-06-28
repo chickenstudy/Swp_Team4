@@ -15,11 +15,7 @@ import { Form, Modal } from "react-bootstrap";
 const Informationmovie = () => {
   const { id } = useParams();
   const [data, setData] = useState([]);
-  const [show, setShow] = useState(false);
-
-  const handleClose = () => setShow(false);
-  const handleShow = () => setShow(true);
-
+  const [showVideoModal, setShowVideoModal] = useState(false);
   useEffect(() => {
     axios
       .get("http://localhost:8080/api/movie/listMovie/" + id)
@@ -30,6 +26,12 @@ const Informationmovie = () => {
         console.log(err.message);
       });
   }, []);
+  const handleOpenVideoModal = () => {
+    setShowVideoModal(true);
+  };
+  const handleCloseVideoModal = () => {
+    setShowVideoModal(false);
+  };
 
   return (
     <Container style={{ paddingTop: "5px" }}>
@@ -71,40 +73,36 @@ const Informationmovie = () => {
               </Col>
             </Row>
             <Row xs={12}>
-              <Button onClick={handleShow}> Trailer</Button>
-              <Modal show={show} onHide={handleClose}>
-                <Modal.Header closeButton>
-                  <Modal.Title>Modal heading</Modal.Title>
-                </Modal.Header>
+              <Button
+                onClick={handleOpenVideoModal}
+                className="btn_reverse Lang-LBL0000 d-block justify-content-center my-2 rounded-0"
+                style={{
+                  width: "175px",
+                  border: "2px solid rgb(206, 161, 11)",
+                }}
+                variant="dark"
+              >
+                View Trailer
+              </Button>
+
+              <Modal
+                show={showVideoModal}
+                onHide={handleCloseVideoModal}
+                size="lg"
+              >
                 <Modal.Body>
                   <ReactPlayer
                     url="https://www.youtube.com/watch?v=XoMEzmrEGGA"
-                    width="640px" // Kích thước theo chiều ngang
-                    height="360px" // Kích thước theo chiều dọc
+                    width="100%" // Kích thước theo chiều ngang - căn chỉnh 100% theo chiều ngang của modal
+                    style={{ aspectRatio: "16/9" }} // Tỷ lệ khung hình 16:9
                   />
                 </Modal.Body>
                 <Modal.Footer>
-                  <Button variant="secondary" onClick={handleClose}>
+                  <Button variant="secondary" onClick={handleCloseVideoModal}>
                     Close
-                  </Button>
-                  <Button variant="primary" onClick={handleClose}>
-                    Save Changes
                   </Button>
                 </Modal.Footer>
               </Modal>
-              {/* <Button
-                  href={data?.movie?.trailer}
-                  className="btn_reverse Lang-LBL0000 d-block justify-content-center my-2 rounded-0"
-                  style={{
-                    width: "175px",
-                    border: "2px solid rgb(206, 161, 11)",
-                  }}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  variant="dark"
-                >
-                  View trailer
-                </Button> */}
             </Row>
           </div>
         </div>
