@@ -74,7 +74,8 @@ export default function Movies() {
                     <MoviesCard
                       title={item.name}
                       image={item.poster}
-                      description={item.times}
+                      times={item.times}
+                      date={item.show_date}
                     />
                   </Col>
                 ))}

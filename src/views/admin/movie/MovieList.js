@@ -64,7 +64,7 @@ const MovieList = () => {
                 <td>Id</td>
                 <td>Poster</td>
                 <td>Name</td>
-                <td>Type</td>
+                <td>Genre</td>
                 <td>Country</td>
                 <td>Show date</td>
                 <td className="action">Actions</td>
