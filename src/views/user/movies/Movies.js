@@ -28,7 +28,7 @@ export default function Movies() {
   }, []);
 
   return (
-    <Container>
+    <div>
       <span className="hotmovies narbar">
         <Link to="/" style={{ textDecoration: "none", color: "#000000" }}>
           HOT MOVIES
@@ -79,8 +79,7 @@ export default function Movies() {
                     className="my-3"
                     md={3}
                     key={item.id}
-                    onClick={LoadDetail.bind(this, item.id)}
-                  >
+                    onClick={LoadDetail.bind(this, item.id)}>
                     <MoviesCard
                       title={item.name}
                       image={item.poster}
@@ -94,6 +93,6 @@ export default function Movies() {
           <Col md={2}></Col>
         </Row>
       </div>
-    </Container>
+    </div>
   );
 }

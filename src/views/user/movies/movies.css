@@ -23,7 +23,28 @@
   color: #ffffff;
 }
 
-.movie_box{
+.movie_box {
   border: 1px solid #ddd;
 }
 
+.mydivouter {
+  position: relative;
+  width: 100%;
+  margin: 0 auto;
+}
+.mydivoverlap {
+  position: relative;
+  z-index: 1;
+}
+.mybuttonoverlap {
+  position: absolute;
+  z-index: 2;
+ 
+  display: none;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+.mydivouter:hover .mybuttonoverlap {
+  display: block;
+}
