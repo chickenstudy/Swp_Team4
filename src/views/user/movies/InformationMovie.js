@@ -26,6 +26,7 @@ const Informationmovie = () => {
         console.log(err.message);
       });
   }, []);
+  console.log(data);
   const handleOpenVideoModal = () => {
     setShowVideoModal(true);
   };

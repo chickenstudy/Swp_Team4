@@ -26,12 +26,15 @@ export default function SignIn() {
     }
 
     try {
-      const response = await axios.post("http://localhost:8080/api/login", {
-        user: {
-          email,
-          password,
-        },
-      });
+      const response = await axios.post(
+        "http://localhost:8080/api/user/login",
+        {
+          user: {
+            email,
+            password,
+          },
+        }
+      );
 
       const { data } = response;
       const user = data.user;
