@@ -17,6 +17,8 @@ import Banner from "./views/admin/banner/Banner";
 import EditMovie from "./views/admin/movie/EditMovie";
 import AddNewStaff from "./views/admin/staff/AddNewStaff";
 import InformationMovie from "./views/user/movies/InformationMovie";
+import Cinema from "./views/admin/cinema/Cinema";
+import CreateCinema from "./views/admin/cinema/CreateCinema";
 //---------- USER ROUTE ---------
 export const UserRoutes = [
   {
@@ -74,6 +76,19 @@ export const AdminRoutes = [
     layout: AdminLayout,
     isProtected: true,
   },
+  {
+    path: "/cinema",
+    component: Cinema,
+    layout: AdminLayout,
+    isProtected: true,
+  },
+  {
+    path: "/cinema/create",
+    component: CreateCinema,
+    layout: AdminLayout,
+    isProtected: true,
+  },
+
   {
     path: "/feedback",
     component: Feedback,
