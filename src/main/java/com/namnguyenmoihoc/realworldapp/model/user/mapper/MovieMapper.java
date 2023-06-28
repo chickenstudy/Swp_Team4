@@ -7,8 +7,6 @@ import java.util.Base64;
 import java.util.HashMap;
 import java.util.Map;
 
-
-
 import com.namnguyenmoihoc.realworldapp.entity.Movie;
 import com.namnguyenmoihoc.realworldapp.model.movie.MovieDTOCreate;
 import com.namnguyenmoihoc.realworldapp.model.movie.MovieDTOResponse;
@@ -35,7 +33,7 @@ public class MovieMapper {
             return movie;
 
         } catch (Exception e) {
-       
+
             e.printStackTrace();
         }
         return null;
@@ -44,11 +42,6 @@ public class MovieMapper {
     public static MovieDTOResponse toMovieDTOReponse(Movie movie) {
         String posterEncode = new String(movie.getPoster());
         String bannerEncode = new String(movie.getBanner());
-
-      
-
-       
-      
 
         return MovieDTOResponse.builder().id(movie.getMovieid()).name(movie.getName()).type(movie.getType())
                 .poster(posterEncode).banner(bannerEncode).trailer(movie.getTrailer())
