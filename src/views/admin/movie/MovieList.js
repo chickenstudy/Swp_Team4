@@ -59,15 +59,15 @@ const MovieList = () => {
             </Link>
           </div>
           <table className="table table-bordered">
-            <thead className="bg-dark text-white">
-              <tr>
-                <td>Id</td>
-                <td>Poster</td>
-                <td>Name</td>
-                <td>Genre</td>
-                <td>Country</td>
-                <td>Show date</td>
-                <td className="action">Actions</td>
+            <thead >
+              <tr >
+                <td className="bg-dark text-white">Id</td>
+                <td className="bg-dark text-white">Poster</td>
+                <td className="bg-dark text-white">Name</td>
+                <td className="bg-dark text-white">Genre</td>
+                <td className="bg-dark text-white">Country</td>
+                <td className="bg-dark text-white">Show date</td>
+                <td className="action bg-dark text-white">Actions</td>
               </tr>
             </thead>
             <tbody>
@@ -75,7 +75,7 @@ const MovieList = () => {
                 data.map((item) => (
                   <tr key={item.id}>
                     <td style={{ width: "10px" }}>{item.id}</td>
-                    <td style={{ width: "100px" }}>
+                    <td style={{ width: "110px" }}>
                       {
                         <img
                           src={item.poster}
@@ -84,18 +84,18 @@ const MovieList = () => {
                         />
                       }
                     </td>
-                    <td style={{ width: "120px" }}>{item.name}</td>
+                    <td style={{ width: "110px" }}>{item.name}</td>
                     <td style={{ width: "100px" }}>{item.type}</td>
-                    <td style={{ width: "110px" }}>{item.country}</td>
-                    <td style={{ width: "100px" }}>{item.show_date}</td>
-                    <td style={{ width: "125px" }} className="action">
+                    <td style={{ width: "90px" }}>{item.country}</td>
+                    <td style={{ width: "90px" }}>{item.show_date}</td>
+                    <td style={{ width: "110px" }} className="action">
                       <div>
                         <a
                           onClick={() => {
                             LoadDetail(item.id);
                           }}>
                           <BiDetail
-                            className="btn btn-outline-dark mx-1"
+                            className="btn btn-primary mx-1"
                             size={50}
                           />
                         </a>
@@ -105,7 +105,7 @@ const MovieList = () => {
                             LoadEdit(item.id);
                           }}>
                           <BiEdit
-                            className="btn btn-outline-dark mx-1"
+                            className="btn btn-warning mx-1"
                             size={50}
                           />
                         </a>
@@ -116,7 +116,7 @@ const MovieList = () => {
                             Removefunction(item.id);
                           }}>
                           <RiDeleteBinLine
-                            className="btn btn-outline-dark mx-1"
+                            className="btn btn-danger mx-1"
                             size={50}
                           />
                         </a>

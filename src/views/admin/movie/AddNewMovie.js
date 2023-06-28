@@ -1,5 +1,4 @@
-import React from "react";
-import { useState } from "react";
+import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 
 const AddNewMovie = () => {
@@ -42,16 +41,17 @@ const AddNewMovie = () => {
   const handlesubmit = (e) => {
     e.preventDefault();
     const data = {
-      movie:{
-      name,
-      poster,
-      trailer,
-      banner,
-      times,
-      type,
-      country,
-      show_date,
-      description,},
+      movie: {
+        name,
+        poster,
+        trailer,
+        banner,
+        times,
+        type,
+        country,
+        show_date,
+        description,
+      },
     };
     console.log(JSON.stringify(data));
     fetch("http://localhost:8080/api/movie/create", {
@@ -79,8 +79,6 @@ const AddNewMovie = () => {
               </div>
               <div className="card-body">
                 <div className="row">
-                 
-
                   <div className="col-lg-12 my-1">
                     <div className="form-group">
                       <label>Name</label>
@@ -181,7 +179,8 @@ const AddNewMovie = () => {
                   <div className="col-lg-12 my-1">
                     <div className="form-group">
                       <label>Movie Content</label>
-                      <textarea rows="6"
+                      <textarea
+                        rows="6"
                         value={description}
                         onChange={(e) => setDescription(e.target.value)}
                         className="form-control"
