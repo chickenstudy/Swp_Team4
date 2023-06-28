@@ -15,7 +15,7 @@ export default function EditMovie() {
   const [times, setTimes] = useState("");
   const [type, setType] = useState("");
   const [country, setCountry] = useState("");
-  const [showDate, setShowDate] = useState("");
+  const [show_date, setShowDate] = useState("");
   const [description, setDescription] = useState("");
 
   const [validation, valchange] = useState(false);
@@ -57,7 +57,7 @@ export default function EditMovie() {
       times,
       type,
       country,
-      showDate,
+      show_date,
       description,
     };
 
@@ -66,6 +66,7 @@ export default function EditMovie() {
       .then((res) => {
         alert("Saved successfully.");
         navigate("/listmovie");
+        console.log(data)
       })
       .catch((err) => {
         console.log(err.message);
@@ -208,7 +209,7 @@ export default function EditMovie() {
                         <label>Show Date</label>
                         <input
                           type="date"
-                          value={showDate}
+                          value={show_date}
                           onChange={(e) => setShowDate(e.target.value)}
                           className="form-control"
                         />

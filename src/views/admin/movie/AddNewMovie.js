@@ -95,7 +95,7 @@ const AddNewMovie = () => {
 
                   <div className="col-lg-12 my-1">
                     <div className="form-group">
-                      <label>Type</label>
+                      <label>Genre</label>
                       <input
                         value={type}
                         onChange={(e) => setType(e.target.value)}
