@@ -8,7 +8,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
-
 import javax.sql.rowset.serial.SerialException;
 
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -53,8 +52,9 @@ public class UserServiceImpl implements UserService {
         UserDTOLoginRequest userDTOLoginRequest = userloginRequestMap.get("user");
 
         Optional<Account> userOptional = userRepository.findByEmail(userDTOLoginRequest.getEmail());
-        if(!userOptional.isPresent()){
-            throw new CustomNotFoundException(CustomError.builder().code("404").message("Your email is not registered").build());
+        if (!userOptional.isPresent()) {
+            throw new CustomNotFoundException(
+                    CustomError.builder().code("404").message("Your email is not registered").build());
         }
 
         boolean isAuthen = false;
@@ -75,14 +75,15 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public Map<String, UserDTOResponse> registerUser(Map<String, UserDTOCreateAccount> userRegisterRequestMap) throws SerialException, SQLException, IOException, CustomNotFoundException {
-      
+    public Map<String, UserDTOResponse> registerUser(Map<String, UserDTOCreateAccount> userRegisterRequestMap)
+            throws SerialException, SQLException, IOException, CustomNotFoundException {
+
         UserDTOCreateAccount userDTOCreateAccount = userRegisterRequestMap.get("user");
 
-        
         Optional<Account> userOptional = userRepository.findByEmail(userDTOCreateAccount.getEmail());
-        if(userOptional.isPresent()){
-            throw new CustomNotFoundException(CustomError.builder().code("404").message("Your email is registed").build());
+        if (userOptional.isPresent()) {
+            throw new CustomNotFoundException(
+                    CustomError.builder().code("404").message("Your email is registed").build());
         }
 
         Account user = UserMapper.toUser(userDTOCreateAccount);
@@ -104,7 +105,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public Map<String, UserDTOResponse> getCurrentUser() throws CustomNotFoundException {
-      
+
         Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         if (principal instanceof UserDetails) {
             String email = ((UserDetails) principal).getUsername();
@@ -116,7 +117,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public List<UserRolesDTOResponse> getRole() {
-      
+
         List<Roles> roles = roleRepository.findAll();
 
         List<UserRolesDTOResponse> rolesDTO = new ArrayList<>();
@@ -130,11 +131,15 @@ public class UserServiceImpl implements UserService {
     @Override
     public Map<String, ProfileDTOResponse> getProfile(int userid) throws CustomNotFoundException {
         // TODO Auto-generated method stub
-        Optional<Account> userOptional = userRepository.findById(userid);
-        if (userOptional.isEmpty()) {
-            throw new CustomNotFoundException(CustomError.builder().code("404").message("User not found").build());
+        Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        if (principal instanceof UserDetails) {
+            Optional<Account> userOptional = userRepository.findById(userid);
+            if (userOptional.isEmpty()) {
+                throw new CustomNotFoundException(CustomError.builder().code("404").message("User not found").build());
+            }
+            return buidProfileResponse(userOptional.get());
         }
-        return buidProfileResponse(userOptional.get());
+        throw new CustomNotFoundException(CustomError.builder().code("404").message("User not login").build());
     }
 
     private Map<String, ProfileDTOResponse> buidProfileResponse(Account user) {
@@ -143,14 +148,14 @@ public class UserServiceImpl implements UserService {
         ProfileDTOResponse profileDTOResponsive = ProfileDTOResponse.builder().address(user.getAddress())
                 .email(user.getEmail()).phonenumber(user.getPhonenumber())
                 .picture(user.getPicture()).sex(checkSex(user)).username(user.getUsername()).dob(user.getDob()).build();
-        
+
         wrapper.put("profile", profileDTOResponsive);
         return wrapper;
     }
 
     private String checkSex(Account user) {
         String sexString = "Male";
-        int sex = (int)(user.getSex());
+        int sex = (int) (user.getSex());
         if (sex == 0) {
             return sexString = "Female";
         }
@@ -160,20 +165,25 @@ public class UserServiceImpl implements UserService {
     @Override
     public Map<String, ProfileDTOResponse> getUpdateAccount(UserDTOUpdateAccount userDTOUpdateAccount)
             throws CustomNotFoundException, IOException {
-      
-        Optional<Account> userOptional = userRepository.findById(userDTOUpdateAccount.getId());
-        
-        if (userOptional.isEmpty()) {
-            throw new CustomNotFoundException(CustomError.builder().code("404").message("User not found").build());
+        Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        if (principal instanceof UserDetails) {
+            Optional<Account> userOptional = userRepository.findById(userDTOUpdateAccount.getId());
+
+            if (userOptional.isEmpty()) {
+                throw new CustomNotFoundException(CustomError.builder().code("404").message("User not found").build());
+            }
+
+            // return buidProfileResponse(userOptional.get());
+
+            Account user = UserMapper.toUpdateUser(userDTOUpdateAccount);
+            System.out.println("profile:");
+            System.out.println(user);
+            user.setPassword(passwordEncoder.encode(user.getPassword()));
+            user = userRepository.save(user);
+            return buidProfileResponse(user);
         }
+        throw new CustomNotFoundException(CustomError.builder().code("404").message("User not login").build());
 
-        //return buidProfileResponse(userOptional.get());
-
-        Account user = UserMapper.toUpdateUser(userDTOUpdateAccount);
-        System.out.println("profile:");
-        System.out.println(user);
-        user = userRepository.save(user);
-        return buidProfileResponse(user);
     }
 
 }

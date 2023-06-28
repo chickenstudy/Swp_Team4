@@ -5,6 +5,7 @@ import java.sql.SQLException;
 import java.util.List;
 import java.util.Map;
 
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -25,7 +26,7 @@ import com.namnguyenmoihoc.realworldapp.service.UserService;
 import lombok.RequiredArgsConstructor;
 
 @RestController
-@RequestMapping("/api")
+@RequestMapping("/api/user")
 @RequiredArgsConstructor
 @CrossOrigin
 public class UserController {
@@ -45,12 +46,12 @@ public class UserController {
         return userService.registerUser(userRegisterRequestMap);
     }
 
-    @GetMapping("/user/role")
+    @GetMapping("/role")
     public List<UserRolesDTOResponse> getRole() {
         return userService.getRole();
     }
 
-    @GetMapping("/user")
+    @GetMapping("/currentUser")
     public Map<String, UserDTOResponse> getCurrentUser() throws CustomNotFoundException {
         return userService.getCurrentUser();
     }

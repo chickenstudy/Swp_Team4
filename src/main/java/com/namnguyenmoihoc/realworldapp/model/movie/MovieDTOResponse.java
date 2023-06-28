@@ -18,7 +18,7 @@ public class MovieDTOResponse {
     private String poster;
     private String banner;
     private String trailer;
-    private Date show_date;
+    private String show_date;
     private String country;
     private String name;
     private String description;

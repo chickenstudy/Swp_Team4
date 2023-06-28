@@ -1,7 +1,7 @@
 package com.namnguyenmoihoc.realworldapp.model.user.mapper;
 
 import java.io.UnsupportedEncodingException;
-
+import java.text.SimpleDateFormat;
 import java.util.Base64;
 
 import java.util.HashMap;
@@ -45,15 +45,19 @@ public class MovieMapper {
         String posterEncode = new String(movie.getPoster());
         String bannerEncode = new String(movie.getBanner());
 
-      
-
-       
-      
+        
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+        String formattedDate = "";
+        if(movie.getShow_date() != null){
+            formattedDate = dateFormat.format(movie.getShow_date());
+        } else {
+            formattedDate = "Nothing";
+        }
 
         return MovieDTOResponse.builder().id(movie.getMovieid()).name(movie.getName()).type(movie.getType())
                 .poster(posterEncode).banner(bannerEncode).trailer(movie.getTrailer())
                 .times(movie.getTimes()).description(movie.getDescription()).country(movie.getCountry())
-                .show_date(movie.getShow_date()).build();
+                .show_date(formattedDate).build();
     }
 
     public static MovieDTOResponseCreate toMovieDTOReponseCreate(Movie movie) {
