@@ -11,7 +11,6 @@ export default function MovieCard({ title, image, times, date }) {
         <dt style={{ borderBottom: "1px solid #ddd", wordWrap: "break-word" }}>
           {title}
         </dt>
-        <dd>{description}</dd>
       </div>
     </div>
   );
