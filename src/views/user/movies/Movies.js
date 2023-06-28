@@ -1,14 +1,20 @@
 import React, { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import "./movies.css";
 import Carousel from "react-bootstrap/Carousel";
 import MoviesCard from "./MoviesCard"; // Import MovieCard component
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import axios from "axios";
+import { Container } from "react-bootstrap";
 
 export default function Movies() {
   const [movies, setMovies] = useState([]);
+  const navigate = useNavigate();
+  const LoadDetail = (id) => {
+    navigate(`/informationmovie/${id}`);
+  };
+
   useEffect(() => {
     axios
       .get("http://localhost:8080/api/movie/listMovie")
@@ -20,10 +26,9 @@ export default function Movies() {
         console.log(err.message);
       });
   }, []);
-  
-  
+
   return (
-    <>
+    <Container>
       <span className="hotmovies narbar">
         <Link to="/" style={{ textDecoration: "none", color: "#000000" }}>
           HOT MOVIES
@@ -70,7 +75,12 @@ export default function Movies() {
             <Row>
               {movies &&
                 movies.map((item) => (
-                  <Col className="my-3" md={3} key={item.id}>
+                  <Col
+                    className="my-3"
+                    md={3}
+                    key={item.id}
+                    onClick={LoadDetail.bind(this, item.id)}
+                  >
                     <MoviesCard
                       title={item.name}
                       image={item.poster}
@@ -83,6 +93,6 @@ export default function Movies() {
           <Col md={2}></Col>
         </Row>
       </div>
-    </>
+    </Container>
   );
 }
