@@ -12,6 +12,7 @@ import com.namnguyenmoihoc.realworldapp.model.staff.StaffDTOResponse;
 public class StaffMapper {
     public static ProfileDTOResponse toStaffResponse(Account staff) {
         ProfileDTOResponse profileDTOResponsive = ProfileDTOResponse.builder().address(staff.getAddress())
+             
                 .email(staff.getEmail()).phonenumber(staff.getPhonenumber()).id(staff.getId())
                 .picture(staff.getPicture()).sex(checkSex(staff)).username(staff.getUsername()).dob(staff.getDob())
                 .build();
@@ -64,6 +65,7 @@ public class StaffMapper {
             staff.setEmail(staffDTOUpdate.getEmail());
             staff.setSex(staffDTOUpdate.getSex());
             staff.setRolesID(Integer.parseInt("2"));
+       
 
         } catch (Exception e) {
 
@@ -84,6 +86,7 @@ public class StaffMapper {
                 .dob(staff.getDob())
                 .username(staff.getUsername())
                 .phonenumber(staff.getPhonenumber())
+               
 
                 .sex(staff.getSex())
                 .email(staff.getEmail())

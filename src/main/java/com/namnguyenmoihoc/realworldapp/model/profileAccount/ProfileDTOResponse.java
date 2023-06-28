@@ -19,6 +19,7 @@ public class ProfileDTOResponse {
     private String email;
     private String sex;
     private String address;
+
     
 
     @Lob
