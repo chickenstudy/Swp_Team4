@@ -11,10 +11,12 @@ export default function Menu() {
   const { user } = React.useContext(ApplicationContext);
   return (
     <div id="container" style={{ backgroundColor: "rgb(242, 196, 141)" }}>
-      <div className="row" >
+      <div className="row">
         <div className="col" style={{ textAlign: "left", paddingTop: "1px" }}>
           <span>
-            <Image src={logo} style={{ width: "50px" }}></Image>
+            <Link to="/">
+              <Image src={logo} style={{ width: "50px" }}></Image>
+            </Link>
           </span>
           <span>
             <Link to="/booking">BOOKING</Link>

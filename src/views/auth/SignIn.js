@@ -1,6 +1,6 @@
 import React, { useState, useContext } from "react";
 import { Form, Button, Modal } from "react-bootstrap";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import axios from "axios"; // import Axios
 import "../../styles/SignIn.css";
 import { ApplicationContext } from "../../App";
@@ -106,6 +106,17 @@ export default function SignIn() {
 
             {error && <div className="alert alert-danger">{error}</div>}
 
+            <Link
+              to="/forgot-password"
+              style={{
+                textDecoration: "none",
+                color: "cadetblue",
+              }}
+            >
+              Forgot password?
+            </Link>
+
+            <br />
             <Button variant="primary" type="submit">
               Sign In
             </Button>

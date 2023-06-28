@@ -4,20 +4,14 @@ import "./movies.css";
 export default function MovieCard({ title, image, times, date }) {
   return (
     <div className="movie_box">
-      <div className="booking_text">
-        <h3>Booking</h3>
-      </div>
-      <span class="poster">
-        <a href="/listmovie">
-          <img style={{ width: "100%" }} src={image} alt="Movie Poster" />
-        </a>
+      <span class=" img">
+        <img style={{ width: "100%" }} src={image} alt="Movie Poster" />
       </span>
       <div class="list_text">
-        <dt style={{ borderBottom: "1px solid #ddd" }}>{title}</dt>
-        <dd>
-          {times}
-          {date}
-        </dd>
+        <dt style={{ borderBottom: "1px solid #ddd", wordWrap: "break-word" }}>
+          {title}
+        </dt>
+        <dd>{description}</dd>
       </div>
     </div>
   );
