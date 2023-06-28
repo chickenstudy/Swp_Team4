@@ -1,11 +1,11 @@
 import React from "react";
 import "./movies.css";
 
-export default function MovieCard({ title, image, times,date }) {
+export default function MovieCard({ title, image, times, date }) {
   return (
     <div className="movie_box">
-      <div className="text">
-        <h3>Đặt vé</h3>
+      <div className="booking_text">
+        <h3>Booking</h3>
       </div>
       <span class="poster">
         <a href="/listmovie">
@@ -14,7 +14,10 @@ export default function MovieCard({ title, image, times,date }) {
       </span>
       <div class="list_text">
         <dt style={{ borderBottom: "1px solid #ddd" }}>{title}</dt>
-        <dd>{times}{date}</dd>
+        <dd>
+          {times}
+          {date}
+        </dd>
       </div>
     </div>
   );
