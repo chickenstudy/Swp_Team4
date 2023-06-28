@@ -4,6 +4,8 @@ package com.namnguyenmoihoc.realworldapp.model.movie;
 
 import java.util.Date;
 
+import jakarta.persistence.Temporal;
+import jakarta.persistence.TemporalType;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -20,6 +22,7 @@ public class MovieDTOUpdate {
     private String poster;
     private String banner;
     private String trailer;
+    @Temporal(TemporalType.DATE)
     private Date show_date;
     private String country;
     private String name;

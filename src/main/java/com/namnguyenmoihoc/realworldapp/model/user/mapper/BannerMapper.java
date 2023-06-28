@@ -21,8 +21,7 @@ public class BannerMapper {
     
     byte[] decodePicture = Base64.getDecoder().decode(encodePictureStr);// string to byte[]
 
-    Banner banner = Banner.builder().cinemaid(bannerDTOcreate.getCinemaid())
-            .picture(decodePicture).build();
+    Banner banner = Banner.builder().picture(decodePicture).build();
             return banner;
 
         } catch (Exception e) {
@@ -45,7 +44,7 @@ return null;
     String decodedStringBanner = new String(bannerDecode, StandardCharsets.UTF_8);
     */
 
-    return BannerDTOResponse.builder().bannerid(banner.getBannerid()).picture(pictureEncode).cinemaid(banner.getCinemaid()).build();
+    return BannerDTOResponse.builder().bannerid(banner.getBannerid()).picture(pictureEncode).build();
 }
 
 
@@ -55,7 +54,7 @@ public static Banner toBannerUpdate(BannerDTOUpdate bannerDTOUpdate)
      // string to byte[]
     byte[] picture = Base64.getDecoder().decode(bannerDTOUpdate.getPicture());
 
-    Banner banner = Banner.builder().cinemaid(bannerDTOUpdate.getCinemaid()).picture(picture).build();
+    Banner banner = Banner.builder().picture(picture).build();
     return banner;
 }
 
@@ -63,6 +62,6 @@ public static BannerDTOResponseCreate toBannerDTOReponseCreate(Banner banner)
 {
      // byte to string
     String picture = Base64.getEncoder().encodeToString(banner.getPicture());
-    return BannerDTOResponseCreate.builder().picture(picture).cinemaid(banner.getCinemaid()).build();
+    return BannerDTOResponseCreate.builder().picture(picture).build();
 }
 }

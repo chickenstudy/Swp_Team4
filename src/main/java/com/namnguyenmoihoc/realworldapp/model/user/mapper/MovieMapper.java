@@ -7,8 +7,6 @@ import java.util.Base64;
 import java.util.HashMap;
 import java.util.Map;
 
-
-
 import com.namnguyenmoihoc.realworldapp.entity.Movie;
 import com.namnguyenmoihoc.realworldapp.model.movie.MovieDTOCreate;
 import com.namnguyenmoihoc.realworldapp.model.movie.MovieDTOResponse;
@@ -35,7 +33,7 @@ public class MovieMapper {
             return movie;
 
         } catch (Exception e) {
-       
+
             e.printStackTrace();
         }
         return null;
@@ -45,19 +43,10 @@ public class MovieMapper {
         String posterEncode = new String(movie.getPoster());
         String bannerEncode = new String(movie.getBanner());
 
-        
-        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
-        String formattedDate = "";
-        if(movie.getShow_date() != null){
-            formattedDate = dateFormat.format(movie.getShow_date());
-        } else {
-            formattedDate = "Nothing";
-        }
-
         return MovieDTOResponse.builder().id(movie.getMovieid()).name(movie.getName()).type(movie.getType())
                 .poster(posterEncode).banner(bannerEncode).trailer(movie.getTrailer())
                 .times(movie.getTimes()).description(movie.getDescription()).country(movie.getCountry())
-                .show_date(formattedDate).build();
+                .show_date(movie.getShow_date()).build();
     }
 
     public static MovieDTOResponseCreate toMovieDTOReponseCreate(Movie movie) {

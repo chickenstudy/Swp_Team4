@@ -7,26 +7,26 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.jackson.Jackson2ObjectMapperBuilderCustomizer;
 import org.springframework.context.annotation.Bean;
 
-
 import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateSerializer;
 import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateTimeSerializer;
 
 @SpringBootApplication
 public class App {
-	private static final String dateFormat= "yyyy-MM-dd";
-	private static final String dateFormatTime= "yyyy-MM-dd HH:mm:ss" ;
+	private static final String dateFormat = "yyyy-MM-dd";
+	private static final String dateFormatTime = "yyyy-MM-dd HH:mm:ss";
 
-	public static void main(String[] args) {
-		SpringApplication.run(App.class, args);
-	}
 	@Bean
-	public Jackson2ObjectMapperBuilderCustomizer jsonCustomizer(){
-		return builder ->{
+	public Jackson2ObjectMapperBuilderCustomizer jsonCustomizer() {
+		return builder -> {
 			builder.simpleDateFormat(dateFormat);
 			builder.serializers(new LocalDateSerializer(DateTimeFormatter.ofPattern(dateFormat)));
 			builder.serializers(new LocalDateTimeSerializer(DateTimeFormatter.ofPattern(dateFormatTime)));
 		};
 
+	}
+
+	public static void main(String[] args) {
+		SpringApplication.run(App.class, args);
 	}
 
 }

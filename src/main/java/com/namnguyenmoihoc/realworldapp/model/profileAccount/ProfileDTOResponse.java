@@ -14,10 +14,12 @@ import lombok.Setter;
 @Getter
 @Setter
 public class ProfileDTOResponse {
+    private int id;
     private String username;
     private String email;
     private String sex;
     private String address;
+
     
 
     @Lob

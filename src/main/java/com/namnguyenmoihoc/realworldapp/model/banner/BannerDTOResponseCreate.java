@@ -12,6 +12,6 @@ import lombok.Setter;
 @NoArgsConstructor
 @Builder
 public class BannerDTOResponseCreate {
-    private int cinemaid;
+    
     private String picture;
 }

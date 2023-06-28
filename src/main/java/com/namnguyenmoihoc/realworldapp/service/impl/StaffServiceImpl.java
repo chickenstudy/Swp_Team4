@@ -32,7 +32,7 @@ import lombok.RequiredArgsConstructor;
 
 @Service
 @RequiredArgsConstructor
-public class StaffServiceImp implements StaffService {
+public class StaffServiceImpl implements StaffService {
     private final StaffRepository staffRepository;
     private final PasswordEncoder passwordEncoder;
 

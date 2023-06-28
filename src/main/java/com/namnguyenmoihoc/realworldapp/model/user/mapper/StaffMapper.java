@@ -9,16 +9,16 @@ import com.namnguyenmoihoc.realworldapp.model.profileAccount.ProfileDTOResponse;
 import com.namnguyenmoihoc.realworldapp.model.staff.StaffDTOCreate;
 import com.namnguyenmoihoc.realworldapp.model.staff.StaffDTOResponse;
 
-
 public class StaffMapper {
     public static ProfileDTOResponse toStaffResponse(Account staff) {
         ProfileDTOResponse profileDTOResponsive = ProfileDTOResponse.builder().address(staff.getAddress())
-                .email(staff.getEmail()).phonenumber(staff.getPhonenumber())
+             
+                .email(staff.getEmail()).phonenumber(staff.getPhonenumber()).id(staff.getId())
                 .picture(staff.getPicture()).sex(checkSex(staff)).username(staff.getUsername()).dob(staff.getDob())
                 .build();
         return profileDTOResponsive;
     }
-    
+
     private static String checkSex(Account staff) {
         String sexString = "Male";
         int sex = (int) (staff.getSex());
@@ -36,6 +36,7 @@ public class StaffMapper {
             byte[] decodePicture = Base64.getDecoder().decode(encodePictureStr); // string to byte[]
 
             return Account.builder().username(staffDTOCreateAccount.getUsername())
+                    .id(staffDTOCreateAccount.getId())
                     .email(staffDTOCreateAccount.getEmail())
                     .password(staffDTOCreateAccount.getPassword()).picture(decodePicture)
                     .address(staffDTOCreateAccount.getAddress())
@@ -47,6 +48,7 @@ public class StaffMapper {
         }
         return null;
     }
+
     public static void updateStaffDetails(Account staff, StaffDTOCreate staffDTOUpdate) {
 
         String picture = staffDTOUpdate.getPicture();
@@ -54,7 +56,7 @@ public class StaffMapper {
             String encodePosterStr = Base64.getEncoder().encodeToString(picture.getBytes("ASCII"));
 
             byte[] decodePicture = Base64.getDecoder().decode(encodePosterStr); // string to byte[]
-
+            staff.setId(staffDTOUpdate.getId());
             staff.setPicture(decodePicture);
             staff.setAddress(staffDTOUpdate.getAddress());
             staff.setUsername(staffDTOUpdate.getUsername());
@@ -63,6 +65,7 @@ public class StaffMapper {
             staff.setEmail(staffDTOUpdate.getEmail());
             staff.setSex(staffDTOUpdate.getSex());
             staff.setRolesID(Integer.parseInt("2"));
+       
 
         } catch (Exception e) {
 
@@ -71,16 +74,19 @@ public class StaffMapper {
         }
 
     }
-     public static  Map<String, StaffDTOResponse> buidDTOUpdateResponse(Account staff) {
+
+    public static Map<String, StaffDTOResponse> buidDTOUpdateResponse(Account staff) {
         String picture = Base64.getEncoder().encodeToString(staff.getPicture());
 
         Map<String, StaffDTOResponse> wrapper = new HashMap<>();
         StaffDTOResponse staffDTOResponse = StaffDTOResponse.builder()
+                .id(staff.getId())
                 .address(staff.getAddress())
                 .picture(picture)
                 .dob(staff.getDob())
                 .username(staff.getUsername())
                 .phonenumber(staff.getPhonenumber())
+               
 
                 .sex(staff.getSex())
                 .email(staff.getEmail())
@@ -90,6 +96,5 @@ public class StaffMapper {
         wrapper.put("update", staffDTOResponse);
         return wrapper;
     }
-
 
 }
