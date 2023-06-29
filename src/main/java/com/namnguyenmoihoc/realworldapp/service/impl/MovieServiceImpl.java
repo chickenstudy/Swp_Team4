@@ -62,7 +62,7 @@ public class MovieServiceImpl implements MovieService {
     @Override
     public Map<String, MovieDTOResponseCreate> getUpdateMovie(MovieDTOUpdate movieDTOUpdate)
             throws CustomNotFoundException {
-
+                
         Optional<Movie> movieOptional = movieRepository.findByMovieid(movieDTOUpdate.getMovieid());
         System.out.println(movieOptional);
 

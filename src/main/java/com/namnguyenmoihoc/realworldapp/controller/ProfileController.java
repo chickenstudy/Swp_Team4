@@ -23,7 +23,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/api/profiles")
+@RequestMapping("/api/user/profiles")
 @CrossOrigin
 public class ProfileController {
     private final UserService userService;
@@ -34,7 +34,7 @@ public class ProfileController {
         return userService.getProfile(userid);
     }
 
-    @PutMapping("/{userid}")
+    @PutMapping("/update/{userid}")
     public Map<String, ProfileDTOResponse> getUpdateAccount(@PathVariable int userid,
             @RequestBody UserDTOUpdateAccount userDTOUpdateAccount)
             throws CustomNotFoundException, IOException {

@@ -13,7 +13,7 @@ public class UserMapper {
         
         String decodedStringPicture = new String(user.getPicture());
 
-        return UserDTOResponse.builder().username(user.getUsername()).email(user.getEmail()).picture(decodedStringPicture).roleID(user.getRolesID())
+        return UserDTOResponse.builder().userId(user.getId()).username(user.getUsername()).email(user.getEmail()).picture(decodedStringPicture).roleID(user.getRolesID())
                 .build();
     }
 

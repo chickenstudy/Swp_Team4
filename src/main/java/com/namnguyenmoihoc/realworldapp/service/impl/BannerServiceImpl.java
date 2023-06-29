@@ -78,7 +78,7 @@ public class BannerServiceImpl implements BannerService {
         String picture = Base64.getEncoder().encodeToString(banner.getPicture());// byte to string
         Map<String, BannerDTOResponseCreate> wrapper = new HashMap<>();
 
-        BannerDTOResponseCreate bannerDTOResponse = BannerDTOResponseCreate.builder().picture(picture).cinemaid(banner.getCinemaid()).build();
+        BannerDTOResponseCreate bannerDTOResponse = BannerDTOResponseCreate.builder().picture(picture).build();
         wrapper.put("update:", bannerDTOResponse);
         return wrapper;
     }

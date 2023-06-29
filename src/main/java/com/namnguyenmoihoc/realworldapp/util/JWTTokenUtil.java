@@ -41,8 +41,14 @@ public class JWTTokenUtil {
     }
 
     private <T> T getClaimsFromToken(String token, Function<Claims, T> ClaimsResolver) {
-        final Claims claims = Jwts.parser().setSigningKey(secret).parseClaimsJws(token).getBody();
-        return ClaimsResolver.apply(claims);
+        try {
+            final Claims claims = Jwts.parser().setSigningKey(secret).parseClaimsJws(token).getBody();
+            return ClaimsResolver.apply(claims);
+        } catch (Exception e) {
+            // TODO: handle exception
+             System.out.println("Invalid JWT format: " + e.getMessage());
+        }
+        return null;
     }
 
     public boolean validate(String token, Account user) {
