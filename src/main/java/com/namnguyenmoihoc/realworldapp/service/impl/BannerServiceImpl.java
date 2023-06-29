@@ -16,7 +16,7 @@ import com.namnguyenmoihoc.realworldapp.model.banner.BannerDTOCreate;
 import com.namnguyenmoihoc.realworldapp.model.banner.BannerDTOResponse;
 import com.namnguyenmoihoc.realworldapp.model.banner.BannerDTOResponseCreate;
 import com.namnguyenmoihoc.realworldapp.model.banner.BannerDTOUpdate;
-import com.namnguyenmoihoc.realworldapp.model.movie.MovieDTOResponseCreate;
+
 import com.namnguyenmoihoc.realworldapp.model.user.CustomError;
 import com.namnguyenmoihoc.realworldapp.model.user.mapper.BannerMapper;
 import com.namnguyenmoihoc.realworldapp.repository.BannerRepository;
@@ -32,7 +32,7 @@ public class BannerServiceImpl implements BannerService {
     @Override
     public Map<String, BannerDTOResponseCreate> createBanner(Map<String, BannerDTOCreate> bannerDTOCreateMap)
             throws UnsupportedEncodingException {
-        // TODO Auto-generated method stub
+        
         BannerDTOCreate bannerDTOcreate = bannerDTOCreateMap.get("banner");
         Banner banner = BannerMapper.toBanner(bannerDTOcreate);
         banner = bannerRepository.save(banner);
