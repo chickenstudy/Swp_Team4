@@ -1,0 +1,49 @@
+.hotmovies {
+  display: inline-block;
+  text-align: center;
+  width: 100%;
+}
+.custom-carousel {
+  width: 80%;
+  margin: 0 auto;
+}
+
+.carousel-caption {
+  background-color: rgba(0, 0, 0, 0.5);
+  padding: 10px;
+}
+
+.carousel-caption h3 {
+  font-size: 24px;
+  color: #ffffff;
+}
+
+.carousel-caption p {
+  font-size: 18px;
+  color: #ffffff;
+}
+
+.movie_box {
+  border: 1px solid #ddd;
+}
+
+.mydivouter {
+  position: relative;
+
+  margin: 0 auto;
+}
+.mydivoverlap {
+  position: relative;
+  z-index: 1;
+}
+.mybuttonoverlap {
+  position: absolute;
+  z-index: 2;
+  display: none;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+.mydivouter:hover .mybuttonoverlap {
+  display: block;
+}

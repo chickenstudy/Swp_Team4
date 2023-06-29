@@ -1,0 +1,23 @@
+1. QUY TRÌNH VẬN HÀNH CỦA ỨNG DỤNG React
+    - src/index.js -> App.js (load App component được tạo bằng React) -> 
+     public/index.html (sử dụng React-DOM để render element mà được trả về từ App component)
+
+2. Cấu trúc Folders/Files trong ứng dụng React
+    - node_modules: Chứa các thư viện (modules) của NodeJS sử dụng cho ứng dụng
+    
+    - public: Chứa các static file (Người dùng có thể nhìn thấy hoặc tải về được)
+      Gồm: images, css, js (libs), logo, favicon
+    
+    - src: Chứa source code (behide) của các Components phục vụ xử lý logic cho các
+        chức năng của ứng dụng
+
+    - .gitignore: Chỉ định quy tắc bỏ qua các thư mục, tập tin trong dự án khi push code 
+      lên GitHub, GitLab, Bitbucket (Version Control)
+    
+    - package.json: Chứa thông tin cấu hình (bao gồm các module, thư viện, script) sẽ 
+        được sử dụng trong dự án
+
+3. Cài đặt thử nghiệm 1 module: Bootstrap
+    > npm install bootstrap@4
+
+    Sử dụng Bootstrap trong React app
