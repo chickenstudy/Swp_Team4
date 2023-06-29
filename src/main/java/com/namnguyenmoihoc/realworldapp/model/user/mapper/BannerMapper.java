@@ -2,6 +2,8 @@ package com.namnguyenmoihoc.realworldapp.model.user.mapper;
 
 import java.io.UnsupportedEncodingException;
 import java.util.Base64;
+import java.util.HashMap;
+import java.util.Map;
 
 import com.namnguyenmoihoc.realworldapp.entity.Banner;
 import com.namnguyenmoihoc.realworldapp.model.banner.BannerDTOCreate;
@@ -49,19 +51,40 @@ return null;
 
 
 
-public static Banner toBannerUpdate(BannerDTOUpdate bannerDTOUpdate)
-{
-     // string to byte[]
-    byte[] picture = Base64.getDecoder().decode(bannerDTOUpdate.getPicture());
-
-    Banner banner = Banner.builder().picture(picture).build();
-    return banner;
-}
-
 public static BannerDTOResponseCreate toBannerDTOReponseCreate(Banner banner)
 {
      // byte to string
     String picture = Base64.getEncoder().encodeToString(banner.getPicture());
     return BannerDTOResponseCreate.builder().picture(picture).build();
 }
+
+    public static Map<String, BannerDTOResponseCreate> buildBannerResponse(Banner banner) {
+        String picture = Base64.getEncoder().encodeToString(banner.getPicture());
+        Map<String, BannerDTOResponseCreate> wrapper = new HashMap<>();
+
+        BannerDTOResponseCreate bannerDTOResponse = BannerDTOResponseCreate.builder().picture(picture).build();
+
+        wrapper.put("update:", bannerDTOResponse);
+        return wrapper;
+    }
+
+    public static void updateBannerDetails(Banner banner, BannerDTOUpdate bannerDTOUpdate) {
+        String pictureStr = bannerDTOUpdate.getPicture();
+        
+        try {
+            String encodePictureStr = Base64.getEncoder().encodeToString(pictureStr.getBytes("ASCII"));
+           
+            byte[] decodePicture = Base64.getDecoder().decode(encodePictureStr); // string to byte[]
+            
+
+            banner.setPicture(decodePicture);
+            
+        } catch (Exception e) {
+
+            e.printStackTrace();
+
+        }
+
+    }
+
 }

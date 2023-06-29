@@ -47,7 +47,7 @@ public class BannerController {
             throws CustomNotFoundException {
         bannerDTOUpdate.setBannerid(bannerid);
         System.out.println(bannerDTOUpdate);
-        return bannerService.getUpdateAccount(bannerDTOUpdate);
+        return bannerService.getUpdateBanner(bannerDTOUpdate);
     }
 
     @DeleteMapping("/deletebanner/{bannerid}")
@@ -59,7 +59,7 @@ public class BannerController {
     }
 
     @GetMapping("/listBanner/{bannerid}")
-    public Map<String, BannerDTOResponseCreate> getListBannerByID(@PathVariable(value = "bannerid") int bannerid)
+    public Map<String, BannerDTOResponse> getListBannerByID(@PathVariable(value = "bannerid") int bannerid)
             throws CustomNotFoundException {
         return bannerService.getBannerByID(bannerid);
 

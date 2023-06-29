@@ -16,7 +16,6 @@ import com.namnguyenmoihoc.realworldapp.model.banner.BannerDTOCreate;
 import com.namnguyenmoihoc.realworldapp.model.banner.BannerDTOResponse;
 import com.namnguyenmoihoc.realworldapp.model.banner.BannerDTOResponseCreate;
 import com.namnguyenmoihoc.realworldapp.model.banner.BannerDTOUpdate;
-import com.namnguyenmoihoc.realworldapp.model.movie.MovieDTOResponseCreate;
 import com.namnguyenmoihoc.realworldapp.model.user.CustomError;
 import com.namnguyenmoihoc.realworldapp.model.user.mapper.BannerMapper;
 import com.namnguyenmoihoc.realworldapp.repository.BannerRepository;
@@ -57,10 +56,11 @@ public class BannerServiceImpl implements BannerService {
     }
 
     @Override
-    public Map<String, BannerDTOResponseCreate> getUpdateAccount(BannerDTOUpdate bannerDTOUpdate)
+    public Map<String, BannerDTOResponseCreate> getUpdateBanner(BannerDTOUpdate bannerDTOUpdate)
             throws CustomNotFoundException {
         // TODO Auto-generated method stub
-        Optional<Banner> bannerOptional = bannerRepository.findById(bannerDTOUpdate.getBannerid());
+        Optional<Banner> bannerOptional = bannerRepository.findByBannerid(bannerDTOUpdate.getBannerid());
+                System.out.println(bannerOptional);
 
         if (bannerOptional.isEmpty()) {
             throw new CustomNotFoundException(CustomError.builder().code("404").message("Banner not found").build());
@@ -68,19 +68,11 @@ public class BannerServiceImpl implements BannerService {
 
         // return buidProfileResponse(userOptional.get());
 
-        Banner banner = BannerMapper.toBannerUpdate(bannerDTOUpdate);
-        System.out.println("update:");
+        Banner banner = bannerOptional.get();
+        BannerMapper.updateBannerDetails(banner, bannerDTOUpdate);
+
         banner = bannerRepository.save(banner);
-        return buildBannerResponse(banner);
-    }
-
-    private Map<String, BannerDTOResponseCreate> buildBannerResponse(Banner banner) {
-        String picture = Base64.getEncoder().encodeToString(banner.getPicture());// byte to string
-        Map<String, BannerDTOResponseCreate> wrapper = new HashMap<>();
-
-        BannerDTOResponseCreate bannerDTOResponse = BannerDTOResponseCreate.builder().picture(picture).build();
-        wrapper.put("update:", bannerDTOResponse);
-        return wrapper;
+        return BannerMapper.buildBannerResponse(banner);
     }
 
     @Override
@@ -96,20 +88,20 @@ public class BannerServiceImpl implements BannerService {
     }
 
     @Override
-    public Map<String, BannerDTOResponseCreate> getBannerByID(int bannerid) throws CustomNotFoundException {
-        // TODO Auto-generated method stub
+    public Map<String, BannerDTOResponse> getBannerByID(int bannerid) throws CustomNotFoundException {
         Optional<Banner> bannerOptional = bannerRepository.findById(bannerid);
 
         if (bannerOptional.isEmpty()) {
             throw new CustomNotFoundException(CustomError.builder().code("404").message("Banner not found").build());
         }
         Banner banner = bannerOptional.get();
-        // BannerDTOResponseCreate.add(BannerMapper.toBannerDTOReponse(banner));
-        BannerDTOResponseCreate bannerDTO = BannerMapper.toBannerDTOReponseCreate(banner);
-        Map<String, BannerDTOResponseCreate> result = new HashMap<>();
+
+        BannerDTOResponse bannerDTO = BannerMapper.toBannerDTOReponse(banner);
+        Map<String, BannerDTOResponse> result = new HashMap<>();
         result.put("banner", bannerDTO);
 
         return result;
+
     }
 
 }
