@@ -9,10 +9,13 @@ export const ApplicationContext = React.createContext([]);
 
 function App() {
   useEffect(() => {
-    const jwt = sessionStorage.getItem("token");
+    const jwt = localStorage.getItem("token");
+    const id = localStorage.getItem("id");
+    console.log(id);
+    console.log(jwt);
     if (jwt != null) {
       axios
-        .post("http://localhost:8080/api/bootstrap", {
+        .post("http://localhost:8080/api/user/profiles/" + id, {
           headers: {
             Authorization: `Bearer ${jwt}`,
           },
@@ -20,6 +23,7 @@ function App() {
         .then((response) => {
           setUser(response.data.user);
           localStorage.setItem("token", response.data.token);
+          console.log(response.data.token);
         })
         .catch((error) => console.log(error));
     }
@@ -30,7 +34,6 @@ function App() {
   const makeSignIn = (user) => {
     setUser(user);
   };
-  console.log(user);
   const makeSignOut = () => {
     setUser([]);
   };

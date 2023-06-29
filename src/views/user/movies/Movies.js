@@ -20,7 +20,6 @@ export default function Movies() {
       .get("http://localhost:8080/api/movie/listMovie")
       .then((res) => {
         setMovies(res.data);
-        console.log(res);
       })
       .catch((err) => {
         console.log(err.message);
@@ -79,7 +78,8 @@ export default function Movies() {
                     className="my-3"
                     md={3}
                     key={item.id}
-                    onClick={LoadDetail.bind(this, item.id)}>
+                    onClick={LoadDetail.bind(this, item.id)}
+                  >
                     <MoviesCard
                       title={item.name}
                       image={item.poster}

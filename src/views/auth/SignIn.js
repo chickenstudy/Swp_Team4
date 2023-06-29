@@ -38,8 +38,8 @@ export default function SignIn() {
 
       const { data } = response;
       const user = data.user;
-      localStorage.setItem("token", data.token);
-
+      localStorage.setItem("token", user.token);
+      localStorage.setItem("id", user.userId);
       if (!user) {
         throw new Error("Incorrect email or password");
       }
