@@ -29,7 +29,7 @@ public class WebSecurityConfig{
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity httpSecurity) throws Exception {
-        httpSecurity.cors().and()
+        httpSecurity.cors().disable()
                 .csrf().disable()
                 .authorizeRequests()
                 .requestMatchers("/api/banner/*").permitAll()
@@ -37,7 +37,7 @@ public class WebSecurityConfig{
                 .requestMatchers("/api/staff/*").permitAll()
                 .requestMatchers("/api/user/login").permitAll()
                 .requestMatchers("/api/user/register").permitAll()
-                .requestMatchers("/api/user/**").authenticated()
+                .requestMatchers("/api/user/profile/*").authenticated()
                 .and()
                 .sessionManagement()
                 .sessionCreationPolicy(SessionCreationPolicy.STATELESS);

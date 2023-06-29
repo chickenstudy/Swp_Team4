@@ -28,11 +28,12 @@ import lombok.RequiredArgsConstructor;
 @RestController
 @RequestMapping("/api/user")
 @RequiredArgsConstructor
-@CrossOrigin
+@CrossOrigin(origins = "http://localhost:3000")
 public class UserController {
     private final UserService userService;
 
     @PostMapping("/login")
+    @CrossOrigin(origins = "http://localhost:3000")
     public Map<String, UserDTOResponse> login(@RequestBody Map<String, UserDTOLoginRequest> userloginRequestMap)
             throws CustomBadRequestException, CustomNotFoundException {
         return userService.authenticate(userloginRequestMap);
