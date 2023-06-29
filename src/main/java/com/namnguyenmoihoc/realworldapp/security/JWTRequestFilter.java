@@ -57,8 +57,10 @@ public class JWTRequestFilter extends OncePerRequestFilter {
             }
 
         } else {
-            System.out.println("JWT Token does not start with token.");
+            System.out.println("JWT Token does not start with 'token '.");
         }
+
+
 
         if (tokenPayload != null && SecurityContextHolder.getContext().getAuthentication() == null) {
             Optional<Account> userOptional = userRepository.findById(tokenPayload.getUserID());
