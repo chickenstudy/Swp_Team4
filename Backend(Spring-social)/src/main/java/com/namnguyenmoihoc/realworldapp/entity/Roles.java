@@ -19,5 +19,4 @@ public class Roles {
     @Id
     private int roleid;
     private String rolename;
-
 }
