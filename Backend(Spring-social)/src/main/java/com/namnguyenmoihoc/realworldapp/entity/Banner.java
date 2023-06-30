@@ -21,4 +21,6 @@ public class Banner {
     private int bannerid;
     @Lob
     private byte[] picture;
+
+    private byte active;
 }

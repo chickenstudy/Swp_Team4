@@ -22,7 +22,7 @@ public class BannerMapper {
 
             byte[] decodePicture = Base64.getDecoder().decode(encodePictureStr);// string to byte[]
 
-            Banner banner = Banner.builder().picture(decodePicture).build();
+            Banner banner = Banner.builder().picture(decodePicture).active(Byte.valueOf("0")).build();
             return banner;
 
         } catch (Exception e) {
@@ -47,14 +47,14 @@ public class BannerMapper {
          * StandardCharsets.UTF_8);
          */
 
-        return BannerDTOResponse.builder().bannerid(banner.getBannerid()).picture(pictureEncode).build();
+        return BannerDTOResponse.builder().bannerid(banner.getBannerid()).picture(pictureEncode).active(banner.getActive()).build();
     }
 
     public static BannerDTOResponseCreate toBannerDTOReponseCreate(Banner banner) {
         // byte to string
         String pictureEncode = new String(banner.getPicture());
 
-        return BannerDTOResponseCreate.builder().picture(pictureEncode).build();
+        return BannerDTOResponseCreate.builder().picture(pictureEncode).active(banner.getActive()).build();
     }
 
     public static void updateBannerDetails(Banner banner, BannerDTOUpdate bannerDTOUpdate) {
@@ -66,6 +66,7 @@ public class BannerMapper {
             byte[] decodePicture = Base64.getDecoder().decode(encodePictureStr); // string to byte[]
 
             banner.setPicture(decodePicture);
+            banner.setActive(bannerDTOUpdate.getActive());
 
         } catch (Exception e) {
 
