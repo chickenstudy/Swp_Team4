@@ -1,22 +1,33 @@
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Col, Row, Table } from "react-bootstrap";
 import { Link } from "react-router-dom";
 
+export const CinemaContext = React.createContext([]);
+
 export default function Cinema() {
-  const [product, setProduct] = useState([]);
+  const [cinema, setCinema] = useState([]);
   const [categories, setCategories] = useState([]);
   const [supplier, setSupplier] = useState([]);
 
   // call api
-
-  const handleDelete = (id) => {
-    if (window.confirm("Muon xoa-id: " + id + "?")) {
-      fetch("http://localhost:9999/product/" + id, {
+  useEffect(() => {
+    fetch("http://localhost:8080/api/cinema/listCinema")
+      .then((res) => res.json())
+      .then((data) => {
+        setCinema(data);
+      })
+      .catch((err) => {
+        console.log(err.message);
+      });
+  }, []);
+  const handleDelete = (cinemaid) => {
+    if (window.confirm("Muon xoa-id: " + cinemaid + "?")) {
+      fetch("http://localhost:8080/api/cinema/deleteCinema/" + cinemaid, {
         method: "DELETE",
       })
         .then(() => {
           alert("Delete success");
-          window.location.reload();
+          window.location.reload("/cinema");
         })
         .catch((err) => {
           console.log(err.message);
@@ -44,22 +55,30 @@ export default function Cinema() {
             <Table>
               <thead>
                 <tr>
-                  <th>Id</th>|<th>Name</th>|<th>Location</th>
+                  <th>Id</th>
+                  <th>Name</th>
+                  <th>Location</th>
+                  <th colSpan={2}>Actions</th>
                 </tr>
               </thead>
               <tbody>
-                {product.map((p) => (
-                  <tr key={p.id}>
-                    <td>{p.id}</td>
+                {cinema.map((p) => (
+                  <tr key={p.cinemaid}>
+                    <td>{p.cinemaid}</td>
                     <td>
-                      {<Link to={"/product/detail/" + p.id}>{p.name}</Link>}
+                      {
+                        <Link to={"/cinema/detail/" + p.cinemaid}>
+                          {p.name}
+                        </Link>
+                      }
                     </td>
-                    <td>{p.price}</td>
+                    <td>{p.location}</td>
                     <td>
-                      <Link to={"/product/edit/" + p.id}>Edit</Link>
-                    </td>
-                    <td>
-                      <Link to={"/"} onClick={() => handleDelete(p.id)}>
+                      <Link to={"/cinema/edit/" + p.cinemaid}>Edit</Link> |{" "}
+                      <Link
+                        to={"/cinema"}
+                        onClick={() => handleDelete(p.cinemaid)}
+                      >
                         Delete
                       </Link>
                     </td>

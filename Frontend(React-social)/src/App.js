@@ -11,8 +11,7 @@ function App() {
   useEffect(() => {
     const jwt = localStorage.getItem("token");
     const id = localStorage.getItem("id");
-    console.log(id);
-    console.log(jwt);
+
     if (jwt != null) {
       axios
         .post("http://localhost:8080/api/user/profiles/" + id, {
@@ -23,11 +22,12 @@ function App() {
         .then((response) => {
           setUser(response.data.user);
           localStorage.setItem("token", response.data.token);
-          console.log(response.data.token);
         })
         .catch((error) => console.log(error));
     }
   }, []);
+
+  const [banners, setBanners] = React.useState([]);
 
   const [user, setUser] = React.useState([]);
 
@@ -40,7 +40,7 @@ function App() {
 
   return (
     <ApplicationContext.Provider
-      value={{ user, setUser, makeSignIn, makeSignOut }}
+      value={{ user, setUser, makeSignIn, makeSignOut, banners, setBanners }}
     >
       <React.Fragment>
         <BrowserRouter>

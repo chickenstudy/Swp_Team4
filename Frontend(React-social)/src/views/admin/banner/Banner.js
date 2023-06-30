@@ -1,13 +1,15 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
 /* eslint-disable jsx-a11y/img-redundant-alt */
 /* eslint-disable jsx-a11y/alt-text */
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import axios from "axios";
 import Button from "react-bootstrap/Button";
 import Modal from "react-bootstrap/Modal";
 import { BiEdit } from "react-icons/bi";
 import { RiDeleteBinLine } from "react-icons/ri";
+import { Form } from "react-bootstrap";
+import { ApplicationContext } from "../../../App";
 
 export default function Banner() {
   const [show, setShow] = useState(false);
@@ -17,11 +19,9 @@ export default function Banner() {
   const { bannerid } = useParams();
   const [data, setData] = useState([]);
   const [banner, setBanner] = useState("");
-
-  
-  
+  const { banners, setBanners } = useContext(ApplicationContext);
   useEffect(() => {
-    if (data.movie) {   
+    if (data.movie) {
       setBanner(data.movie.banner || "");
     }
   }, [data]);
@@ -36,7 +36,6 @@ export default function Banner() {
         console.log(err.message);
       });
   }, []);
-
 
   const handleBannerChange = (event) => {
     const file = event.target.files[0];
@@ -72,12 +71,11 @@ export default function Banner() {
         console.log(err.message);
       });
 
-      axios
+    axios
       .put(`http://localhost:8080/api/banner/updateBanner/${bannerid}`, data)
       .then((res) => {
         alert("Saved successfully.");
         window.location.reload();
-
       })
       .catch((err) => {
         console.log(err.message);
@@ -105,7 +103,8 @@ export default function Banner() {
         <Button
           variant="success rounded-0 my-3"
           onClick={handleShow}
-          type="submit">
+          type="submit"
+        >
           Add new banner
         </Button>
 
@@ -134,7 +133,8 @@ export default function Banner() {
 
       <table
         className="table table-bordered mx-auto"
-        style={{ maxWidth: "800px" }}>
+        style={{ maxWidth: "800px" }}
+      >
         <thead>
           <tr>
             <td className="bg-dark text-white">Id</td>
@@ -163,6 +163,23 @@ export default function Banner() {
                     }}>
                     <BiEdit className="btn btn-primary my-1" size={50} />
                   </a> */}
+                  <Form>
+                    <Form.Check
+                      type="switch"
+                      id={item.bannerid}
+                      label="on screen"
+                      onChange={(event) => {
+                        if (event.target.checked == true) {
+                          banners.push(item.picture);
+
+                          setBanners(banners);
+                        } else {
+                          banners.pop(item.picture);
+                          setBanners(banners);
+                        }
+                      }}
+                    />{" "}
+                  </Form>
                   <BiEdit
                     className="btn btn-primary my-1"
                     size={50}
@@ -196,7 +213,8 @@ export default function Banner() {
                     className=""
                     onClick={() => {
                       Removefunction(item.bannerid);
-                    }}>
+                    }}
+                  >
                     <RiDeleteBinLine
                       className="btn btn-danger my-1"
                       size={50}

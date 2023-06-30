@@ -14,12 +14,13 @@ export default function CreateCinema() {
       return;
     }
     const cinema = {
-      name: name,
-
-      location: location,
+      cinema: {
+        name: name,
+        location: location,
+      },
     };
 
-    fetch("", {
+    fetch("http://localhost:8080/api/cinema/create", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -28,10 +29,10 @@ export default function CreateCinema() {
     })
       .then((res) => res.json())
       .then((data) => {
-        alert("Create cINEMA successfully.");
+        alert("Create Cinema successfully.");
         setName("");
         setLocation("");
-        negative("/");
+        negative("/cinema");
       })
       .catch((err) => console.log(err));
   };

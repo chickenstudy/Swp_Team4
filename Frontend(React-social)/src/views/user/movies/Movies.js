@@ -7,8 +7,13 @@ import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import axios from "axios";
 import { Container } from "react-bootstrap";
+import { useContext } from "react";
+import { ApplicationContext } from "../../../App";
 
 export default function Movies() {
+  const { banners } = useContext(ApplicationContext);
+  console.log(banners);
+
   const [movies, setMovies] = useState([]);
   const navigate = useNavigate();
   const LoadDetail = (id) => {
@@ -28,41 +33,24 @@ export default function Movies() {
 
   return (
     <div>
-      <span className="hotmovies narbar">
-        <Link to="/" style={{ textDecoration: "none", color: "#000000" }}>
-          HOT MOVIES
-        </Link>
-      </span>
-      <Carousel>
-        <Carousel.Item>
-          <img
-            className="d-block w-100"
-            src="https://media.lottecinemavn.com/Media/WebAdmin/df18effc746842f1834d34bea8081501.jpg"
-            alt="First slide"
-          />
-        </Carousel.Item>
-        <Carousel.Item>
-          <img
-            className="d-block w-100"
-            src="https://media.lottecinemavn.com/Media/WebAdmin/a49acadcb9a04f73835912cdee3c489f.jpg"
-            alt="Second slide"
-          />
-        </Carousel.Item>
-        <Carousel.Item>
-          <img
-            className="d-block w-100"
-            src="https://media.lottecinemavn.com/Media/WebAdmin/b2397436fad3439c86f005325f05fac1.jpg"
-            alt="Third slide"
-          />
-        </Carousel.Item>
-        <Carousel.Item>
-          <img
-            className="d-block w-100"
-            src="https://media.lottecinemavn.com/Media/WebAdmin/5164c5f4e6964c71b3f9443471000840.jpg"
-            alt="Fourth slide"
-          />
-        </Carousel.Item>
-      </Carousel>
+      <div className="banner">
+        <span className="hotmovies narbar">
+          <Link to="/" style={{ textDecoration: "none", color: "#000000" }}>
+            HOT MOVIES
+          </Link>
+        </span>
+        <Carousel>
+          {banners.map((banner, index) => (
+            <Carousel.Item key={index}>
+              <img
+                className="d-block w-100"
+                src={banner}
+                alt={`Slide ${index + 1}`}
+              />
+            </Carousel.Item>
+          ))}
+        </Carousel>
+      </div>
       <h2 className="title my-3" style={{ textAlign: "center" }}>
         NOW SHOWING
       </h2>
