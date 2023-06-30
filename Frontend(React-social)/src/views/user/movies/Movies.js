@@ -12,7 +12,6 @@ import { ApplicationContext } from "../../../App";
 
 export default function Movies() {
   const { banners } = useContext(ApplicationContext);
-  console.log(banners);
 
   const [movies, setMovies] = useState([]);
   const navigate = useNavigate();
@@ -44,7 +43,7 @@ export default function Movies() {
             <Carousel.Item key={index}>
               <img
                 className="d-block w-100"
-                src={banner}
+                src={banner.content}
                 alt={`Slide ${index + 1}`}
               />
             </Carousel.Item>

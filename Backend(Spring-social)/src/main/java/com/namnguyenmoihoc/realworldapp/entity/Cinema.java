@@ -20,8 +20,8 @@ import lombok.Setter;
 @Table(name = "cinema")
 public class Cinema {
     @Id
-    private  int cinemaid;
-    private  String name;
-    private  String location;
+    private int cinemaid;
+    private String name;
+    private String location;
 }
 

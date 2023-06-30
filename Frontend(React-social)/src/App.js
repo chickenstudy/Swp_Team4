@@ -10,18 +10,29 @@ export const ApplicationContext = React.createContext([]);
 function App() {
   useEffect(() => {
     const jwt = localStorage.getItem("token");
-    const id = localStorage.getItem("id");
+    console.log(jwt);
+    axios
+      .get("http://localhost:8080/api/banner/listBanner")
+      .then((response) => {
+        const activeBanners = response.data
+          .filter((banner) => banner.active == 1)
+          .map((banner) => {
+            return { id: banner.bannerid, content: banner.picture };
+          });
+        setBanners(activeBanners);
+      })
+      .catch((error) => console.log(error));
 
     if (jwt != null) {
       axios
-        .post("http://localhost:8080/api/user/profiles/" + id, {
+        .get("http://localhost:8080/api/user/currentUser", {
           headers: {
             Authorization: `Bearer ${jwt}`,
           },
         })
         .then((response) => {
+          localStorage.setItem("token", response.data.user.token);
           setUser(response.data.user);
-          localStorage.setItem("token", response.data.token);
         })
         .catch((error) => console.log(error));
     }
@@ -35,6 +46,7 @@ function App() {
     setUser(user);
   };
   const makeSignOut = () => {
+    localStorage.removeItem("token");
     setUser([]);
   };
 

@@ -5,6 +5,10 @@ import { Link } from "react-router-dom";
 export const CinemaContext = React.createContext([]);
 
 export default function Cinema() {
+  const makeCinema = (cinema) => {
+    setCinema(cinema);
+  };
+
   const [cinema, setCinema] = useState([]);
   const [categories, setCategories] = useState([]);
   const [supplier, setSupplier] = useState([]);

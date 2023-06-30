@@ -42,8 +42,8 @@ public class JWTRequestFilter extends OncePerRequestFilter {
         String token = null;
         TokenPayload tokenPayload = null;
 
-        if (requestTokenHeader != null && requestTokenHeader.startsWith("Token ")) {
-            token = requestTokenHeader.substring(6).trim();
+        if (requestTokenHeader != null && requestTokenHeader.startsWith("Bearer ")) {
+            token = requestTokenHeader.substring(7).trim();
 
             try {
                 tokenPayload = jwtTokenUtil.getTokenPayLoad(token);

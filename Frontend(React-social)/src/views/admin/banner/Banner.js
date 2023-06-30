@@ -167,6 +167,9 @@ export default function Banner() {
                     <Form.Check
                       type="switch"
                       id={item.bannerid}
+                      checked={banners
+                        .map((banner) => banner.bannerid)
+                        .includes(item.bannerid)}
                       label="on screen"
                       onChange={(event) => {
                         if (event.target.checked == true) {
