@@ -20,4 +20,6 @@ public interface CinemaService {
 
     public void getDeleteCinema(int cinemaId) throws CustomNotFoundException;
 
+    Map<String, CinemaDTOResponse> getCinemaByID(int cinemaId) throws CustomNotFoundException;
+
 }
