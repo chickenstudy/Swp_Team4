@@ -1,6 +1,6 @@
 package com.namnguyenmoihoc.realworldapp.service.impl;
 
-import java.io.UnsupportedEncodingException;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -16,6 +16,7 @@ import com.namnguyenmoihoc.realworldapp.exception.custom.CustomNotFoundException
 import com.namnguyenmoihoc.realworldapp.model.cinema.CinemaDTO;
 import com.namnguyenmoihoc.realworldapp.model.cinema.CinemaDTOResponse;
 import com.namnguyenmoihoc.realworldapp.model.cinema.CinemaDTOResponseNoId;
+
 import com.namnguyenmoihoc.realworldapp.model.user.CustomError;
 
 import com.namnguyenmoihoc.realworldapp.model.user.mapper.CinemaMapper;
@@ -32,7 +33,7 @@ public class CinemaServiceImpl implements CinemaService {
     private final CinemaRepository cinemaRepository;
 
     @Override
-    public Map<String, CinemaDTOResponseNoId> createCinema(Map<String, CinemaDTO> cinemaCreate){
+    public Map<String, CinemaDTOResponseNoId> createCinema(Map<String, CinemaDTO> cinemaCreate) {
         CinemaDTO cinemaDTOcreate = cinemaCreate.get("cinema");
         Cinema cinema = CinemaMapper.toCinema(cinemaDTOcreate);
         cinema = cinemaRepository.save(cinema);
@@ -43,11 +44,8 @@ public class CinemaServiceImpl implements CinemaService {
         wrapper.put("cinema", cinemaDTOResponse);
 
         return wrapper;
-    
-            
+
     }
-   
-    
 
     @Override
     public List<CinemaDTOResponse> getListCinemas() {
@@ -61,8 +59,6 @@ public class CinemaServiceImpl implements CinemaService {
         return cinemaDTOResponses;
 
     }
-
-    
 
     @Override
     public Map<String, CinemaDTOResponseNoId> getUpdateCinema(CinemaDTO cinemaDTO) throws CustomNotFoundException {
@@ -90,6 +86,23 @@ public class CinemaServiceImpl implements CinemaService {
         }
 
         cinemaRepository.deleteById(cinemaId);
+    }
+
+    @Override
+    public Map<String, CinemaDTOResponse> getCinemaByID(int cinemaId) throws CustomNotFoundException {
+       Optional<Cinema> cinemaOptional=cinemaRepository.findById(cinemaId);
+       if (cinemaOptional.isEmpty()) {
+            throw new CustomNotFoundException(CustomError.builder().code("404").message("Cinema not found").build());
+        }
+        Cinema cinema= cinemaOptional.get();
+        CinemaDTOResponse cinemaDTO=CinemaMapper.toCinemaDTOReponse(cinema);
+
+       
+        Map<String, CinemaDTOResponse> result = new HashMap<>();
+        result.put("cinema", cinemaDTO);
+
+        return result;
+
     }
 
 }

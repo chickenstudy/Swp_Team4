@@ -2,8 +2,7 @@ package com.namnguyenmoihoc.realworldapp.entity;
 
 import java.util.Date;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
-import com.fasterxml.jackson.annotation.JsonFormat.Shape;
+
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;

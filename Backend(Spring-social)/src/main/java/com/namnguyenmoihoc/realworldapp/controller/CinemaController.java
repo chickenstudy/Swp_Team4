@@ -18,6 +18,7 @@ import com.namnguyenmoihoc.realworldapp.exception.custom.CustomNotFoundException
 import com.namnguyenmoihoc.realworldapp.model.cinema.CinemaDTO;
 import com.namnguyenmoihoc.realworldapp.model.cinema.CinemaDTOResponse;
 import com.namnguyenmoihoc.realworldapp.model.cinema.CinemaDTOResponseNoId;
+
 import com.namnguyenmoihoc.realworldapp.service.CinemaService;
 
 import lombok.RequiredArgsConstructor;
@@ -57,5 +58,11 @@ public class CinemaController {
     cinemaService.getDeleteCinema(cinemaId);
 
     }
+    @GetMapping("/listCinema/{cinemaid}")
+    public Map<String, CinemaDTOResponse> getLisCinemaByID(@PathVariable(value = "cinemaid") int cinemaId)
+            throws CustomNotFoundException {
+        return cinemaService.getCinemaByID(cinemaId);
+    }
+
 
 }
