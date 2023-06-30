@@ -2,6 +2,8 @@ package com.namnguyenmoihoc.realworldapp.model.user.mapper;
 
 import java.io.UnsupportedEncodingException;
 import java.util.Base64;
+import java.util.HashMap;
+import java.util.Map;
 
 import com.namnguyenmoihoc.realworldapp.entity.Banner;
 import com.namnguyenmoihoc.realworldapp.model.banner.BannerDTOCreate;
@@ -10,58 +12,66 @@ import com.namnguyenmoihoc.realworldapp.model.banner.BannerDTOResponseCreate;
 import com.namnguyenmoihoc.realworldapp.model.banner.BannerDTOUpdate;
 
 public class BannerMapper {
-    public static Banner toBanner(BannerDTOCreate bannerDTOcreate) throws UnsupportedEncodingException
-    {
-       
+    public static Banner toBanner(BannerDTOCreate bannerDTOcreate) throws UnsupportedEncodingException {
+
         String pictureStr = bannerDTOcreate.getPicture();
 
         try {
-            
-    String encodePictureStr = Base64.getEncoder().encodeToString(pictureStr.getBytes("ASCII"));
-    
-    byte[] decodePicture = Base64.getDecoder().decode(encodePictureStr);// string to byte[]
 
-    Banner banner = Banner.builder().picture(decodePicture).build();
+            String encodePictureStr = Base64.getEncoder().encodeToString(pictureStr.getBytes("ASCII"));
+
+            byte[] decodePicture = Base64.getDecoder().decode(encodePictureStr);// string to byte[]
+
+            Banner banner = Banner.builder().picture(decodePicture).build();
             return banner;
 
         } catch (Exception e) {
-    // TODO: handle exception
-    e.printStackTrace();
-}
-return null;
+            // TODO: handle exception
+            e.printStackTrace();
+        }
+        return null;
     }
 
-    public static BannerDTOResponse toBannerDTOReponse(Banner banner)
-{
-    
-    String pictureEncode = new String(banner.getPicture());
+    public static BannerDTOResponse toBannerDTOReponse(Banner banner) {
 
-    /* 
-    byte[] posterDecode = Base64.getUrlDecoder().decode(posterEncode); // byte to string
-    byte[] bannerDecode = Base64.getUrlDecoder().decode(bannerEncode);
+        String pictureEncode = new String(banner.getPicture());
 
-    String decodedStringPoster = new String(posterDecode, StandardCharsets.UTF_8);
-    String decodedStringBanner = new String(bannerDecode, StandardCharsets.UTF_8);
-    */
+        /*
+         * byte[] posterDecode = Base64.getUrlDecoder().decode(posterEncode); // byte to
+         * string
+         * byte[] bannerDecode = Base64.getUrlDecoder().decode(bannerEncode);
+         * 
+         * String decodedStringPoster = new String(posterDecode,
+         * StandardCharsets.UTF_8);
+         * String decodedStringBanner = new String(bannerDecode,
+         * StandardCharsets.UTF_8);
+         */
 
-    return BannerDTOResponse.builder().bannerid(banner.getBannerid()).picture(pictureEncode).build();
-}
+        return BannerDTOResponse.builder().bannerid(banner.getBannerid()).picture(pictureEncode).build();
+    }
 
+    public static BannerDTOResponseCreate toBannerDTOReponseCreate(Banner banner) {
+        // byte to string
+        String pictureEncode = new String(banner.getPicture());
 
+        return BannerDTOResponseCreate.builder().picture(pictureEncode).build();
+    }
 
-public static Banner toBannerUpdate(BannerDTOUpdate bannerDTOUpdate)
-{
-     // string to byte[]
-    byte[] picture = Base64.getDecoder().decode(bannerDTOUpdate.getPicture());
+    public static void updateBannerDetails(Banner banner, BannerDTOUpdate bannerDTOUpdate) {
+        String pictureStr = bannerDTOUpdate.getPicture();
 
-    Banner banner = Banner.builder().picture(picture).build();
-    return banner;
-}
+        try {
+            String encodePictureStr = Base64.getEncoder().encodeToString(pictureStr.getBytes("ASCII"));
 
-public static BannerDTOResponseCreate toBannerDTOReponseCreate(Banner banner)
-{
-     // byte to string
-    String picture = Base64.getEncoder().encodeToString(banner.getPicture());
-    return BannerDTOResponseCreate.builder().picture(picture).build();
-}
+            byte[] decodePicture = Base64.getDecoder().decode(encodePictureStr); // string to byte[]
+
+            banner.setPicture(decodePicture);
+
+        } catch (Exception e) {
+
+            e.printStackTrace();
+
+        }
+
+    }
 }

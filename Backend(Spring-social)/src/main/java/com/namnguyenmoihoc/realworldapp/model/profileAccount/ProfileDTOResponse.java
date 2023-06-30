@@ -19,11 +19,7 @@ public class ProfileDTOResponse {
     private String email;
     private String sex;
     private String address;
-
-    
-
-    @Lob
-    private byte[] picture;
+    private String picture;
     private String phonenumber;
     private Date dob;
 }

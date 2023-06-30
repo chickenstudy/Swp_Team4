@@ -32,7 +32,6 @@ public class BannerController {
     @PostMapping("/create")
     public Map<String, BannerDTOResponseCreate> createBanner(
             @RequestBody Map<String, BannerDTOCreate> bannerDTOCreateMap) throws UnsupportedEncodingException {
-        System.out.println(bannerDTOCreateMap);
         return bannerService.createBanner(bannerDTOCreateMap);
     }
 
@@ -46,7 +45,6 @@ public class BannerController {
             @RequestBody BannerDTOUpdate bannerDTOUpdate)
             throws CustomNotFoundException {
         bannerDTOUpdate.setBannerid(bannerid);
-        System.out.println(bannerDTOUpdate);
         return bannerService.getUpdateAccount(bannerDTOUpdate);
     }
 
