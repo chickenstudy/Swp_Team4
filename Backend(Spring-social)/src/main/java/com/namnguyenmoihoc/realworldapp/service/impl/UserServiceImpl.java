@@ -144,10 +144,12 @@ public class UserServiceImpl implements UserService {
 
     private Map<String, ProfileDTOResponse> buidProfileResponse(Account user) {
         Map<String, ProfileDTOResponse> wrapper = new HashMap<>();
+                String decodedStringPicture = new String(user.getPicture());
+
 
         ProfileDTOResponse profileDTOResponsive = ProfileDTOResponse.builder().address(user.getAddress())
                 .email(user.getEmail()).phonenumber(user.getPhonenumber())
-                .picture(user.getPicture()).sex(checkSex(user)).username(user.getUsername()).dob(user.getDob()).build();
+                .picture(decodedStringPicture).sex(checkSex(user)).username(user.getUsername()).dob(user.getDob()).build();
 
         wrapper.put("profile", profileDTOResponsive);
         return wrapper;

@@ -68,17 +68,19 @@ public class BannerServiceImpl implements BannerService {
 
         // return buidProfileResponse(userOptional.get());
 
-        Banner banner = BannerMapper.toBannerUpdate(bannerDTOUpdate);
-        System.out.println("update:");
+        Banner banner = bannerOptional.get();
+        BannerMapper.updateBannerDetails(banner, bannerDTOUpdate);
+
         banner = bannerRepository.save(banner);
         return buildBannerResponse(banner);
     }
 
     private Map<String, BannerDTOResponseCreate> buildBannerResponse(Banner banner) {
-        String picture = Base64.getEncoder().encodeToString(banner.getPicture());// byte to string
+        String picture = Base64.getEncoder().encodeToString(banner.getPicture());
         Map<String, BannerDTOResponseCreate> wrapper = new HashMap<>();
 
-        BannerDTOResponseCreate bannerDTOResponse = BannerDTOResponseCreate.builder().picture(picture).build();
+        BannerDTOResponseCreate bannerDTOResponse = BannerDTOResponseCreate.builder().picture(picture).active(banner.getActive()).build();
+
         wrapper.put("update:", bannerDTOResponse);
         return wrapper;
     }

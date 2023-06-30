@@ -16,13 +16,12 @@ import lombok.Setter;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-
+@Data
 @Table(name = "cinema")
 public class Cinema {
     @Id
     private  int cinemaid;
     private  String name;
     private  String location;
-
-    
 }
+

@@ -14,4 +14,5 @@ import lombok.Setter;
 public class BannerDTOResponseCreate {
     
     private String picture;
+    private byte active;
 }
