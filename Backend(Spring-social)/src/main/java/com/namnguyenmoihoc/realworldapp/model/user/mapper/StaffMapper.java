@@ -11,10 +11,11 @@ import com.namnguyenmoihoc.realworldapp.model.staff.StaffDTOResponse;
 
 public class StaffMapper {
     public static ProfileDTOResponse toStaffResponse(Account staff) {
+                String decodedStringPicture = new String(staff.getPicture());
+
         ProfileDTOResponse profileDTOResponsive = ProfileDTOResponse.builder().address(staff.getAddress())
-             
                 .email(staff.getEmail()).phonenumber(staff.getPhonenumber()).id(staff.getId())
-                .picture(staff.getPicture()).sex(checkSex(staff)).username(staff.getUsername()).dob(staff.getDob())
+                .picture(decodedStringPicture).sex(checkSex(staff)).username(staff.getUsername()).dob(staff.getDob())
                 .build();
         return profileDTOResponsive;
     }
