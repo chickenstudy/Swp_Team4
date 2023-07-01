@@ -35,89 +35,169 @@ const Informationmovie = () => {
   };
 
   return (
-    <Container style={{ paddingTop: "5px" }}>
-      <Row>
-        <div className="movie_trailer detail_typeA">
-          <div className="movie-box d-block">
-            <Carousel>
-              <Carousel.Item>
-                <div className="d-flex justify-content-center ">
-                  <img className="bannerImg" src={data?.movie?.banner} />
-                </div>
-              </Carousel.Item>
-            </Carousel>
-          </div>
-        </div>
-        <div className="wide-top d-flex">
-          <div className="thumb">
-            <Row style={{ paddingTop: "5px" }} xs={12}>
-              <Col>
-                <img src={data?.movie?.poster} />
-              </Col>
-              <Col style={{ paddingRight: "100px" }}>
-                <Form>
-                  <h2 className="movie_title">{data?.movie?.name}</h2>
-                  <p>
-                    <AiOutlineFieldTime size={26} /> {data?.movie?.times}
-                  </p>
-                  <p>
-                    <strong>Thể loại</strong> {data?.movie?.type}
-                  </p>
-                  <p>
-                    <strong>Quốc gia</strong> {data?.movie?.country}
-                  </p>
-                  <p>
-                    <strong>Ngày công chiếu </strong>
-                    {data?.movie?.show_date}
-                  </p>
-                </Form>
-              </Col>
-            </Row>
-            <Row xs={12}>
-              <Button
-                onClick={handleOpenVideoModal}
-                className="btn_reverse Lang-LBL0000 d-block justify-content-center my-2 rounded-0"
-                style={{
-                  width: "175px",
-                  border: "2px solid rgb(206, 161, 11)",
-                }}
-                variant="dark"
-              >
-                View Trailer
-              </Button>
+    // <Container style={{ paddingTop: "5px" }}>
+    //   <Row>
+    //     <div className="movie_trailer detail_typeA">
+    //       <div className="movie-box d-block">
+    //         <Carousel>
+    //           <Carousel.Item>
+    //             <div className="d-flex justify-content-center ">
+    //               <img className="bannerImg" src={data?.movie?.banner} />
+    //             </div>
+    //           </Carousel.Item>
+    //         </Carousel>
+    //       </div>
+    //     </div>
+    //     <div className="wide-top d-flex">
+    //       <div className="thumb">
+    //         <Row style={{ paddingTop: "5px" }} xs={12}>
+    //           <Col>
+    //             <img src={data?.movie?.poster} />
+    //           </Col>
+    //           <Col style={{ paddingRight: "100px" }}>
+    //             <Form>
+    //               <h2 className="movie_title">{data?.movie?.name}</h2>
+    //               <p>
+    //                 <AiOutlineFieldTime size={26} /> {data?.movie?.times}
+    //               </p>
+    //               <p>
+    //                 <strong>Thể loại</strong> {data?.movie?.type}
+    //               </p>
+    //               <p>
+    //                 <strong>Quốc gia</strong> {data?.movie?.country}
+    //               </p>
+    //               <p>
+    //                 <strong>Ngày công chiếu </strong>
+    //                 {data?.movie?.show_date}
+    //               </p>
+    //             </Form>
+    //           </Col>
+    //         </Row>
+    //         <Row xs={12}>
+    //           <Button
+    //             onClick={handleOpenVideoModal}
+    //             className="btn_reverse Lang-LBL0000 d-block justify-content-center my-2 rounded-0"
+    //             style={{
+    //               width: "175px",
+    //               border: "2px solid rgb(206, 161, 11)",
+    //             }}
+    //             variant="dark"
+    //           >
+    //             View Trailer
+    //           </Button>
 
-              <Modal
-                show={showVideoModal}
-                onHide={handleCloseVideoModal}
-                size="lg"
-              >
-                <Modal.Body>
-                  <ReactPlayer
-                    url="https://www.youtube.com/watch?v=XoMEzmrEGGA"
-                    width="100%" // Kích thước theo chiều ngang - căn chỉnh 100% theo chiều ngang của modal
-                    style={{ aspectRatio: "16/9" }} // Tỷ lệ khung hình 16:9
-                  />
-                </Modal.Body>
-                <Modal.Footer>
-                  <Button variant="secondary" onClick={handleCloseVideoModal}>
-                    Close
-                  </Button>
-                </Modal.Footer>
-              </Modal>
-            </Row>
-          </div>
+    //           <Modal
+    //             show={showVideoModal}
+    //             onHide={handleCloseVideoModal}
+    //             size="lg"
+    //           >
+    //             <Modal.Body>
+    //               <ReactPlayer
+    //                 url="https://www.youtube.com/watch?v=XoMEzmrEGGA"
+    //                 width="100%" // Kích thước theo chiều ngang - căn chỉnh 100% theo chiều ngang của modal
+    //                 style={{ aspectRatio: "16/9" }} // Tỷ lệ khung hình 16:9
+    //               />
+    //             </Modal.Body>
+    //             <Modal.Footer>
+    //               <Button variant="secondary" onClick={handleCloseVideoModal}>
+    //                 Close
+    //               </Button>
+    //             </Modal.Footer>
+    //           </Modal>
+    //         </Row>
+    //       </div>
+    //     </div>
+    //   </Row>
+    //   <div className="summary my-4">
+    //     <h3>Summary</h3>
+    //     <p className="my-2">{data?.movie?.description}</p>
+    //   </div>
+    //   <div className="text-end my-2">
+    //     <Link to="/" className="btn btn-danger">
+    //       Back to list movie
+    //     </Link>
+    //   </div>
+    // </Container>
+
+    <div id="">
+      <div className="movie_trailer detail_typeA">
+        <div className="movie-box d-block">
+          <Carousel>
+            <Carousel.Item>
+              <div className="d-flex justify-content-center ">
+                <img className="bannerImg" src={data?.movie?.banner} />
+              </div>
+            </Carousel.Item>
+          </Carousel>
         </div>
-      </Row>
-      <div className="summary my-4">
-        <h3>Summary</h3>
-        <p className="my-2">{data?.movie?.description}</p>
       </div>
-      <div className="text-end my-2">
-        <Link to="/" className="btn btn-danger">
-          Back to list movie
-        </Link>
-      </div>
-    </Container>
+        <Row>
+          <Col xs={2}></Col>
+          <Col className="border border-2 my-4">
+            <div className="wide-top d-flex">
+              <div className="thumb">
+                <span className="img">
+                  <img src={data?.movie?.poster} />
+                </span>
+                <Button
+                  onClick={handleOpenVideoModal}
+                  className="btn_reverse Lang-LBL0000 d-block justify-content-center my-2 rounded-0"
+                  style={{
+                    width: "175px",
+                    border: "2px solid rgb(206, 161, 11)",
+                  }}
+                 
+                  rel="noopener noreferrer"
+                  variant="dark">
+                  View trailer
+                </Button>
+ 
+    
+
+                <Modal
+                  show={showVideoModal}
+                  onHide={handleCloseVideoModal}
+                  size="lg">
+                  <Modal.Body>
+                    <ReactPlayer
+                      url={data?.movie?.trailer}
+                      width="100%" 
+                      style={{ aspectRatio: "16/9" }} // Tỷ lệ khung hình 16:9
+                    />
+                  </Modal.Body>
+                  <Modal.Footer>
+                    <Button variant="secondary" onClick={handleCloseVideoModal}>
+                   Close
+                 </Button>
+               </Modal.Footer>
+                </Modal>
+              </div>
+              <div className="info_main">
+                <h2 className="movie_title">{data?.movie?.name}</h2>
+                <p>
+                  <AiOutlineFieldTime size={26} /> {data?.movie?.times}
+                </p>
+                <p>
+                  <strong>Thể loại</strong> {data?.movie?.type}
+                </p>
+                <p>
+                  <strong>Quốc gia</strong> {data?.movie?.country}
+                </p>
+                <p>
+                  <strong>Ngày công chiếu </strong>
+                  {data?.movie?.show_date}
+                </p>
+              </div>
+            </div>
+            <div className="summary my-4">
+              <h3>Summary</h3>
+              <p className="my-2">{data?.movie?.description}</p>
+            </div>
+
+          </Col>
+          <Col xs={2}></Col>
+        </Row>
+    </div>
   );
 };
 export default Informationmovie;

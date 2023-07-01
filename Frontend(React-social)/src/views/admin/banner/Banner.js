@@ -2,11 +2,10 @@
 /* eslint-disable jsx-a11y/img-redundant-alt */
 /* eslint-disable jsx-a11y/alt-text */
 import React, { useContext, useEffect, useState } from "react";
-import { useNavigate, useParams } from "react-router-dom";
+import {useParams} from "react-router-dom";
 import axios from "axios";
 import Button from "react-bootstrap/Button";
 import Modal from "react-bootstrap/Modal";
-import { BiEdit } from "react-icons/bi";
 import { RiDeleteBinLine } from "react-icons/ri";
 import { Form } from "react-bootstrap";
 import { ApplicationContext } from "../../../App";
@@ -48,7 +47,6 @@ export default function Banner() {
     }
   };
 
-  const navigate = useNavigate();
 
   const handlesubmit = (e) => {
     e.preventDefault();
@@ -71,15 +69,6 @@ export default function Banner() {
         console.log(err.message);
       });
 
-    axios
-      .put(`http://localhost:8080/api/banner/updateBanner/${bannerid}`, data)
-      .then((res) => {
-        alert("Saved successfully.");
-        window.location.reload();
-      })
-      .catch((err) => {
-        console.log(err.message);
-      });
   };
 
   const Removefunction = (bannerid) => {
@@ -133,7 +122,7 @@ export default function Banner() {
 
       <table
         className="table table-bordered mx-auto"
-        style={{ maxWidth: "800px" }}
+        style={{ maxWidth: "900px" }}
       >
         <thead>
           <tr>
@@ -157,12 +146,7 @@ export default function Banner() {
                   }
                 </td>
                 <td style={{ width: "100%" }}>
-                  {/* <a
-                    onClick={() => {
-                      // LoadEdit(item.id);
-                    }}>
-                    <BiEdit className="btn btn-primary my-1" size={50} />
-                  </a> */}
+
                   <Form>
                     <Form.Check
                       type="switch"
@@ -170,7 +154,7 @@ export default function Banner() {
                       checked={banners
                         .map((banner) => banner.bannerid)
                         .includes(item.bannerid)}
-                      label="on screen"
+                      label="On screen"
                       onChange={(event) => {
                         if (event.target.checked == true) {
                           banners.push(item.picture);
@@ -183,35 +167,7 @@ export default function Banner() {
                       }}
                     />{" "}
                   </Form>
-                  <BiEdit
-                    className="btn btn-primary my-1"
-                    size={50}
-                    onClick={handleShow}
-                  />
 
-                  <Modal show={show} onHide={handleClose}>
-                    <Modal.Header closeButton>
-                      <Modal.Title>Add banner</Modal.Title>
-                    </Modal.Header>
-                    <Modal.Body>
-                      <div>
-                        <input
-                          type="file"
-                          accept="image/*"
-                          onChange={handleBannerChange}
-                        />
-                        {picture && <p>Selected File:</p>}
-                      </div>
-                      {picture && (
-                        <img src={picture} style={{ width: "100%" }} />
-                      )}
-                    </Modal.Body>
-                    <Modal.Footer>
-                      <Button variant="primary" onClick={handlesubmit}>
-                        Save Changes
-                      </Button>
-                    </Modal.Footer>
-                  </Modal>
                   <a
                     className=""
                     onClick={() => {
