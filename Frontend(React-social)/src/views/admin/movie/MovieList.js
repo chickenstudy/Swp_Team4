@@ -66,7 +66,7 @@ const MovieList = () => {
                 <td className="bg-dark text-white">Name</td>
                 <td className="bg-dark text-white">Genre</td>
                 <td className="bg-dark text-white">Country</td>
-                <td className="bg-dark text-white">Show date</td>
+                <td className="bg-dark text-white">Show Date</td>
                 <td className="action bg-dark text-white">Actions</td>
               </tr>
             </thead>

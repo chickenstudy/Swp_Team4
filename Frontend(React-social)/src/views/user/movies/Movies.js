@@ -88,10 +88,11 @@ export default function Movies() {
                         style={{
                           borderBottom: "1px solid #ddd",
                           wordWrap: "break-word",
+                          paddingLeft: "2px",
                         }}>
                         {item.name}
                       </dt>
-                      <dd>
+                      <dd style={{paddingLeft:'2px'}}>
                         {item.times}
                         {item.show_date}
                       </dd>
