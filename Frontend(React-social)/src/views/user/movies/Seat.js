@@ -218,7 +218,6 @@ class Seat extends React.Component {
           </div>
           <div class="row-container">
             <div class="row">
-              <div class="row-mark"></div>
               <div class="seat-col">1</div>
               <div class="seat-col">2</div>
               <div class="seat-col">3</div>
