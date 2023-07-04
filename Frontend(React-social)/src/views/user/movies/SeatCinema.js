@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import "./seat.css";
+import "./Seat.css";
 import { Button, Container, Modal } from "react-bootstrap";
 
 export default function SeatCinema() {
@@ -81,7 +81,7 @@ export default function SeatCinema() {
       }
 
       seats.push(
-        <div key={row} className="row">
+        <div key={row} className="rowseat">
           <div className="row-mark">{row}</div>
           {rowSeats}
         </div>
@@ -95,7 +95,7 @@ export default function SeatCinema() {
       </div>
     ));
     seats.push(
-      <div key={`number-row`} className="row">
+      <div key={`number-row`} className="rowseat">
         <div className="row-mark"></div>
         {colNumbers}
       </div>
