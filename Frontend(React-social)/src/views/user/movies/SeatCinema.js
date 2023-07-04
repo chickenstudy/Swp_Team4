@@ -6,9 +6,10 @@ export default function SeatCinema() {
   const [show, setShow] = useState(false);
   const [count, setCount] = useState(0);
   const [selectedSeats, setSelectedSeats] = useState([]);
+  const [totalPrice, setTotalPrice] = useState(0);
 
   const handleSeatClick = (row, col) => {
-    // Check if the seat is already selected
+    // Kiểm tra xem ghế đã được chọn hay chưa
     const isSelected = selectedSeats.some(
       (seat) => seat.row === row && seat.col === col
     );
@@ -27,6 +28,80 @@ export default function SeatCinema() {
       setSelectedSeats(updatedSeats);
       setCount(count + 1);
     }
+    console.log(selectedSeats);
+
+    calculateTotalPrice();
+  };
+
+  const calculateTotalPrice = () => {
+    const pricePerSeat = 50; // Giá tiền mỗi ghế
+    const totalPrice = (count + 1) * pricePerSeat;
+    setTotalPrice(totalPrice);
+  };
+  const renderSeats = () => {
+    const seats = [];
+
+    const rows = ["A", "B", "C", "D", "E"]; // Mảng chứa tên các hàng
+
+    for (let i = 0; i < rows.length; i++) {
+      const row = rows[i];
+
+      const rowSeats = [];
+
+      for (let col = 1; col <= 15; col++) {
+        let seatClass = "seat";
+
+        // Kiểm tra nếu là hàng A và ghế là ghế đầu hoặc ghế cuối
+        if (
+          row === "A" &&
+          (col === 1 || col === 2 || col === 14 || col === 15)
+        ) {
+          seatClass = "seat-blank default";
+        }
+        // Kiểm tra nếu là hàng E và ghế là ghế đầu hoặc ghế cuối
+        else if (
+          row === "E" &&
+          (col === 1 || col === 2 || col === 14 || col === 15)
+        ) {
+          seatClass = "seat-blank default";
+        } else {
+          const isSelected = selectedSeats.some(
+            (seat) => seat.row === row && seat.col === col
+          );
+          seatClass = isSelected ? "seat selected" : "seat";
+        }
+
+        rowSeats.push(
+          <div
+            key={`${row}-${col}`}
+            className={seatClass}
+            onClick={() => handleSeatClick(row, col)}
+          ></div>
+        );
+      }
+
+      seats.push(
+        <div key={row} className="row">
+          <div className="row-mark">{row}</div>
+          {rowSeats}
+        </div>
+      );
+    }
+
+    // Thêm hàng đánh số tứ tự dưới mỗi cột
+    const colNumbers = Array.from({ length: 15 }, (_, index) => (
+      <div key={`col-number-${index}`} className="seat-col">
+        {index + 1}
+      </div>
+    ));
+    seats.push(
+      <div key={`number-row`} className="row">
+        <div className="row-mark"></div>
+        {colNumbers}
+      </div>
+    );
+
+    return seats;
   };
 
   const handleClose = () => setShow(false);
@@ -51,13 +126,13 @@ export default function SeatCinema() {
     >
       <div class="space" style={{ marginTop: "170px" }}></div>
       <div class="movie-container-aaa">
-        <label>Pick a movie:</label>
-        <select id="movie">
-          <option value="10">Avengers: Endgame ($10)</option>
-          <option value="12">Joker ($12)</option>
-          <option value="8">Toy Story 4 ($8)</option>
-          <option value="9">The Lion King ($9)</option>
-        </select>
+        <label>Movie Selected:</label>
+        <input
+          type="text"
+          placeholder="Movie"
+          disabled
+          style={{ border: "10px", textAlign: "center" }}
+        />
       </div>
 
       <ul class="showcase">
@@ -67,305 +142,18 @@ export default function SeatCinema() {
         </li>
         <li>
           <div class="seat selected" id="normal"></div>
-          <small>Normal Seat</small>
+          <small> Available </small>
         </li>
         <li>
           <div class="seat occupied" id="gold"></div>
-          <small>Gold Seat</small>
+          <small> Unavailable</small>
         </li>
       </ul>
 
       <div class="screen"></div>
       <Container>
         <div style={{ textAlign: "center", color: "pink" }}>
-          <div class="container">
-            <div class="row">
-              <div class="row-mark">A</div>
-              <div class="seat-blank default row-A col-1"></div>
-              <div class="seat-blank default row-A col-2"></div>
-              <div
-                class="seat default row-A col-3"
-                onClick={() => handleSeatClick("A", 3)}
-              ></div>
-              <div
-                class="seat default row-A col-4"
-                onClick={() => handleSeatClick("A", 4)}
-              ></div>
-              <div
-                class="seat default row-A col-5"
-                onClick={() => handleSeatClick("A", 5)}
-              ></div>
-              <div
-                class="seat default row-A col-6"
-                onClick={() => handleSeatClick("A", 6)}
-              ></div>
-              <div
-                class="seat default row-A col-7"
-                onClick={() => handleSeatClick("A", 7)}
-              ></div>
-              <div
-                class="seat default row-A col-8"
-                onClick={() => handleSeatClick("A", 8)}
-              ></div>
-              <div
-                class="seat default row-A col-9"
-                onClick={() => handleSeatClick("A", 9)}
-              ></div>
-              <div
-                class="seat default row-A col-10"
-                onClick={() => handleSeatClick("A", 10)}
-              ></div>
-              <div
-                class="seat default row-A col-11"
-                onClick={() => handleSeatClick("A", 11)}
-              ></div>
-              <div
-                class="seat default row-A col-12"
-                onClick={() => handleSeatClick("A", 12)}
-              ></div>
-              <div
-                class="seat default row-A col-13"
-                onClick={() => handleSeatClick("A", 13)}
-              ></div>
-              <div
-                class="seat default row-A col-14"
-                onClick={() => handleSeatClick("A", 14)}
-              ></div>
-              <div
-                class="seat default row-A col-15"
-                onClick={() => handleSeatClick("A", 15)}
-              ></div>
-              <div
-                class="seat default row-A col-16"
-                onClick={() => handleSeatClick("A", 16)}
-              ></div>
-              <div class="seat-blank default row-A col-17"></div>
-              <div class="seat-blank default row-A col-18"></div>
-            </div>
-            <div class="row">
-              <div class="row-mark">B</div>
-              <div class="seat-blank"></div>
-              <div class="seat" onClick={() => handleSeatClick("B", 1)}></div>
-              <div class="seat" onClick={() => handleSeatClick("B", 2)}></div>
-              <div
-                class="seat occupied"
-                onClick={() => handleSeatClick("B", 3)}
-              ></div>
-              <div
-                class="seat occupied"
-                onClick={() => handleSeatClick("B", 4)}
-              ></div>
-              <div class="seat" onClick={() => handleSeatClick("B", 5)}></div>
-              <div class="seat" onClick={() => handleSeatClick("B", 6)}></div>
-              <div class="seat" onClick={() => handleSeatClick("B", 7)}></div>
-              <div class="seat" onClick={() => handleSeatClick("B", 8)}></div>
-              <div class="seat" onClick={() => handleSeatClick("B", 9)}></div>
-              <div class="seat" onClick={() => handleSeatClick("B", 10)}></div>
-              <div class="seat" onClick={() => handleSeatClick("B", 11)}></div>
-              <div class="seat" onClick={() => handleSeatClick("B", 12)}></div>
-              <div class="seat" onClick={() => handleSeatClick("B", 13)}></div>
-              <div class="seat" onClick={() => handleSeatClick("B", 14)}></div>
-              <div class="seat" onClick={() => handleSeatClick("B", 15)}></div>
-              <div class="seat" onClick={() => handleSeatClick("B", 16)}></div>
-              <div class="seat-blank"></div>
-            </div>
-            <div class="row">
-              <div class="row-mark">C</div>
-              <div class="seat" onClick={() => handleSeatClick("C", 1)}></div>
-              <div class="seat" onClick={() => handleSeatClick("C", 2)}></div>
-              <div class="seat" onClick={() => handleSeatClick("C", 3)}></div>
-              <div
-                class="seat occupied"
-                onClick={() => handleSeatClick("C", 4)}
-              ></div>
-              <div
-                class="seat occupied"
-                onClick={() => handleSeatClick("C", 5)}
-              ></div>
-              <div class="seat" onClick={() => handleSeatClick("C", 6)}></div>
-              <div class="seat" onClick={() => handleSeatClick("C", 7)}></div>
-              <div class="seat" onClick={() => handleSeatClick("C", 8)}></div>
-              <div class="seat" onClick={() => handleSeatClick("C", 9)}></div>
-              <div class="seat" onClick={() => handleSeatClick("C", 10)}></div>
-              <div class="seat" onClick={() => handleSeatClick("C", 11)}></div>
-              <div class="seat" onClick={() => handleSeatClick("C", 12)}></div>
-              <div class="seat" onClick={() => handleSeatClick("C", 13)}></div>
-              <div class="seat" onClick={() => handleSeatClick("C", 14)}></div>
-              <div class="seat" onClick={() => handleSeatClick("C", 15)}></div>
-              <div class="seat" onClick={() => handleSeatClick("C", 16)}></div>
-              <div class="seat" onClick={() => handleSeatClick("C", 17)}></div>
-              <div class="seat" onClick={() => handleSeatClick("C", 18)}></div>
-            </div>
-            <div class="row">
-              <div class="row-mark">D</div>
-              <div class="seat"></div>
-              <div class="seat"></div>
-              <div class="seat"></div>
-              <div class="seat occupied"></div>
-              <div class="seat occupied"></div>
-              <div class="seat"></div>
-              <div class="seat"></div>
-              <div class="seat"></div>
-              <div class="seat"></div>
-              <div class="seat"></div>
-              <div class="seat"></div>
-              <div class="seat"></div>
-              <div class="seat"></div>
-              <div class="seat"></div>
-              <div class="seat"></div>
-              <div class="seat"></div>
-              <div class="seat"></div>
-              <div class="seat"></div>
-            </div>
-            <div class="row">
-              <div class="row-mark">E</div>
-              <div class="seat"></div>
-              <div class="seat"></div>
-              <div class="seat"></div>
-              <div class="seat occupied"></div>
-              <div class="seat occupied"></div>
-              <div class="seat"></div>
-              <div class="seat"></div>
-              <div class="seat"></div>
-              <div class="seat"></div>
-              <div class="seat"></div>
-              <div class="seat"></div>
-              <div class="seat"></div>
-              <div class="seat"></div>
-              <div class="seat"></div>
-              <div class="seat"></div>
-              <div class="seat"></div>
-              <div class="seat"></div>
-              <div class="seat"></div>
-            </div>
-            <div class="row">
-              <div class="row-mark">F</div>
-              <div class="seat"></div>
-              <div class="seat"></div>
-              <div class="seat"></div>
-              <div class="seat occupied"></div>
-              <div class="seat occupied"></div>
-              <div class="seat vip"></div>
-              <div class="seat vip"></div>
-              <div class="seat vip"></div>
-              <div class="seat vip"></div>
-              <div class="seat vip"></div>
-              <div class="seat vip"></div>
-              <div class="seat vip"></div>
-              <div class="seat vip"></div>
-              <div class="seat"></div>
-              <div class="seat"></div>
-              <div class="seat"></div>
-              <div class="seat"></div>
-              <div class="seat"></div>
-            </div>
-            <div class="row">
-              <div class="row-mark">G</div>
-              <div class="seat"></div>
-              <div class="seat"></div>
-              <div class="seat"></div>
-              <div class="seat occupied"></div>
-              <div class="seat occupied"></div>
-              <div class="seat vip"></div>
-              <div class="seat vip"></div>
-              <div class="seat vip"></div>
-              <div class="seat vip"></div>
-              <div class="seat vip"></div>
-              <div class="seat vip"></div>
-              <div class="seat vip"></div>
-              <div class="seat vip"></div>
-              <div class="seat"></div>
-              <div class="seat"></div>
-              <div class="seat"></div>
-              <div class="seat"></div>
-              <div class="seat"></div>
-            </div>
-            <div class="row">
-              <div class="row-mark">H</div>
-              <div class="seat"></div>
-              <div class="seat"></div>
-              <div class="seat"></div>
-              <div class="seat occupied"></div>
-              <div class="seat occupied"></div>
-              <div class="seat vip"></div>
-              <div class="seat vip"></div>
-              <div class="seat vip"></div>
-              <div class="seat vip"></div>
-              <div class="seat vip"></div>
-              <div class="seat vip"></div>
-              <div class="seat vip"></div>
-              <div class="seat vip"></div>
-              <div class="seat"></div>
-              <div class="seat"></div>
-              <div class="seat"></div>
-              <div class="seat"></div>
-              <div class="seat"></div>
-            </div>
-            <div class="row">
-              <div class="row-mark">I</div>
-              <div class="seat-blank"></div>
-              <div class="seat"></div>
-              <div class="seat"></div>
-              <div class="seat occupied"></div>
-              <div class="seat occupied"></div>
-              <div class="seat vip"></div>
-              <div class="seat vip"></div>
-              <div class="seat vip"></div>
-              <div class="seat vip"></div>
-              <div class="seat vip"></div>
-              <div class="seat vip"></div>
-              <div class="seat vip"></div>
-              <div class="seat vip"></div>
-              <div class="seat"></div>
-              <div class="seat"></div>
-              <div class="seat"></div>
-              <div class="seat"></div>
-              <div class="seat-blank"></div>
-            </div>
-            <div class="row">
-              <div class="row-mark">J</div>
-              <div class="seat-blank"></div>
-              <div class="seat"></div>
-              <div class="seat"></div>
-              <div class="seat occupied"></div>
-              <div class="seat occupied"></div>
-              <div class="seat vip"></div>
-              <div class="seat vip"></div>
-              <div class="seat vip"></div>
-              <div class="seat vip"></div>
-              <div class="seat vip"></div>
-              <div class="seat vip"></div>
-              <div class="seat vip"></div>
-              <div class="seat vip"></div>
-              <div class="seat"></div>
-              <div class="seat"></div>
-              <div class="seat"></div>
-              <div class="seat"></div>
-              <div class="seat-blank"></div>
-            </div>
-            <div class="row-container">
-              <div class="row">
-                <div class="seat-col">1</div>
-                <div class="seat-col">2</div>
-                <div class="seat-col">3</div>
-                <div class="seat-col">4</div>
-                <div class="seat-col">5</div>
-                <div class="seat-col">6</div>
-                <div class="seat-col">7</div>
-                <div class="seat-col">8</div>
-                <div class="seat-col">9</div>
-                <div class="seat-col">10</div>
-                <div class="seat-col">11</div>
-                <div class="seat-col">12</div>
-                <div class="seat-col">13</div>
-                <div class="seat-col">14</div>
-                <div class="seat-col">15</div>
-                <div class="seat-col">16</div>
-                <div class="seat-col">17</div>
-                <div class="seat-col">18</div>
-              </div>
-            </div>
-          </div>
+          <div class="row">{renderSeats()}</div>
         </div>
       </Container>
       <>
@@ -396,14 +184,14 @@ export default function SeatCinema() {
                 {selectedSeats.map((seat, index) => (
                   <li key={index}>{`Row: ${seat.row}, Col: ${seat.col}`}</li>
                 ))}
-              </span>
+              </span>{" "}
             </p>
             <p>
               <span>Number of ticket(s) booked:</span>
               <span id="count"> {count}</span>
             </p>
             <p class="text">
-              Total: <span id="total">0</span>
+              Total: <span id="total">{totalPrice}</span>
               <span>,000 VND</span>
             </p>
           </Modal.Body>

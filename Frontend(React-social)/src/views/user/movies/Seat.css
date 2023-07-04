@@ -23,6 +23,7 @@
     margin: 3px;
     border-top-left-radius: 10px;
     border-top-right-radius: 10px;
+    
 }
 
 .row-mark {
@@ -47,15 +48,12 @@
     border-top-left-radius: 10px;
     border-top-right-radius: 10px;
 }
-.seat.vip{
-    background-color: rgb(255, 255, 97);
-}
 
 .seat.selected {
     background-color: #619cbc;
 }
 
-.seat.occupied {
+.seat.unavailable {
     background-color: #929292;
 }
 
@@ -86,12 +84,12 @@
     margin-left: 18px;
   } */
 
-.seat:not(.occupied):hover {
+.seat:not(.unavailable):hover {
     cursor: pointer;
     transform: scale(1.2);
 }
 
-.showcase .seat:not(.occupied):hover {
+.showcase .seat:not(.unavailable):hover {
     cursor: default;
     transform: scale(1);
 }
@@ -252,3 +250,5 @@ p.text span {
     color: #fff;
     border: none;
 }
+
+  

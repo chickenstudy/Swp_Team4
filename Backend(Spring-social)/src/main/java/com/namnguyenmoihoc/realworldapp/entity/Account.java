@@ -33,7 +33,6 @@ public class Account {
 
     @Lob
     private byte[] picture;
-
     private String phonenumber;
     private int rolesID;
     private Date dob;
