@@ -19,9 +19,7 @@ import com.namnguyenmoihoc.realworldapp.exception.custom.CustomNotFoundException
 import com.namnguyenmoihoc.realworldapp.model.Showtime.ShowtimeDTOCreate;
 import com.namnguyenmoihoc.realworldapp.model.Showtime.ShowtimeDTOResponse;
 import com.namnguyenmoihoc.realworldapp.model.Showtime.ShowtimeDTOResponseNoID;
-import com.namnguyenmoihoc.realworldapp.model.cinema.CinemaDTO;
-import com.namnguyenmoihoc.realworldapp.model.cinema.CinemaDTOResponse;
-import com.namnguyenmoihoc.realworldapp.model.cinema.CinemaDTOResponseNoId;
+
 import com.namnguyenmoihoc.realworldapp.service.ShowtimeService;
 
 import lombok.RequiredArgsConstructor;

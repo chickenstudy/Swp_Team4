@@ -27,9 +27,9 @@ import com.namnguyenmoihoc.realworldapp.entity.Account;
 import com.namnguyenmoihoc.realworldapp.exception.custom.CustomNotFoundException;
 import com.namnguyenmoihoc.realworldapp.model.roles.UserRolesDTOResponse;
 import com.namnguyenmoihoc.realworldapp.model.user.dto.UserDTOCreateAccount;
-import com.namnguyenmoihoc.realworldapp.model.user.dto.UserDTOLoginRequest;
+
 import com.namnguyenmoihoc.realworldapp.model.user.dto.UserDTOResponse;
-import com.namnguyenmoihoc.realworldapp.model.user.mapper.UserMapper;
+
 import com.namnguyenmoihoc.realworldapp.repository.RoleRepository;
 import com.namnguyenmoihoc.realworldapp.repository.UserRepository;
 import com.namnguyenmoihoc.realworldapp.service.UserService;
