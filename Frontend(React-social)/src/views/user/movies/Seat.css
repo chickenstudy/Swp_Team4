@@ -53,7 +53,7 @@
     background-color: #619cbc;
 }
 
-.seat.unavailable {
+.seat.occupied {
     background-color: #929292;
 }
 
@@ -84,12 +84,12 @@
     margin-left: 18px;
   } */
 
-.seat:not(.unavailable):hover {
+.seat:not(.seat.occupied):hover {
     cursor: pointer;
     transform: scale(1.2);
 }
 
-.showcase .seat:not(.unavailable):hover {
+.showcase .seat:not(.seat.occupied):hover {
     cursor: default;
     transform: scale(1);
 }

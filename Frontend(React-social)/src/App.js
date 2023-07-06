@@ -1,6 +1,6 @@
 import React, { Fragment } from "react";
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
-import { UserRoutes } from "./routes";
+import { StaffRoutes, UserRoutes } from "./routes";
 import { AdminRoutes } from "./routes";
 import { useEffect } from "react";
 import axios from "axios";
@@ -105,6 +105,26 @@ function App() {
                   //     <Navigate to="/" /> // Redirect to login page if user is not authenticated
                   //   )
                   // }
+                />
+              );
+            })}
+            {StaffRoutes.map((route, index) => {
+              const Page = route.component;
+              let Layout = route.layout;
+
+              if (route.layout === null) {
+                Layout = Fragment;
+              }
+
+              return (
+                <Route
+                  key={index}
+                  path={route.path}
+                  element={
+                    <Layout>
+                      <Page />
+                    </Layout>
+                  }
                 />
               );
             })}

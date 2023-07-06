@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import "./Seat.css";
 import { Button, Container, Modal } from "react-bootstrap";
 
@@ -7,7 +7,33 @@ export default function SeatCinema() {
   const [count, setCount] = useState(0);
   const [selectedSeats, setSelectedSeats] = useState([]);
   const [totalPrice, setTotalPrice] = useState(0);
+  useEffect(() => {
+    calculateTotalPrice();
+  }, [count]);
 
+  useEffect(() => {
+    setSelectedSeats([
+      {
+        row: "A",
+        col: 3,
+        available: false,
+        isSelected: false,
+      },
+      {
+        row: "A",
+        col: 5,
+        available: true,
+        isSelected: true,
+      },
+    ]);
+  }, []);
+  const getAvailable = (row, col) => {
+    const seat = selectedSeats.find(
+      (seat) => seat.row === row && seat.col === col
+    );
+    if (!seat) return true;
+    return seat.available;
+  };
   const handleSeatClick = (row, col) => {
     // Kiểm tra xem ghế đã được chọn hay chưa
     const isSelected = selectedSeats.some(
@@ -15,27 +41,23 @@ export default function SeatCinema() {
     );
 
     if (isSelected) {
-      // Deselect the seat
+      // Bỏ chọn ghế
       const updatedSeats = selectedSeats.filter(
-        (seat) => seat.row !== row || seat.col !== col
+        (seat) => !(seat.row === row && seat.col === col)
       );
       setSelectedSeats(updatedSeats);
       setCount(count - 1);
     } else {
-      // Select the seat
+      // Chọn ghế
       const newSeat = { row, col };
       const updatedSeats = [...selectedSeats, newSeat];
       setSelectedSeats(updatedSeats);
       setCount(count + 1);
     }
-    console.log(selectedSeats);
-
-    calculateTotalPrice();
   };
-
   const calculateTotalPrice = () => {
     const pricePerSeat = 50; // Giá tiền mỗi ghế
-    const totalPrice = (count + 1) * pricePerSeat;
+    const totalPrice = count * pricePerSeat;
     setTotalPrice(totalPrice);
   };
   const renderSeats = () => {
@@ -49,7 +71,7 @@ export default function SeatCinema() {
       const rowSeats = [];
 
       for (let col = 1; col <= 15; col++) {
-        let seatClass = "seat";
+        let seatClass = "seat-blank default";
 
         // Kiểm tra nếu là hàng A và ghế là ghế đầu hoặc ghế cuối
         if (
@@ -64,6 +86,8 @@ export default function SeatCinema() {
           (col === 1 || col === 2 || col === 14 || col === 15)
         ) {
           seatClass = "seat-blank default";
+        } else if (getAvailable(row, col) === false) {
+          seatClass = "seat occupied";
         } else {
           const isSelected = selectedSeats.some(
             (seat) => seat.row === row && seat.col === col
@@ -72,16 +96,16 @@ export default function SeatCinema() {
         }
 
         rowSeats.push(
-          <div
+          <button
             key={`${row}-${col}`}
             className={seatClass}
             onClick={() => handleSeatClick(row, col)}
-          ></div>
+            disabled={getAvailable(row, col) === false}
+          ></button>
         );
       }
-
       seats.push(
-        <div key={row} className="rowseat">
+        <div key={row} className="rowseat ">
           <div className="row-mark">{row}</div>
           {rowSeats}
         </div>

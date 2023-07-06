@@ -19,6 +19,8 @@ import AddNewStaff from "./views/admin/staff/AddNewStaff";
 import InformationMovie from "./views/user/movies/InformationMovie";
 import Cinema from "./views/admin/cinema/Cinema";
 import CreateCinema from "./views/admin/cinema/CreateCinema";
+import MoviesStaff from "./views/staff/movies/MoviesStaff";
+import StaffLayout from "./layouts/StaffLayout";
 //---------- USER ROUTE ---------
 export const UserRoutes = [
   {
@@ -118,5 +120,14 @@ export const AdminRoutes = [
     component: Banner,
     layout: AdminLayout,
     isProtected: true,
+  },
+];
+
+// Staff Routes
+export const StaffRoutes = [
+  {
+    path: "/staffmanagement",
+    component: MoviesStaff,
+    layout: StaffLayout,
   },
 ];
