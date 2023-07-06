@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import "./Seat.css";
 import { Button, Container, Modal } from "react-bootstrap";
+import axios from "axios";
 
 export default function SeatCinema() {
   const [show, setShow] = useState(false);
@@ -12,27 +13,21 @@ export default function SeatCinema() {
   }, [count]);
 
   useEffect(() => {
-    setSelectedSeats([
-      {
-        row: "A",
-        col: 3,
-        available: false,
-        isSelected: false,
-      },
-      {
-        row: "A",
-        col: 5,
-        available: true,
-        isSelected: true,
-      },
-    ]);
+    axios
+      .get("http://localhost:8080/api/seat/listSeat")
+      .then((res) => {
+        setSelectedSeats(res.data);
+      })
+      .catch((err) => {
+        console.log(err.message);
+      });
   }, []);
-  const getAvailable = (row, col) => {
+  const getActive = (row, col) => {
     const seat = selectedSeats.find(
       (seat) => seat.row === row && seat.col === col
     );
-    if (!seat) return true;
-    return seat.available;
+    if (!seat) return 1;
+    return seat.active;
   };
   const handleSeatClick = (row, col) => {
     // Kiểm tra xem ghế đã được chọn hay chưa
@@ -86,7 +81,7 @@ export default function SeatCinema() {
           (col === 1 || col === 2 || col === 14 || col === 15)
         ) {
           seatClass = "seat-blank default";
-        } else if (getAvailable(row, col) === false) {
+        } else if (getActive(row, col) === 0) {
           seatClass = "seat occupied";
         } else {
           const isSelected = selectedSeats.some(
@@ -100,7 +95,7 @@ export default function SeatCinema() {
             key={`${row}-${col}`}
             className={seatClass}
             onClick={() => handleSeatClick(row, col)}
-            disabled={getAvailable(row, col) === false}
+            disabled={getActive(row, col) === 0}
           ></button>
         );
       }
