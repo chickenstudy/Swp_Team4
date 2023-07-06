@@ -3,7 +3,7 @@ package com.namnguyenmoihoc.realworldapp.model.profileAccount;
 
 import java.util.Date;
 
-import jakarta.persistence.Lob;
+
 import lombok.Builder;
 import lombok.Data;
 import lombok.Getter;
