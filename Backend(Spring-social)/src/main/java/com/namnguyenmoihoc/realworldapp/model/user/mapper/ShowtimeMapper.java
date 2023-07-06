@@ -7,7 +7,7 @@ import com.namnguyenmoihoc.realworldapp.entity.Showtime;
 import com.namnguyenmoihoc.realworldapp.model.Showtime.ShowtimeDTOCreate;
 import com.namnguyenmoihoc.realworldapp.model.Showtime.ShowtimeDTOResponse;
 import com.namnguyenmoihoc.realworldapp.model.Showtime.ShowtimeDTOResponseNoID;
-import com.namnguyenmoihoc.realworldapp.model.cinema.CinemaDTOResponseNoId;
+
 
 public class ShowtimeMapper {
 

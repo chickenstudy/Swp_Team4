@@ -8,7 +8,7 @@ import java.util.Optional;
 
 import org.springframework.stereotype.Service;
 
-import com.namnguyenmoihoc.realworldapp.entity.Cinema;
+
 import com.namnguyenmoihoc.realworldapp.entity.Showtime;
 import com.namnguyenmoihoc.realworldapp.exception.custom.CustomNotFoundException;
 import com.namnguyenmoihoc.realworldapp.model.Showtime.ShowtimeDTOCreate;
