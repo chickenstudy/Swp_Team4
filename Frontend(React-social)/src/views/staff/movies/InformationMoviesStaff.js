@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { useParams, Link } from "react-router-dom";
+import { useParams, Link, useNavigate } from "react-router-dom";
 import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
@@ -13,7 +13,22 @@ import { Form, Modal } from "react-bootstrap";
 export default function InformationMoviesStaff() {
   const { id } = useParams();
   const [data, setData] = useState([]);
+  const [showtime, setShowtime] = useState([]);
   const [showVideoModal, setShowVideoModal] = useState(false);
+  const [date, setDate] = useState([]); // [1, 2, 3, 4, 5, 6, 7
+  const [time, setTime] = useState("");
+  const cinema = "tuann";
+  const dateMovies = sessionStorage.setItem("date", date);
+  const timeStart = sessionStorage.setItem("time", time);
+  const dateMovies12 = sessionStorage.getItem("date");
+  const timeStart12 = sessionStorage.getItem("time");
+  const navigate = useNavigate();
+
+  if (dateMovies12 && timeStart12) {
+    // Cả hai biến đã có giá trị và được lưu trong sessionStorage
+    // Thực hiện chuyển hướng đến trang khác
+    navigate("/seat");
+  }
   useEffect(() => {
     axios
       .get("http://localhost:8080/api/movie/listMovie/" + id)
@@ -24,7 +39,18 @@ export default function InformationMoviesStaff() {
         console.log(err.message);
       });
   }, []);
-  console.log(data);
+
+  useEffect(() => {
+    axios
+      .get("http://localhost:8080/api/showtime/listShowtime")
+      .then((res) => {
+        setShowtime(res.data);
+      })
+      .catch((err) => {
+        console.log(err.message);
+      });
+  }, []);
+
   const handleOpenVideoModal = () => {
     setShowVideoModal(true);
   };
@@ -78,7 +104,7 @@ export default function InformationMoviesStaff() {
               <div className="info_main">
                 <h2 className="movie_title">{data?.movie?.name}</h2>
                 <p>
-                  <AiOutlineFieldTime size={26} /> {data?.movie?.times}
+                  <AiOutlineFieldTime size={25} /> {data?.movie?.times}
                 </p>
                 <p>
                   <strong>Thể loại</strong> {data?.movie?.type}
@@ -98,7 +124,7 @@ export default function InformationMoviesStaff() {
             </div>
             <p class="ng-scope">&nbsp;</p>
             <div className="showtimes">
-              <h3>LỊCH CHIẾU</h3>
+              <h3>LỊCH CHIẾU: </h3>
 
               <Row className="mt-4">
                 <Col md={3}>
@@ -109,18 +135,38 @@ export default function InformationMoviesStaff() {
                       width: "100%",
                       paddingLeft: "10px",
                     }}
+                    value={date}
+                    onChange={(e) => setDate(e.target.value)}
                   />
                 </Col>
-                <Col md={3}></Col>
+                <Col md={3}>
+                  <a>
+                    <span class="btn-select-value ng-binding"></span>
+                    <div></div>
+                  </a>
+                </Col>
                 <Col md={3}></Col>
                 <Col md={3}></Col>
               </Row>
 
-              <div className="cinema mt-4">
-                <div class="title-cinema">
-                  <h5 class="">Sông Lam Nghệ An</h5>
-                </div>
-                <div className="item-cinema">Genre and Show Time</div>
+              <div className="cinema mt-5">
+                <Row>
+                  <Col xs={8}>
+                    <h3>Time to start:</h3>
+                    {showtime.map((item) => (
+                      <span className="ml-3">
+                        <Button
+                          style={{ border: "1px solid black" }}
+                          variant="light"
+                          value={item.starttime}
+                          onClick={(e) => setTime(e.target.value)}
+                        >
+                          {item.starttime}
+                        </Button>
+                      </span>
+                    ))}
+                  </Col>
+                </Row>
               </div>
             </div>
           </Col>

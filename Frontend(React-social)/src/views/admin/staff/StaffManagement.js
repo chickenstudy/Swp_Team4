@@ -1,6 +1,9 @@
+/* eslint-disable jsx-a11y/anchor-is-valid */
+/* eslint-disable jsx-a11y/img-redundant-alt */
 import React, { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
+import { RiDeleteBinLine } from "react-icons/ri";
 
 export default function StaffManagement() {
   const [data, setData] = useState([]);
@@ -17,6 +20,21 @@ export default function StaffManagement() {
         console.log(err.message);
       });
   }, []);
+
+  const Removefunction = (id) => {
+    if (window.confirm("Do you want to remove?")) {
+      fetch("http://localhost:8080/api/staff/delete/" + id, {
+        method: "DELETE",
+      })
+        .then((res) => {
+          alert("Removed successfully.");
+          window.location.reload();
+        })
+        .catch((err) => {
+          console.log(err.message);
+        });
+    }
+  };
 
   return (
     <div className="container">
@@ -41,18 +59,38 @@ export default function StaffManagement() {
         </thead>
         <tbody>
           {data &&
-            data.map((item) => {
+            data.map((item) => (
               <tr key={item.id}>
                 <td>{item.id}</td>
-                <td>{item.picture}</td>
-                <td>{item.name}</td>
+                <td style={{ width: "120px" }}>
+                  {
+                    <img
+                      src={item.picture}
+                      alt="Image"
+                      style={{ width: "100%" }}
+                    />
+                  }
+                </td>
+                <td>{item.username}</td>
                 <td>{item.email}</td>
                 <td>{item.sex}</td>
                 <td>{item.address}</td>
                 <td>{item.phonenumber}</td>
-                <td className="action">Actions</td>
-              </tr>;
-            })}
+                <td className="action">
+                  <a
+                    className=""
+                    onClick={() => {
+                      Removefunction(item.id);
+                    }}
+                  >
+                    <RiDeleteBinLine
+                      className="btn btn-danger mx-1"
+                      size={50}
+                    />
+                  </a>
+                </td>
+              </tr>
+            ))}
         </tbody>
       </table>
     </div>

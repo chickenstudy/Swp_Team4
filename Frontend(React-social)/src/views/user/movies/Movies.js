@@ -5,6 +5,7 @@ import "./movies.css";
 import Carousel from "react-bootstrap/Carousel";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
+import Button from "react-bootstrap/Button";
 import axios from "axios";
 import { useContext } from "react";
 import { ApplicationContext } from "../../../App";
@@ -29,6 +30,11 @@ export default function Movies() {
       });
   }, []);
 
+  const [visible, setVisible] = useState(8);
+  const showMore = () => {
+    setVisible((prevValue) => prevValue + 8);
+  };
+
   return (
     <div>
       <div className="banner">
@@ -37,18 +43,17 @@ export default function Movies() {
             HOT MOVIES
           </Link>
         </span>
-          <Carousel>
-            {banners.map((banner, index) => (
-              <Carousel.Item key={index}>
-                <img
-                  className="d-block w-100"
-                  src={banner.content}
-                  alt={`Slide ${index + 1}`}
-                />
-              </Carousel.Item>
-            ))}
-          </Carousel>
-          
+        <Carousel>
+          {banners.map((banner, index) => (
+            <Carousel.Item key={index}>
+              <img
+                className="d-block w-100"
+                src={banner.content}
+                alt={`Slide ${index + 1}`}
+              />
+            </Carousel.Item>
+          ))}
+        </Carousel>
       </div>
 
       <h2 className="title my-3" style={{ textAlign: "center" }}>
@@ -61,7 +66,7 @@ export default function Movies() {
           <Col md={8}>
             <Row>
               {movies &&
-                movies.map((item) => (
+                movies.slice(0, visible).map((item) => (
                   <Col className="my-3" md={3} key={item.id}>
                     <div className="movie_box">
                       <div class="mydivouter ">
@@ -92,9 +97,8 @@ export default function Movies() {
                         }}>
                         {item.name}
                       </dt>
-                      <dd style={{paddingLeft:'2px'}}>
-                        {item.times}
-                        {item.show_date}
+                      <dd style={{ paddingLeft: "2px" }}>
+                        {item.times} | {item.show_date}
                       </dd>
                     </div>
                   </Col>
@@ -103,6 +107,11 @@ export default function Movies() {
           </Col>
           <Col md={2}></Col>
         </Row>
+      </div>
+      <div className="d-flex flex-column align-items-center">
+        <Button className="mt-3" onClick={showMore} variant="dark">
+          Show more
+        </Button>
       </div>
     </div>
   );

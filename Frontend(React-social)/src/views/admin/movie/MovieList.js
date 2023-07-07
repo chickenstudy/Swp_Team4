@@ -15,7 +15,7 @@ const MovieList = () => {
     navigate(`/movie/detailmovie/${id}`);
   };
   const LoadEdit = (id) => {
-    navigate("/movie/editmovie/" + id);
+    navigate(`/movie/editmovie/${id}`);
   };
 
   const Removefunction = (id) => {
@@ -71,7 +71,7 @@ const MovieList = () => {
               </tr>
             </thead>
             <tbody>
-              {data &&
+              {
                 data.map((item) => (
                   <tr key={item.id}>
                     <td style={{ width: "10px" }}>{item.id}</td>
