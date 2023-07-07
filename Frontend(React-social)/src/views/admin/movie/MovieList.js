@@ -15,7 +15,7 @@ const MovieList = () => {
     navigate(`/movie/detailmovie/${id}`);
   };
   const LoadEdit = (id) => {
-    navigate("/movie/editmovie/" + id);
+    navigate(`/movie/editmovie/${id}`);
   };
 
   const Removefunction = (id) => {

@@ -10,11 +10,13 @@ import { AiOutlineFieldTime } from "react-icons/ai";
 import axios from "axios";
 import ReactPlayer from "react-player";
 import { Form, Modal } from "react-bootstrap";
-import './informationMovie.css'
+import "./informationMovie.css";
 
 const Informationmovie = () => {
   const { id } = useParams();
   const [data, setData] = useState([]);
+  const [cinema, setCinema] = useState([]);
+  const [showtime, setShowtime] = useState([]);
   const [showVideoModal, setShowVideoModal] = useState(false);
   useEffect(() => {
     axios
@@ -26,7 +28,31 @@ const Informationmovie = () => {
         console.log(err.message);
       });
   }, []);
-  console.log(data);
+
+  useEffect(() => {
+    axios
+      .get("http://localhost:8080/api/cinema/listCinema")
+      .then((res) => {
+        setCinema(res.data);
+      })
+      .catch((err) => {
+        console.log(err.message);
+      });
+  }, []);
+
+  useEffect(() => {
+    axios
+      .get("http://localhost:8080/api/showtime/listShowtime")
+      .then((res) => {
+        setShowtime(res.data);
+      })
+      .catch((err) => {
+        console.log(err.message);
+      });
+  }, []);
+
+  console.log(cinema);
+
   const handleOpenVideoModal = () => {
     setShowVideoModal(true);
   };
@@ -67,12 +93,11 @@ const Informationmovie = () => {
                   variant="dark">
                   View trailer
                 </Button>
-  
+
                 <Modal
                   show={showVideoModal}
                   onHide={handleCloseVideoModal}
-                  size="lg"
-                  >
+                  size="lg">
                   <Modal.Body>
                     <ReactPlayer
                       url={data?.movie?.trailer}
@@ -90,7 +115,7 @@ const Informationmovie = () => {
               <div className="info_main">
                 <h2 className="movie_title">{data?.movie?.name}</h2>
                 <p>
-                  <AiOutlineFieldTime size={26} /> {data?.movie?.times}
+                  <AiOutlineFieldTime size={25} /> {data?.movie?.times}
                 </p>
                 <p>
                   <strong>Thể loại</strong> {data?.movie?.type}
@@ -111,27 +136,48 @@ const Informationmovie = () => {
             <p class="ng-scope">&nbsp;</p>
             <div className="showtimes">
               <h3>LỊCH CHIẾU</h3>
-  
+
               <Row className="mt-4">
                 <Col md={3}>
-                  <input type="date" style={{ height: "40px", width: "100%", paddingLeft:'10px' }} />
+                  <input
+                    type="date"
+                    style={{
+                      height: "40px",
+                      width: "100%",
+                      paddingLeft: "10px",
+                    }}
+                  />
                 </Col>
                 <Col md={3}>
                   <a>
-                    <span class="btn-select-value ng-binding">Tất cả rạp</span>
+                    <span class="btn-select-value ng-binding"></span>
                     <div></div>
                   </a>
                 </Col>
                 <Col md={3}></Col>
                 <Col md={3}></Col>
               </Row>
-  
-              <div className="cinema mt-4">
-                <div class="title-cinema">
-                  <h5 class="">Sông Lam Nghệ An</h5>
+
+              {cinema.map((item) => (
+                <div className="cinema mt-5">
+                  <div class="title-cinema">
+                    <h5 class="">{item.name}</h5>
+                  </div>
+                  <div className="item-cinema">
+                    <Row>
+                      <Col>{data?.movie?.type}</Col>
+                      <Col xs={8}>
+                        {showtime.map((item) => (
+                          <span className="ml-3" >
+                            {" "}
+                            <Button style={{border:'1px solid black'}} variant="light">{item.starttime}</Button>
+                          </span>
+                        ))}
+                      </Col>
+                    </Row>
+                  </div>
                 </div>
-                <div className="item-cinema">Genre and Show Time</div>
-              </div>
+              ))}
             </div>
           </Col>
           <Col xs={2}></Col>
