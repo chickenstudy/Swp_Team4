@@ -8,6 +8,9 @@ export default function SeatCinema() {
   const [count, setCount] = useState(0);
   const [selectedSeats, setSelectedSeats] = useState([]);
   const [totalPrice, setTotalPrice] = useState(0);
+  const [loadingSeats, setLoadingSeats] = useState(true);
+  const [seats, setSeats] = useState([]);
+
   useEffect(() => {
     calculateTotalPrice();
   }, [count]);
@@ -16,49 +19,58 @@ export default function SeatCinema() {
     axios
       .get("http://localhost:8080/api/seat/listSeat")
       .then((res) => {
-        setSelectedSeats(res.data);
+        setSeats(res.data);
       })
       .catch((err) => {
         console.log(err.message);
       });
   }, []);
-  const getActive = (row, col) => {
-    const seat = selectedSeats.find(
-      (seat) => seat.row === row && seat.col === col
-    );
-    if (!seat) return 1;
-    return seat.active;
-  };
+  console.log(seats);
   const handleSeatClick = (row, col) => {
-    // Kiểm tra xem ghế đã được chọn hay chưa
+    const seat = seats.find((seat) => seat.row === row && seat.col === col);
+
+    if (seat) {
+      // Seat is disabled, do nothing
+      return;
+    }
+
     const isSelected = selectedSeats.some(
       (seat) => seat.row === row && seat.col === col
     );
 
     if (isSelected) {
-      // Bỏ chọn ghế
       const updatedSeats = selectedSeats.filter(
         (seat) => !(seat.row === row && seat.col === col)
       );
       setSelectedSeats(updatedSeats);
       setCount(count - 1);
     } else {
-      // Chọn ghế
       const newSeat = { row, col };
       const updatedSeats = [...selectedSeats, newSeat];
       setSelectedSeats(updatedSeats);
       setCount(count + 1);
     }
   };
+
   const calculateTotalPrice = () => {
-    const pricePerSeat = 50; // Giá tiền mỗi ghế
+    const pricePerSeat = 50;
     const totalPrice = count * pricePerSeat;
     setTotalPrice(totalPrice);
   };
+
+  const getActive = (row, col) => {
+    const seat = seats.find((seat) => {
+      console.log(seat);
+      return seat.row == row && seat.col == col;
+    });
+    if (!seat) return 1;
+    return seat.active;
+  };
+
   const renderSeats = () => {
     const seats = [];
 
-    const rows = ["A", "B", "C", "D", "E"]; // Mảng chứa tên các hàng
+    const rows = ["A", "B", "C", "D", "E"];
 
     for (let i = 0; i < rows.length; i++) {
       const row = rows[i];
@@ -68,15 +80,12 @@ export default function SeatCinema() {
       for (let col = 1; col <= 15; col++) {
         let seatClass = "seat-blank default";
 
-        // Kiểm tra nếu là hàng A và ghế là ghế đầu hoặc ghế cuối
         if (
           row === "A" &&
           (col === 1 || col === 2 || col === 14 || col === 15)
         ) {
           seatClass = "seat-blank default";
-        }
-        // Kiểm tra nếu là hàng E và ghế là ghế đầu hoặc ghế cuối
-        else if (
+        } else if (
           row === "E" &&
           (col === 1 || col === 2 || col === 14 || col === 15)
         ) {
@@ -85,7 +94,7 @@ export default function SeatCinema() {
           seatClass = "seat occupied";
         } else {
           const isSelected = selectedSeats.some(
-            (seat) => seat.row === row && seat.col === col
+            (seat) => seat.row == row && seat.col == col
           );
           seatClass = isSelected ? "seat selected" : "seat";
         }
@@ -122,7 +131,6 @@ export default function SeatCinema() {
 
     return seats;
   };
-
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
 

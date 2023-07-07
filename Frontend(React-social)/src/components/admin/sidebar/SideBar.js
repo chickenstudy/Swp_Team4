@@ -21,7 +21,7 @@ function SideBar() {
           <p>STAFF</p>
         </NavLink>
         <NavLink to="/cinema" className="nav-link" activeClassName="active">
-          <p>Cinema</p>
+          <p>CINEMA</p>
         </NavLink>
 
         <NavLink to="/banner" className="nav-link" activeClassName="active">

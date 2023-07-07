@@ -6,18 +6,12 @@ export default function StaffManagement() {
   const [data, setData] = useState([]);
   const navigate = useNavigate();
 
-  const LoadDetail = (id) => {
-    navigate(`/movie/detailmovie/${id}`);
-  };
-  const LoadEdit = (id) => {
-    navigate("/movie/editmovie/" + id);
-  };
-
   useEffect(() => {
     axios
       .get("http://localhost:8080/api/staff/listStaff")
       .then((res) => {
         setData(res.data);
+        console.log(res.data);
       })
       .catch((err) => {
         console.log(err.message);
@@ -46,18 +40,19 @@ export default function StaffManagement() {
           </tr>
         </thead>
         <tbody>
-          {data && data.map((item) => {
-          <tr key={item.id}>
-            <td>{item.id}</td>
-            <td>{item.picture}</td>
-            <td>{item.name}</td>
-            <td>{item.email}</td>
-            <td>{item.sex}</td>
-            <td>{item.address}</td>
-            <td>{item.phonenumber}</td>
-            <td className="action">Actions</td>
-          </tr>
-          })}
+          {data &&
+            data.map((item) => {
+              <tr key={item.id}>
+                <td>{item.id}</td>
+                <td>{item.picture}</td>
+                <td>{item.name}</td>
+                <td>{item.email}</td>
+                <td>{item.sex}</td>
+                <td>{item.address}</td>
+                <td>{item.phonenumber}</td>
+                <td className="action">Actions</td>
+              </tr>;
+            })}
         </tbody>
       </table>
     </div>
