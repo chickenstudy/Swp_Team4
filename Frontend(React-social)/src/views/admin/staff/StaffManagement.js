@@ -22,7 +22,7 @@ export default function StaffManagement() {
 
   const Removefunction = (id) => {
     if (window.confirm("Do you want to remove?")) {
-      fetch("http://localhost:8080/api/movie/deletemovie/" + id, {
+      fetch("http://localhost:8080/api/staff/delete/" + id, {
         method: "DELETE",
       })
         .then((res) => {
