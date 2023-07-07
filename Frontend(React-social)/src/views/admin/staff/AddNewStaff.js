@@ -31,7 +31,7 @@ export default function AddNewStaff() {
   const handlesubmit = (e) => {
     e.preventDefault();
     const data = {
-      account_tbl: {
+      user: {
         username,
         picture,
         address,

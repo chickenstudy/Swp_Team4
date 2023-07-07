@@ -71,7 +71,7 @@ const MovieList = () => {
               </tr>
             </thead>
             <tbody>
-              {data &&
+              {
                 data.map((item) => (
                   <tr key={item.id}>
                     <td style={{ width: "10px" }}>{item.id}</td>
