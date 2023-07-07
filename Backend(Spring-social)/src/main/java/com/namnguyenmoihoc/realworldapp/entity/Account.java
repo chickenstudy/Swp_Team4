@@ -2,6 +2,9 @@ package com.namnguyenmoihoc.realworldapp.entity;
 
 import java.util.Date;
 
+import org.hibernate.annotations.DynamicInsert;
+import org.hibernate.annotations.DynamicUpdate;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 
@@ -19,6 +22,8 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Table(name = "account_tbl")
+@DynamicUpdate
+@DynamicInsert
 public class Account {
     @Id
     private int id;

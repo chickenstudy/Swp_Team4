@@ -3,6 +3,7 @@ package com.namnguyenmoihoc.realworldapp.service.impl;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Base64;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -144,12 +145,12 @@ public class UserServiceImpl implements UserService {
 
     private Map<String, ProfileDTOResponse> buidProfileResponse(Account user) {
         Map<String, ProfileDTOResponse> wrapper = new HashMap<>();
-                String decodedStringPicture = new String(user.getPicture());
-
+        String decodedStringPicture = new String(user.getPicture());
 
         ProfileDTOResponse profileDTOResponsive = ProfileDTOResponse.builder().address(user.getAddress())
                 .email(user.getEmail()).phonenumber(user.getPhonenumber())
-                .picture(decodedStringPicture).sex(checkSex(user)).username(user.getUsername()).dob(user.getDob()).build();
+                .picture(decodedStringPicture).sex(checkSex(user)).username(user.getUsername()).dob(user.getDob())
+                .build();
 
         wrapper.put("profile", profileDTOResponsive);
         return wrapper;
@@ -177,10 +178,44 @@ public class UserServiceImpl implements UserService {
 
             // return buidProfileResponse(userOptional.get());
 
-            Account user = UserMapper.toUpdateUser(userDTOUpdateAccount);
+            byte[] image = Base64.getDecoder().decode(userDTOUpdateAccount.getPicture());
+
+            if (image.length == 0) {
+                image = Base64.getDecoder().decode("NoImage");
+            }
+
+            Account user = userOptional.get();
+            
+            if (!userDTOUpdateAccount.getEmail().equals(user.getEmail())) {
+                Optional<Account> userOptional1 = userRepository.findByEmail(userDTOUpdateAccount.getEmail());
+                if (userOptional1.isPresent()) {
+                    throw new CustomNotFoundException(
+                            CustomError.builder().code("404").message("Your email is registered").build());
+                }
+                
+                System.out.println("userfromdb:" + user);
+                user.setAddress(userDTOUpdateAccount.getAddress());
+                user.setDob(userDTOUpdateAccount.getDob());
+                user.setPhonenumber(userDTOUpdateAccount.getPhonenumber());
+                user.setPicture(image);
+                user.setSex(userDTOUpdateAccount.getSex());
+                user.setUsername(userDTOUpdateAccount.getUsername());
+                user.setEmail(userDTOUpdateAccount.getEmail());
+
+                
+            } else {
+                user.setAddress(userDTOUpdateAccount.getAddress());
+                user.setDob(userDTOUpdateAccount.getDob());
+                user.setPhonenumber(userDTOUpdateAccount.getPhonenumber());
+                user.setPicture(image);
+                user.setSex(userDTOUpdateAccount.getSex());
+                user.setUsername(userDTOUpdateAccount.getUsername());
+                
+            }
+
             System.out.println("profile:");
             System.out.println(user);
-            user.setPassword(passwordEncoder.encode(user.getPassword()));
+            // user.setPassword(passwordEncoder.encode(user.getPassword()));
             user = userRepository.save(user);
             return buidProfileResponse(user);
         }

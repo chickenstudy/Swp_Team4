@@ -43,10 +43,12 @@ public class UserMapper {
         }
 
         return Account.builder().id(userDTOUpdateAccount.getId()).username(userDTOUpdateAccount.getUsername())
-                .email(userDTOUpdateAccount.getEmail()).password(userDTOUpdateAccount.getPassword())
+                .email(userDTOUpdateAccount.getEmail())
                 .picture(image)
-                .address(userDTOUpdateAccount.getAddress()).sex(userDTOUpdateAccount.getSex())
-                .phonenumber(userDTOUpdateAccount.getPhonenumber()).rolesID(Integer.parseInt("3"))
+                .address(userDTOUpdateAccount.getAddress())
+                .sex(userDTOUpdateAccount.getSex())
+                .phonenumber(userDTOUpdateAccount.getPhonenumber())
+                .rolesID(Integer.parseInt("3"))
                 .dob(userDTOUpdateAccount.getDob()).build();
     }
 
@@ -54,7 +56,7 @@ public class UserMapper {
         String image = Base64.getEncoder().encodeToString(user.getPicture());
 
         return UserDTOUpdateAccount.builder().username(user.getUsername()).email(user.getEmail())
-                .password(user.getPassword()).picture(image).address(user.getAddress()).sex(user.getSex())
+                .picture(image).address(user.getAddress()).sex(user.getSex())
                 .phonenumber(user.getPhonenumber()).dob(user.getDob()).build();
     }
 
