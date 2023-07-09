@@ -149,7 +149,7 @@ public class UserServiceImpl implements UserService {
 
         ProfileDTOResponse profileDTOResponsive = ProfileDTOResponse.builder().address(user.getAddress())
                 .email(user.getEmail()).phonenumber(user.getPhonenumber())
-                .picture(decodedStringPicture).sex(checkSex(user)).username(user.getUsername()).dob(user.getDob())
+                .picture(decodedStringPicture).sex(user.getSex()).username(user.getUsername()).dob(user.getDob())
                 .build();
 
         wrapper.put("profile", profileDTOResponsive);
