@@ -7,10 +7,12 @@ import java.util.Map;
 
 import javax.sql.rowset.serial.SerialException;
 
+import com.namnguyenmoihoc.realworldapp.entity.Account;
 import com.namnguyenmoihoc.realworldapp.exception.custom.CustomBadRequestException;
 import com.namnguyenmoihoc.realworldapp.exception.custom.CustomNotFoundException;
 import com.namnguyenmoihoc.realworldapp.model.profileAccount.ProfileDTOResponse;
 import com.namnguyenmoihoc.realworldapp.model.roles.UserRolesDTOResponse;
+import com.namnguyenmoihoc.realworldapp.model.user.dto.AccountDTONewPassword;
 import com.namnguyenmoihoc.realworldapp.model.user.dto.UserDTOCreateAccount;
 import com.namnguyenmoihoc.realworldapp.model.user.dto.UserDTOLoginRequest;
 import com.namnguyenmoihoc.realworldapp.model.user.dto.UserDTOResponse;
@@ -29,6 +31,8 @@ public interface UserService {
     public Map<String, ProfileDTOResponse> getProfile(int userid) throws CustomNotFoundException;
 
     public Map<String, ProfileDTOResponse> getUpdateAccount(UserDTOUpdateAccount userDTOUpdateAccount) throws CustomNotFoundException, IOException;
+
+    public void changePassword(int userid, AccountDTONewPassword accountNewPassword) throws CustomNotFoundException;
 
     //public UserRolesDTOResponse findAll();
     
