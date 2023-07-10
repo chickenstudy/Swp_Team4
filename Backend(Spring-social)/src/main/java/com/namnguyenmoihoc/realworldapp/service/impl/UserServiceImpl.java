@@ -178,11 +178,10 @@ public class UserServiceImpl implements UserService {
 
             // return buidProfileResponse(userOptional.get());
 
-            byte[] image = Base64.getDecoder().decode(userDTOUpdateAccount.getPicture());
+            String picture = userDTOUpdateAccount.getPicture();
 
-            if (image.length == 0) {
-                image = Base64.getDecoder().decode("NoImage");
-            }
+            String encodePictureStr = Base64.getEncoder().encodeToString(picture.getBytes("ASCII"));
+            byte[] decodePicture = Base64.getDecoder().decode(encodePictureStr); // string to byte[]
 
             Account user = userOptional.get();
             
@@ -197,7 +196,7 @@ public class UserServiceImpl implements UserService {
                 user.setAddress(userDTOUpdateAccount.getAddress());
                 user.setDob(userDTOUpdateAccount.getDob());
                 user.setPhonenumber(userDTOUpdateAccount.getPhonenumber());
-                user.setPicture(image);
+                user.setPicture(decodePicture);
                 user.setSex(userDTOUpdateAccount.getSex());
                 user.setUsername(userDTOUpdateAccount.getUsername());
                 user.setEmail(userDTOUpdateAccount.getEmail());
@@ -207,7 +206,7 @@ public class UserServiceImpl implements UserService {
                 user.setAddress(userDTOUpdateAccount.getAddress());
                 user.setDob(userDTOUpdateAccount.getDob());
                 user.setPhonenumber(userDTOUpdateAccount.getPhonenumber());
-                user.setPicture(image);
+                user.setPicture(decodePicture);
                 user.setSex(userDTOUpdateAccount.getSex());
                 user.setUsername(userDTOUpdateAccount.getUsername());
                 
