@@ -15,7 +15,7 @@ public class StaffMapper {
 
         ProfileDTOResponse profileDTOResponsive = ProfileDTOResponse.builder().address(staff.getAddress())
                 .email(staff.getEmail()).phonenumber(staff.getPhonenumber()).id(staff.getId())
-                .picture(decodedStringPicture).sex(checkSex(staff)).username(staff.getUsername()).dob(staff.getDob())
+                .picture(decodedStringPicture).username(staff.getUsername()).dob(staff.getDob()).sex(staff.getSex())
                 .build();
         return profileDTOResponsive;
     }

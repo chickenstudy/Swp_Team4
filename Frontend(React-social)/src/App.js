@@ -45,6 +45,7 @@ function App() {
   const makeSignIn = (user) => {
     setUser(user);
   };
+  console.log(user);
   const makeSignOut = () => {
     localStorage.removeItem("token");
     setUser([]);
