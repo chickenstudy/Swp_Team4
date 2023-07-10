@@ -21,6 +21,9 @@ import Cinema from "./views/admin/cinema/Cinema";
 import CreateCinema from "./views/admin/cinema/CreateCinema";
 import MoviesStaff from "./views/staff/movies/MoviesStaff";
 import StaffLayout from "./layouts/StaffLayout";
+import ProfileAccount from "./views/auth/ProfileAccount";
+import DashboardStaff from "./views/staff/dashboard/DashboardStaff";
+import InformationMoviesStaff from "./views/staff/movies/InformationMoviesStaff";
 //---------- USER ROUTE ---------
 export const UserRoutes = [
   {
@@ -42,6 +45,11 @@ export const UserRoutes = [
   {
     path: "/booking",
     component: Booking,
+    layout: UserLayout,
+  },
+  {
+    path: "/profile",
+    component: ProfileAccount,
     layout: UserLayout,
   },
 
@@ -127,7 +135,17 @@ export const AdminRoutes = [
 export const StaffRoutes = [
   {
     path: "/staffmanagement",
+    component: DashboardStaff,
+    layout: StaffLayout,
+  },
+  {
+    path: "/staffmanagement/movies",
     component: MoviesStaff,
+    layout: StaffLayout,
+  },
+  {
+    path: "/staffmanagement/movies/informationmovie/:id",
+    component: InformationMoviesStaff,
     layout: StaffLayout,
   },
 ];

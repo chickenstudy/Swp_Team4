@@ -10,7 +10,7 @@ export const ApplicationContext = React.createContext([]);
 function App() {
   useEffect(() => {
     const jwt = localStorage.getItem("token");
-    console.log(jwt);
+
     axios
       .get("http://localhost:8080/api/banner/listBanner")
       .then((response) => {
@@ -45,6 +45,7 @@ function App() {
   const makeSignIn = (user) => {
     setUser(user);
   };
+  console.log(user);
   const makeSignOut = () => {
     localStorage.removeItem("token");
     setUser([]);

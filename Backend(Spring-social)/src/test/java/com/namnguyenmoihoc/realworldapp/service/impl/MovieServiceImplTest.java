@@ -9,13 +9,14 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 import java.io.UnsupportedEncodingException;
-
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
-
+import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
@@ -24,6 +25,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 
 import com.namnguyenmoihoc.realworldapp.entity.Movie;
 import com.namnguyenmoihoc.realworldapp.exception.custom.CustomNotFoundException;
+
 import com.namnguyenmoihoc.realworldapp.model.movie.MovieDTOCreate;
 import com.namnguyenmoihoc.realworldapp.model.movie.MovieDTOUpdate;
 import com.namnguyenmoihoc.realworldapp.model.user.mapper.MovieMapper;
@@ -168,4 +170,84 @@ public class MovieServiceImplTest {
                                                 // movieId
     }
 
+    @Test
+    void testGetMovieByID() throws CustomNotFoundException {
+        int movieid = 1;
+        Movie movie = new Movie();
+
+        movie.setMovieid(movieid);
+        movie.setName("Test Movie");
+        movie.setPoster("poster data".getBytes());
+        movie.setDescription("Test movie description");
+        movie.setType("Action");
+        movie.setShow_date(new Date());
+        movie.setBanner("banner data".getBytes());
+        movie.setTrailer("https://example.com/trailer");
+        movie.setCountry("Test country");
+        movie.setTimes("120");
+
+        when(movieRepository.findById(movieid)).thenReturn(Optional.of(movie));
+
+        Map<String, MovieDTOResponse> result = null; // Initialize the result variable
+
+        result = movieService.getMovieByID(movieid);
+        assertNotNull(result);
+        assertEquals(1, result.size());
+        assertTrue(result.containsKey("movie"));
+
+        MovieDTOResponse movieDTO = result.get("movie");
+        assertNotNull(movieDTO);
+        assertEquals(movie.getMovieid(), movieDTO.getId());
+        assertEquals(movie.getName(), movieDTO.getName());
+        assertEquals(movie.getCountry(), movieDTO.getCountry());
+
+    }
+
+    @Test
+    void testSearchMovieByName() throws CustomNotFoundException {
+        String name = "Avengers";
+        Movie movie1 = new Movie();
+        movie1.setName("Avengers: Endgame");
+        movie1.setPoster("poster data".getBytes());
+        movie1.setDescription("Test movie description");
+        movie1.setType("Action");
+        movie1.setShow_date(new Date());
+        movie1.setBanner("banner data".getBytes());
+        movie1.setTrailer("https://example.com/trailer");
+        movie1.setCountry("Test country");
+        movie1.setTimes("120");
+
+        // Set other properties for movie1 object
+        Movie movie2 = new Movie();
+        movie2.setName("Avengers: Infinity War");
+        movie2.setPoster("poster data".getBytes());
+        movie2.setDescription("Test movie description");
+        movie2.setType("Action");
+        movie2.setShow_date(new Date());
+        movie2.setBanner("banner data".getBytes());
+        movie2.setCountry("Test country");
+        movie2.setTimes("120");
+        // Set other properties for movie2 object
+
+        List<Movie> movieList = new ArrayList<>();
+        movieList.add(movie1);
+        movieList.add(movie2);
+
+        when(movieRepository.findAll()).thenReturn(movieList);
+
+        // Act
+        List<MovieDTOResponse> result = movieService.searchMovieByName(name);
+
+        // Assert
+        Assertions.assertNotNull(result);
+        Assertions.assertEquals(2, result.size());
+
+        MovieDTOResponse movieDTO1 = result.get(0);
+        Assertions.assertEquals(movie1.getName(), movieDTO1.getName());
+        // Perform additional assertions for other properties of movieDTO1
+
+        MovieDTOResponse movieDTO2 = result.get(1);
+        Assertions.assertEquals(movie2.getName(), movieDTO2.getName());
+
+    }
 }

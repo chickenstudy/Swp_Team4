@@ -17,7 +17,7 @@ public class ProfileDTOResponse {
     private int id;
     private String username;
     private String email;
-    private String sex;
+    private byte sex;
     private String address;
     private String picture;
     private String phonenumber;

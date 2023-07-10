@@ -14,6 +14,7 @@ export default function StaffManagement() {
       .get("http://localhost:8080/api/staff/listStaff")
       .then((res) => {
         setData(res.data);
+        console.log(res.data);
       })
       .catch((err) => {
         console.log(err.message);
@@ -80,7 +81,8 @@ export default function StaffManagement() {
                     className=""
                     onClick={() => {
                       Removefunction(item.id);
-                    }}>
+                    }}
+                  >
                     <RiDeleteBinLine
                       className="btn btn-danger mx-1"
                       size={50}
