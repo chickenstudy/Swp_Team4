@@ -9,6 +9,7 @@ import org.springframework.stereotype.Repository;
 import com.namnguyenmoihoc.realworldapp.entity.Account;
 
 @Repository
+
 public interface StaffRepository extends JpaRepository<Account, Integer>{
     public Optional<Account> findById(int id);
 
