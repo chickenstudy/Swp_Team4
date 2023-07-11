@@ -23,6 +23,7 @@ import com.namnguyenmoihoc.realworldapp.exception.custom.CustomNotFoundException
 import com.namnguyenmoihoc.realworldapp.model.profileAccount.ProfileDTOResponse;
 import com.namnguyenmoihoc.realworldapp.model.roles.UserRolesDTOResponse;
 import com.namnguyenmoihoc.realworldapp.model.user.CustomError;
+import com.namnguyenmoihoc.realworldapp.model.user.dto.AccountDTONewPassword;
 import com.namnguyenmoihoc.realworldapp.model.user.dto.UserDTOCreateAccount;
 import com.namnguyenmoihoc.realworldapp.model.user.dto.UserDTOLoginRequest;
 import com.namnguyenmoihoc.realworldapp.model.user.dto.UserDTOResponse;
@@ -178,39 +179,37 @@ public class UserServiceImpl implements UserService {
 
             // return buidProfileResponse(userOptional.get());
 
-            byte[] image = Base64.getDecoder().decode(userDTOUpdateAccount.getPicture());
+            String picture = userDTOUpdateAccount.getPicture();
 
-            if (image.length == 0) {
-                image = Base64.getDecoder().decode("NoImage");
-            }
+            String encodePictureStr = Base64.getEncoder().encodeToString(picture.getBytes("ASCII"));
+            byte[] decodePicture = Base64.getDecoder().decode(encodePictureStr); // string to byte[]
 
             Account user = userOptional.get();
-            
+
             if (!userDTOUpdateAccount.getEmail().equals(user.getEmail())) {
                 Optional<Account> userOptional1 = userRepository.findByEmail(userDTOUpdateAccount.getEmail());
                 if (userOptional1.isPresent()) {
                     throw new CustomNotFoundException(
                             CustomError.builder().code("404").message("Your email is registered").build());
                 }
-                
+
                 System.out.println("userfromdb:" + user);
                 user.setAddress(userDTOUpdateAccount.getAddress());
                 user.setDob(userDTOUpdateAccount.getDob());
                 user.setPhonenumber(userDTOUpdateAccount.getPhonenumber());
-                user.setPicture(image);
+                user.setPicture(decodePicture);
                 user.setSex(userDTOUpdateAccount.getSex());
                 user.setUsername(userDTOUpdateAccount.getUsername());
                 user.setEmail(userDTOUpdateAccount.getEmail());
 
-                
             } else {
                 user.setAddress(userDTOUpdateAccount.getAddress());
                 user.setDob(userDTOUpdateAccount.getDob());
                 user.setPhonenumber(userDTOUpdateAccount.getPhonenumber());
-                user.setPicture(image);
+                user.setPicture(decodePicture);
                 user.setSex(userDTOUpdateAccount.getSex());
                 user.setUsername(userDTOUpdateAccount.getUsername());
-                
+
             }
 
             System.out.println("profile:");
@@ -220,6 +219,35 @@ public class UserServiceImpl implements UserService {
             return buidProfileResponse(user);
         }
         throw new CustomNotFoundException(CustomError.builder().code("404").message("User not login").build());
+
+    }
+
+    @Override
+    public void changePassword(int userid, AccountDTONewPassword accountNewPassword)
+            throws CustomNotFoundException {
+        // TODO Auto-generated method stub
+
+        if (accountNewPassword.getPassword().isEmpty()) {
+            throw new CustomNotFoundException(CustomError.builder().code("404").message("Password null").build());
+        }
+
+        Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        if (principal instanceof UserDetails) {
+            Optional<Account> userOptional = userRepository.findById(userid);
+
+            if (userOptional.isEmpty()) {
+                throw new CustomNotFoundException(CustomError.builder().code("404").message("User not found").build());
+            }
+
+            Account user = userOptional.get();
+            System.out.println("password : " + accountNewPassword);
+            System.out.println("password : " + user);
+
+            user.setPassword(passwordEncoder.encode(accountNewPassword.getPassword()));
+            System.out.println("password : " + accountNewPassword);
+            user = userRepository.save(user);
+        }
+    
 
     }
 

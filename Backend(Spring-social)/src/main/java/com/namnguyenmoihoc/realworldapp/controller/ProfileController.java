@@ -3,8 +3,11 @@ package com.namnguyenmoihoc.realworldapp.controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.namnguyenmoihoc.realworldapp.entity.Account;
 import com.namnguyenmoihoc.realworldapp.exception.custom.CustomNotFoundException;
 import com.namnguyenmoihoc.realworldapp.model.profileAccount.ProfileDTOResponse;
+import com.namnguyenmoihoc.realworldapp.model.user.CustomError;
+import com.namnguyenmoihoc.realworldapp.model.user.dto.AccountDTONewPassword;
 import com.namnguyenmoihoc.realworldapp.model.user.dto.UserDTOUpdateAccount;
 import com.namnguyenmoihoc.realworldapp.service.UserService;
 
@@ -12,14 +15,16 @@ import lombok.RequiredArgsConstructor;
 
 import java.io.IOException;
 import java.util.Map;
+import java.util.Optional;
 
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-
 
 @RestController
 @RequiredArgsConstructor
@@ -41,6 +46,12 @@ public class ProfileController {
         System.out.println(userDTOUpdateAccount);
         userDTOUpdateAccount.setId(userid);
         return userService.getUpdateAccount(userDTOUpdateAccount);
+    }
+
+    @PutMapping("/update/changepassword/{userid}")
+    public void changePassword(@PathVariable int userid, @RequestBody AccountDTONewPassword accountNewPassword)
+            throws CustomNotFoundException, IOException {
+        userService.changePassword(userid, accountNewPassword);
     }
 
 }
