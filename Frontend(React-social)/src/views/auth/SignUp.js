@@ -18,13 +18,54 @@ export default function SignUp() {
   const [phoneNumber, setPhonenumber] = useState("");
   const [dob, setDob] = useState("");
   const [error, setError] = useState("");
+  const [error1, setError1] = useState("");
+  const [error2, setError2] = useState("");
   const [showModal, setShowModal] = useState(false);
+  const [isEmailVerified, setIsEmailVerified] = useState(false);
+  const [otp, setOtp] = useState("");
+  const [otpError, setOtpError] = useState("");
+
+  const [confirmationMessage, setConfirmationMessage] = useState("");
 
   const handleSexChange = (event) => {
     setSex(event.target.value);
   };
 
   const navigate = useNavigate();
+
+  const handleEmailVerification = () => {
+    axios
+      .post("http://localhost:3001/send-otp", { email })
+      .then((response) => {
+        console.log(response.data);
+        setConfirmationMessage("OTP has been sent to your email.");
+      })
+      .catch((error) => {
+        console.log(error);
+        setConfirmationMessage("Error sending OTP. Please try again.");
+      });
+  };
+
+  const handleOtpVerification = () => {
+    axios
+      .post("http://localhost:3001/verify-otp", { email, otp })
+      .then((response) => {
+        console.log(response.data);
+        if (response.data) {
+          setConfirmationMessage("OTP has been verified successfully.");
+          setIsEmailVerified(true);
+        } else {
+          setConfirmationMessage("Invalid OTP. Please try again.");
+          setIsEmailVerified(false);
+        }
+      })
+      .catch((error) => {
+        console.log(error);
+        setConfirmationMessage("Error verifying OTP. Please try again.");
+        setIsEmailVerified(false);
+      });
+  };
+
   const handleSubmit = (e) => {
     e.preventDefault();
 
@@ -45,14 +86,24 @@ export default function SignUp() {
       axios
         .post("http://localhost:8080/api/user/register", data)
         .then((response) => {
-          console.log(response);
+          console.log(response.message);
 
           if (response.status === 200) {
+            alert("Sign up successful!");
             window.location.href = "/";
           }
         })
         .catch((error) => {
           console.error(error);
+          if (
+            error.response &&
+            error.response.data &&
+            error.response.data.message
+          ) {
+            setError1("Your email is Null");
+          } else {
+            setError1("Your email is registered");
+          }
         });
     } else {
       setError("Passwords do not match.");
@@ -65,12 +116,12 @@ export default function SignUp() {
       return;
     }
     if (!file.type.startsWith("image/")) {
-      setError("Vui lòng chọn tệp hình ảnh.");
+      setError2("Please choose an image file.");
       return;
     }
     const MAX_FILE_SIZE = 5 * 1024 * 1024; // 5 MB
     if (file.size > MAX_FILE_SIZE) {
-      setError("Kích thước tệp đã chọn vượt quá giới hạn cho phép.");
+      setError2("The selected file size exceeds the allowed limit.");
       return;
     }
 
@@ -80,10 +131,28 @@ export default function SignUp() {
       setPicture(reader.result);
     };
 
-    setError(null);
+    setError2(null);
   };
-  const handleClose = () => setShowModal(false);
-  const handleShow = () => setShowModal(true);
+
+  const handleClose = () => {
+    setShowModal(false);
+    setEmail("");
+    setOtp("");
+    setConfirmationMessage("");
+    setError1("");
+    setError2("");
+    setIsEmailVerified(false);
+  };
+
+  const handleShow = () => {
+    setShowModal(true);
+    setEmail("");
+    setOtp("");
+    setConfirmationMessage("");
+    setError1("");
+    setError2("");
+    setIsEmailVerified(false);
+  };
 
   return (
     <>
@@ -117,8 +186,44 @@ export default function SignUp() {
               />
               <Form.Text className="text-muted">
                 We'll never share your email with anyone else.
+                {error1 && <div className="text-danger mt-2">{error1}</div>}
               </Form.Text>
             </Form.Group>
+
+            {confirmationMessage && (
+              <Form.Text>{confirmationMessage}</Form.Text>
+            )}
+
+            {confirmationMessage ? (
+              <Form.Group controlId="formBasicOtp">
+                <Form.Label>OTP</Form.Label>
+                <Form.Control
+                  type="text"
+                  placeholder="Enter OTP"
+                  value={otp}
+                  onChange={(e) => setOtp(e.target.value)}
+                />
+                {error2 && (
+                  <Form.Text className="text-danger">{error2}</Form.Text>
+                )}
+                <Button
+                  variant="primary"
+                  onClick={handleOtpVerification}
+                  className="mt-3"
+                  disabled={!otp}
+                >
+                  Verify OTP
+                </Button>
+              </Form.Group>
+            ) : (
+              <Button
+                variant="primary"
+                onClick={handleEmailVerification}
+                disabled={!email}
+              >
+                Send OTP
+              </Button>
+            )}
 
             <Form.Group controlId="formBasicPassword">
               <Form.Label>Password</Form.Label>
@@ -173,10 +278,12 @@ export default function SignUp() {
                   type="file"
                   accept="image/*"
                   onChange={handlePictureChange}
-                  isInvalid={!!error}
+                  isInvalid={!!error2}
                 />
               </InputGroup>
-              {error && <Form.Text className="text-danger">{error}</Form.Text>}
+              {error2 && (
+                <Form.Text className="text-danger">{error2}</Form.Text>
+              )}
             </Form.Group>
 
             <Form.Group controlId="formBasicPhoneNumber">
@@ -199,9 +306,11 @@ export default function SignUp() {
               />
             </Form.Group>
 
-            <Button variant="primary" type="submit">
-              Sign Up
-            </Button>
+            {isEmailVerified && (
+              <Button variant="primary" type="submit">
+                Sign Up
+              </Button>
+            )}
           </Form>
         </Modal.Body>
       </Modal>

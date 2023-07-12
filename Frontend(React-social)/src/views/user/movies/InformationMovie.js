@@ -16,8 +16,18 @@ const Informationmovie = () => {
   const { id } = useParams();
   const [data, setData] = useState([]);
   const [cinema, setCinema] = useState([]);
+  const [cinema1, setCinema1] = useState([]);
   const [showtime, setShowtime] = useState([]);
   const [showVideoModal, setShowVideoModal] = useState(false);
+  const [date, setDate] = useState([]); // [1, 2, 3, 4, 5, 6, 7
+  const [time, setTime] = useState("");
+
+  const dateMovies = sessionStorage.setItem("date", date);
+  const timeStart = sessionStorage.setItem("time", time);
+  const cinemaName = sessionStorage.setItem("cinema", cinema1);
+  const dateMovies12 = sessionStorage.getItem("date");
+  const timeStart12 = sessionStorage.getItem("time");
+
   useEffect(() => {
     axios
       .get("http://localhost:8080/api/movie/listMovie/" + id)
@@ -90,14 +100,16 @@ const Informationmovie = () => {
                     border: "2px solid rgb(206, 161, 11)",
                   }}
                   rel="noopener noreferrer"
-                  variant="dark">
+                  variant="dark"
+                >
                   View trailer
                 </Button>
 
                 <Modal
                   show={showVideoModal}
                   onHide={handleCloseVideoModal}
-                  size="lg">
+                  size="lg"
+                >
                   <Modal.Body>
                     <ReactPlayer
                       url={data?.movie?.trailer}
@@ -146,6 +158,8 @@ const Informationmovie = () => {
                       width: "100%",
                       paddingLeft: "10px",
                     }}
+                    value={date}
+                    onChange={(e) => setDate(e.target.value)}
                   />
                 </Col>
                 <Col md={3}>
@@ -158,19 +172,28 @@ const Informationmovie = () => {
                 <Col md={3}></Col>
               </Row>
 
-              {cinema.map((item) => (
+              {cinema.map((item1) => (
                 <div className="cinema mt-5">
-                  <div class="title-cinema">
-                    <h5 class="">{item.name}</h5>
-                  </div>
+                  <span
+                    class="title-cinema"
+                    onClick={(e) => setCinema1(e.target.value)}
+                  >
+                    {item1.name}
+                  </span>
                   <div className="item-cinema">
                     <Row>
                       <Col>{data?.movie?.type}</Col>
                       <Col xs={8}>
                         {showtime.map((item) => (
-                          <span className="ml-3" >
-                            {" "}
-                            <Button style={{border:'1px solid black'}} variant="light">{item.starttime}</Button>
+                          <span className="ml-3">
+                            <Button
+                              style={{ border: "1px solid black" }}
+                              variant="light"
+                              value={item.starttime}
+                              onClick={(e) => setTime(e.target.value)}
+                            >
+                              {item.starttime}
+                            </Button>
                           </span>
                         ))}
                       </Col>
