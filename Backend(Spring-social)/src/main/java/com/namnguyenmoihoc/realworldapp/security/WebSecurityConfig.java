@@ -37,7 +37,7 @@ public class WebSecurityConfig{
                 .requestMatchers("/api/staff/*").permitAll()
                 .requestMatchers("/api/user/login").permitAll()
                 .requestMatchers("/api/user/register").permitAll()
-                .requestMatchers("/api/user/profiles/*").authenticated()
+                .requestMatchers("/api/user/profile/*").authenticated()
                 .and()
                 .sessionManagement()
                 .sessionCreationPolicy(SessionCreationPolicy.STATELESS);
