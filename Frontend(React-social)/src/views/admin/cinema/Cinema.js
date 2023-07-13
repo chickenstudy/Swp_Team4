@@ -18,6 +18,7 @@ export default function Cinema() {
     fetch("http://localhost:8080/api/cinema/listCinema")
       .then((res) => res.json())
       .then((data) => {
+        console.log(data);
         setCinema(data);
       })
       .catch((err) => {

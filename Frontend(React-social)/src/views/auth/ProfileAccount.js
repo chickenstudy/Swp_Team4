@@ -20,6 +20,8 @@ import {
   MDBListGroupItem,
 } from "mdb-react-ui-kit";
 import { ApplicationContext } from "../../App";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 export default function ProfileAccount() {
   const { user } = React.useContext(ApplicationContext);
@@ -59,8 +61,12 @@ export default function ProfileAccount() {
         },
       })
       .then((res) => {
-        console.log(res.data);
-        // Thực hiện các xử lý sau khi cập nhật thành công
+        toast.success("Update success", {
+          onClose: () => {
+            navigate("/profile");
+            // Thực hiện các xử lý sau khi cập nhật thành công
+          },
+        }); // Thực hiện các xử lý sau khi cập nhật thành công
       })
       .catch((error) => {
         console.error(error);
@@ -310,12 +316,13 @@ export default function ProfileAccount() {
                 </MDBCardBody>
               </MDBCard>
             </MDBCol>
-            <Button variant="primary" size="lg">
+            <Button variant="primary" size="lg" onClick={handleUpdate}>
               Update Profile
             </Button>
           </MDBRow>
         </Form>
       </MDBContainer>
+      <ToastContainer />
     </section>
   );
 }

@@ -12,6 +12,7 @@ import Tooltip from "@mui/material/Tooltip";
 import MenuItem from "@mui/material/MenuItem";
 import { Container } from "react-bootstrap";
 import { Link } from "react-router-dom";
+import { Grid } from "@mui/material";
 
 function Account() {
   const { user, makeSignOut } = useContext(ApplicationContext);
@@ -65,10 +66,27 @@ function Account() {
       >
         <MenuItem onClick={handleCloseUserMenu}>
           <Typography textAlign="center">
-            <Link to="/profile" style={{ textDecoration: "none" }}>
-              Profile
-            </Link>
-            <Typography onClick={makeSignOut}>Log Out</Typography>
+            <Grid container direction="column" spacing={1}>
+              <Grid item>
+                <Link
+                  to="/profile"
+                  style={{ textDecoration: "none", color: "black" }}
+                >
+                  <Typography>Profile</Typography>
+                </Link>
+              </Grid>
+              <Grid item>
+                <Link
+                  to="/change-password"
+                  style={{ textDecoration: "none", color: "black" }}
+                >
+                  <Typography>Change password</Typography>
+                </Link>
+              </Grid>
+              <Grid item>
+                <Typography onClick={makeSignOut}>Log Out</Typography>
+              </Grid>
+            </Grid>
           </Typography>
         </MenuItem>
       </Menu>

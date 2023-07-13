@@ -16,6 +16,7 @@ const Informationmovie = () => {
   const { id } = useParams();
   const [data, setData] = useState([]);
   const [cinema, setCinema] = useState([]);
+  const [cinema1, setCinema1] = useState([]);
   const [showtime, setShowtime] = useState([]);
   const [showVideoModal, setShowVideoModal] = useState(false);
 
@@ -71,9 +72,9 @@ const Informationmovie = () => {
     setSelectedShowtime(showtime);
 
     // Save values to session storage
-    sessionStorage.setItem("selectedDate", date);
-    sessionStorage.setItem("selectedCinema", cinema);
-    sessionStorage.setItem("selectedShowtime", showtime);
+    sessionStorage.setItem("date", date);
+    sessionStorage.setItem("time", cinema);
+    sessionStorage.setItem("cinema", showtime);
   };
 
   const handleDateChange = (event) => {
@@ -110,14 +111,16 @@ const Informationmovie = () => {
                     border: "2px solid rgb(206, 161, 11)",
                   }}
                   rel="noopener noreferrer"
-                  variant="dark">
+                  variant="dark"
+                >
                   View trailer
                 </Button>
 
                 <Modal
                   show={showVideoModal}
                   onHide={handleCloseVideoModal}
-                  size="lg">
+                  size="lg"
+                >
                   <Modal.Body>
                     <ReactPlayer
                       url={data?.movie?.trailer}

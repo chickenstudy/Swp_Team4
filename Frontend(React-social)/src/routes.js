@@ -26,7 +26,7 @@ import StaffLayout from "./layouts/StaffLayout";
 import ProfileAccount from "./views/auth/ProfileAccount";
 import DashboardStaff from "./views/staff/dashboard/DashboardStaff";
 import InformationMoviesStaff from "./views/staff/movies/InformationMoviesStaff";
-
+import ChangePassword from "./views/auth/ChangePassword";
 //---------- USER ROUTE ---------
 export const UserRoutes = [
   {
@@ -53,6 +53,11 @@ export const UserRoutes = [
   {
     path: "/profile",
     component: ProfileAccount,
+    layout: UserLayout,
+  },
+  {
+    path: "/change-password",
+    component: ChangePassword,
     layout: UserLayout,
   },
 
