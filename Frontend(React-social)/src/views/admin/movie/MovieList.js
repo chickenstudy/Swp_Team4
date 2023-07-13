@@ -48,13 +48,13 @@ const MovieList = () => {
     <div className="container">
       <div className="card">
         <div className="card-title">
-          <h2 className="d-flex justify-content-center my-3">List Movie</h2>
+          <h2 className="d-flex justify-content-center my-2">List Movie</h2>
         </div>
         <div className="card-body">
           <div className="divbtn text-end mx-4">
             <Link
               to="/movie/addmovie"
-              className="btn btn-success rounded-0 mb-3">
+              className="btn btn-success rounded-0 mb-2">
               Add new movie
             </Link>
           </div>

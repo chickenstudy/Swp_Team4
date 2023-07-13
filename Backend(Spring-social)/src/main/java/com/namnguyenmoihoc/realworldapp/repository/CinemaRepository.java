@@ -10,7 +10,5 @@ import com.namnguyenmoihoc.realworldapp.entity.Cinema;
 @Repository
 public interface CinemaRepository extends JpaRepository<Cinema , Integer>{
 
-   
-   
     
 }

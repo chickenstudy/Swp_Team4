@@ -2,9 +2,6 @@
   width: 240px;
   min-height: 1000px;
   background-color: rgb(46, 47, 50);
-  display: flex;
-  flex-direction: column;
-  align-items: center;
 }
 .sidebar a {
   font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
@@ -18,6 +15,7 @@
 }
 
 .nav-link {
-width: 90%;
-height: 50px;
+  width: 90%;
+  height: 50px;
 }
+

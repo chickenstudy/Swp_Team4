@@ -21,6 +21,7 @@ export default function StaffManagement() {
       });
   }, []);
 
+  console.log(data)
   const Removefunction = (id) => {
     if (window.confirm("Do you want to remove?")) {
       fetch("http://localhost:8080/api/staff/delete/" + id, {
@@ -73,10 +74,10 @@ export default function StaffManagement() {
                 </td>
                 <td>{item.username}</td>
                 <td>{item.email}</td>
-                <td>{item.sex}</td>
-                <td>{item.address}</td>
+                <td>{item.sex === 1 ? "Male" : "Female"}</td>
+                <td style={{width:'150px'}}>{item.address}</td>
                 <td>{item.phonenumber}</td>
-                <td className="action">
+                <td style={{width:'75px'}} className="action">
                   <a
                     className=""
                     onClick={() => {

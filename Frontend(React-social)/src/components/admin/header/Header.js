@@ -4,9 +4,9 @@ import './header.css'
 
 export default function Header() {
   return (
-    <header className='header'>
-      <div className='inner'>
-        <strong>cinema system management</strong>
+    <header className='header d-flex align-items-center'>
+      <div className='text-center'>
+        <strong className="text-white">CINEMA SYSTEM MANAGEMENT</strong>
       </div>
     </header>
   )

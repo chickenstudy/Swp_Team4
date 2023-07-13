@@ -2,9 +2,7 @@
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 
-
 export default function AddNewStaff() {
-  const [id, setId] = useState("");
   const [username, setUserName] = useState("");
   const [picture, setPicture] = useState("");
   const [address, setAddress] = useState("");
@@ -15,7 +13,7 @@ export default function AddNewStaff() {
   const [dob, setDob] = useState("");
 
   const [validation, valchange] = useState(false);
-  
+
   const handlePosterChange = (event) => {
     const file = event.target.files[0];
     const reader = new FileReader();
@@ -57,124 +55,134 @@ export default function AddNewStaff() {
       });
   };
 
-  return <div>
-  <div className="row">
-    <div className="offset-lg-3 col-lg-6">
-      <form className="container" onSubmit={handlesubmit}>
-        <div className="card" style={{ textAlign: "left" }}>
-          <div className="card-title">
-            <h2 className="text-center my-3">Add New Movie</h2>
-          </div>
-          <div className="card-body">
-            <div className="row">
-              <div className="col-lg-12 my-1">
-                <div className="form-group">
-                  <label>Name</label>
-                  <input
-                    required
-                    value={username}
-                    onMouseDown={(e) => valchange(true)}
-                    onChange={(e) => setUserName(e.target.value)}
-                    className="form-control"></input>
-                </div>
+  return (
+    <div>
+      <div className="row">
+        <div className="offset-lg-3 col-lg-6">
+          <form className="container" onSubmit={handlesubmit}>
+            <div className="card" style={{ textAlign: "left" }}>
+              <div className="card-title">
+                <h2 className="text-center my-3">ADD NEW STAFF</h2>
               </div>
-
-              <div className="col-lg-12 my-1">
-                <div className="form-group">
-                  <label>Avatar</label>
-                  <div>
-                    <input
-                      type="file"
-                      accept="image/*"
-                      onChange={handlePosterChange}
-                    />
-                    {picture && <p>Selected File:</p>}
+              <div className="card-body">
+                <div className="row">
+                  <div className="col-lg-12 my-1">
+                    <div className="form-group">
+                      <label>Name</label>
+                      <input
+                        required
+                        value={username}
+                        onMouseDown={(e) => valchange(true)}
+                        onChange={(e) => setUserName(e.target.value)}
+                        className="form-control"></input>
+                    </div>
                   </div>
-                  {picture && (
-                    <img src={picture} style={{ width: "150px" }} />
-                  )}
-                </div>
-              </div>
 
-              <div className="col-lg-12 my-1">
-                <div className="form-group">
-                  <label>Email</label>
-                  <input
-                    value={email}
-                    onChange={(e) => setEmail(e.target.value)}
-                    className="form-control"></input>
-                </div>
-              </div>
+                  <div className="col-lg-12 my-1">
+                    <div className="form-group">
+                      <label>Avatar</label>
+                      <div>
+                        <input
+                          type="file"
+                          accept="image/*"
+                          onChange={handlePosterChange}
+                        />
+                        {picture && <p>Selected File:</p>}
+                      </div>
+                      {picture && (
+                        <img src={picture} style={{ width: "150px" }} />
+                      )}
+                    </div>
+                  </div>
 
-              <div className="col-lg-12 my-1">
-                <div className="form-group">
-                  <label>Password</label>
-                  <input
-                    value={password}
-                    onChange={(e) => setPassword(e.target.value)}
-                    className="form-control"></input>
-                </div>
-              </div>
+                  <div className="col-lg-12 my-1">
+                    <div className="form-group">
+                      <label>Email</label>
+                      <input
+                        value={email}
+                        onChange={(e) => setEmail(e.target.value)}
+                        className="form-control"></input>
+                    </div>
+                  </div>
 
-              <div className="col-lg-12 my-1">
-                <div className="form-group">
-                  <label>Sex</label>
-                  <input
-                    value={sex}
-                    onChange={(e) => setSex(e.target.value)}
-                    className="form-control"></input>
-                </div>
-              </div>
+                  <div className="col-lg-12 my-1">
+                    <div className="form-group">
+                      <label>Password</label>
+                      <input
+                        type="password"
+                        value={password}
+                        onChange={(e) => setPassword(e.target.value)}
+                        className="form-control"></input>
+                    </div>
+                  </div>
 
-              <div className="col-lg-12 my-1">
-                <div className="form-group">
-                  <label>Address</label>
-                  <input
-                    value={address}
-                    onChange={(e) => setAddress(e.target.value)}
-                    className="form-control"></input>
-                </div>
-              </div>
+                  <div className="col-lg-12 my-1">
+                    <div className="form-group">
+                      <label>Sex</label>
+                      <div
+                        value={sex}
+                        onChange={(e) => setSex(e.target.value)}
+                        className="form-control">
+                        <select>
+                          <option value="">Choose option</option>
+                          <option value={0}>Female</option>
+                          <option value={1}>Male</option>
+                          <option value={2}>Other</option>
+                        </select>
+                      </div>
+                    </div>
+                  </div>
 
-              <div className="col-lg-12 my-1">
-                <div className="form-group">
-                  <label>Data of birth</label>
-                  <input
-                    type="date"
-                    value={dob}
-                    onChange={(e) => setDob(e.target.value)}
-                    className="form-control"
-                  />
-                </div>
-              </div>
+                  <div className="col-lg-12 my-1">
+                    <div className="form-group">
+                      <label>Address</label>
+                      <input
+                        value={address}
+                        onChange={(e) => setAddress(e.target.value)}
+                        className="form-control"></input>
+                    </div>
+                  </div>
 
-              <div className="col-lg-12 my-1">
-                <div className="form-group">
-                  <label>Phone Number</label>
-                  <input
-                    rows="6"
-                    value={phonenumber}
-                    onChange={(e) => setPhonenumber(e.target.value)}
-                    className="form-control"
-                  />
-                </div>
-              </div>
+                  <div className="col-lg-12 my-1">
+                    <div className="form-group">
+                      <label>Data of birth</label>
+                      <input
+                        type="date"
+                        value={dob}
+                        onChange={(e) => setDob(e.target.value)}
+                        className="form-control"
+                      />
+                    </div>
+                  </div>
 
-              <div className="col-lg-12 text-end my-4">
-                <div className="form-group">
-                  <button className="btn btn-success" type="submit">
-                    Save
-                  </button>
-                  <Link to="/staff" className="btn btn-danger mx-3">
-                    Back
-                  </Link>
+                  <div className="col-lg-12 my-1">
+                    <div className="form-group">
+                      <label>Phone Number</label>
+                      <input
+                        rows="6"
+                        value={phonenumber}
+                        onChange={(e) => setPhonenumber(e.target.value)}
+                        className="form-control"
+                      />
+                    </div>
+                  </div>
+
+                  <div className="col-lg-12 text-end my-4">
+                    <div className="form-group">
+                      <button className="btn btn-success" type="submit">
+                        Save
+                      </button>
+                      <Link to="/staff" className="btn btn-danger mx-3">
+                        Back
+                      </Link>
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>
-          </div>
+          </form>
         </div>
-      </form>
+      </div>
     </div>
-  </div>
-</div>
+  );
 }

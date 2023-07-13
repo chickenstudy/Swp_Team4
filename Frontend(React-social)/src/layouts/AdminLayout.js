@@ -4,13 +4,11 @@ import Header from "../components/admin/header/Header";
 import "./layout.css";
 
 function AdminLayout({ className = "container-fluid row", children }) {
-  
-
   return (
     <div className="wrapper">
-      <Header />
       <div className="body">
         <SideBar />
+        <Header />
         <div className="content">{children}</div>
       </div>
     </div>

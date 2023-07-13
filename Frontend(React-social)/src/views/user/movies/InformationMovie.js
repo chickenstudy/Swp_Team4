@@ -66,15 +66,16 @@ const Informationmovie = () => {
     setShowVideoModal(false);
   };
 
-  const handleShowtimeClick = (date, cinema, showtime) => {
+  const handleTicketClick = (date, cinema, showtime, movieName) => {
     setSelectedDate(date);
     setSelectedCinema(cinema);
     setSelectedShowtime(showtime);
 
     // Save values to session storage
     sessionStorage.setItem("date", date);
-    sessionStorage.setItem("time", cinema);
-    sessionStorage.setItem("cinema", showtime);
+    sessionStorage.setItem("cinema", cinema);
+    sessionStorage.setItem("time", showtime);
+    sessionStorage.setItem("movieName", movieName);
   };
 
   const handleDateChange = (event) => {
@@ -197,7 +198,7 @@ const Informationmovie = () => {
                             {" "}
                             <Link to = "/seat">
                               <Button
-                              onClick = {() => handleShowtimeClick(selectedDate, cinemaitem.name, showtimeitem.starttime) }
+                              onClick = {() => handleTicketClick(selectedDate, cinemaitem.name, showtimeitem.starttime, data?.movie?.name) }
                                 style={{ border: "1px solid black" }}
                                 variant="light">
                                 {showtimeitem.starttime}

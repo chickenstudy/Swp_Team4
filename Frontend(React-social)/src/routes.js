@@ -116,19 +116,19 @@ export const AdminRoutes = [
   {
     path: "/movie/addmovie",
     component: AddNewMovie,
-    layout: HeaderOnly,
+    layout: null,
     isProtected: true,
   },
   {
     path: "/movie/detailmovie/:id",
     component: DetailMovie,
-    layout: HeaderOnly,
+    layout: null,
     isProtected: true,
   },
   {
     path: "/movie/editmovie/:id",
     component: EditMovie,
-    layout: HeaderOnly,
+    layout: null,
     isProtected: true,
   },
   {

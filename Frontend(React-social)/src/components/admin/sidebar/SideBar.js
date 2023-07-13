@@ -1,5 +1,4 @@
 import React from "react";
-import { Link } from "react-router-dom";
 import "./sidebar.css";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { NavLink } from "react-router-dom";
@@ -9,6 +8,7 @@ function SideBar() {
   return (
     <aside className="sidebar">
       <Nav>
+
         <NavLink to="/admin" className="nav-link" activeClassName="active">
           DASHBOARD
         </NavLink>
