@@ -61,7 +61,6 @@ export default function ProfileAccount() {
         },
       })
       .then((res) => {
-        console.log(res.data);
         toast.success("Update success", {
           onClose: () => {
             navigate("/profile");

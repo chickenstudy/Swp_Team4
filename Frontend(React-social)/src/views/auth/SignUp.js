@@ -23,7 +23,6 @@ export default function SignUp() {
   const [showModal, setShowModal] = useState(false);
   const [isEmailVerified, setIsEmailVerified] = useState(false);
   const [otp, setOtp] = useState("");
-  const [otpError, setOtpError] = useState("");
 
   const [confirmationMessage, setConfirmationMessage] = useState("");
 
