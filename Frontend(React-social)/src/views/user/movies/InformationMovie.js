@@ -9,7 +9,7 @@ import Carousel from "react-bootstrap/Carousel";
 import { AiOutlineFieldTime } from "react-icons/ai";
 import axios from "axios";
 import ReactPlayer from "react-player";
-import { Form, Modal } from "react-bootstrap";
+import { Modal } from "react-bootstrap";
 import "./informationMovie.css";
 
 const Informationmovie = () => {
@@ -18,6 +18,11 @@ const Informationmovie = () => {
   const [cinema, setCinema] = useState([]);
   const [showtime, setShowtime] = useState([]);
   const [showVideoModal, setShowVideoModal] = useState(false);
+
+  const [selectedDate, setSelectedDate] = useState("");
+  const [selectedCinema, setSelectedCinema] = useState("");
+  const [selectedShowtime, setSelectedShowtime] = useState("");
+
   useEffect(() => {
     axios
       .get("http://localhost:8080/api/movie/listMovie/" + id)
@@ -58,6 +63,21 @@ const Informationmovie = () => {
   };
   const handleCloseVideoModal = () => {
     setShowVideoModal(false);
+  };
+
+  const handleShowtimeClick = (date, cinema, showtime) => {
+    setSelectedDate(date);
+    setSelectedCinema(cinema);
+    setSelectedShowtime(showtime);
+
+    // Save values to session storage
+    sessionStorage.setItem("selectedDate", date);
+    sessionStorage.setItem("selectedCinema", cinema);
+    sessionStorage.setItem("selectedShowtime", showtime);
+  };
+
+  const handleDateChange = (event) => {
+    setSelectedDate(event.target.value);
   };
 
   return (
@@ -146,6 +166,8 @@ const Informationmovie = () => {
                       width: "100%",
                       paddingLeft: "10px",
                     }}
+                    value={selectedDate}
+              onChange={handleDateChange}
                   />
                 </Col>
                 <Col md={3}>
@@ -158,19 +180,27 @@ const Informationmovie = () => {
                 <Col md={3}></Col>
               </Row>
 
-              {cinema.map((item) => (
+              {cinema.map((cinemaitem) => (
                 <div className="cinema mt-5">
                   <div class="title-cinema">
-                    <h5 class="">{item.name}</h5>
+                    <h5 class="">{cinemaitem.name}</h5>
                   </div>
                   <div className="item-cinema">
                     <Row>
                       <Col>{data?.movie?.type}</Col>
                       <Col xs={8}>
-                        {showtime.map((item) => (
-                          <span className="ml-3" >
+                        {showtime.map((showtimeitem) => (
+                          <span className="ml-3">
                             {" "}
-                            <Button style={{border:'1px solid black'}} variant="light">{item.starttime}</Button>
+                            <Link to = "/seat">
+                              <Button
+                              onClick = {() => handleShowtimeClick(selectedDate, cinemaitem.name, showtimeitem.starttime) }
+                                style={{ border: "1px solid black" }}
+                                variant="light">
+                                {showtimeitem.starttime}
+                           
+                              </Button>
+                            </Link>
                           </span>
                         ))}
                       </Col>

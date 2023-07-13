@@ -24,8 +24,8 @@ const MovieList = () => {
         method: "DELETE",
       })
         .then((res) => {
-          alert("Removed successfully.");
           window.location.reload();
+          alert("Removed successfully.");
         })
         .catch((err) => {
           console.log(err.message);

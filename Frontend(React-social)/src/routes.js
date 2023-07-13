@@ -1,12 +1,15 @@
 import UserLayout from "./layouts/UserLayout";
 import HeaderOnly from "./layouts/HeaderOnly";
 import AdminLayout from "./layouts/AdminLayout";
+
 // ---------- USER ----------
 import Cinemas from "./views/user/cinemas/Cinemas";
 import Movies from "./views/user/movies/Movies";
 import Booking from "./views/user/booking/Booking";
 import SeatCinema from "./views/user/movies/SeatCinema";
-// ---------- ADMIN ----------
+import InformationMovie from "./views/user/movies/InformationMovie";
+
+// ---------- ADMIN and STAFF----------
 import MovieList from "./views/admin/movie/MovieList";
 import Dashboard from "./views/admin/dashboard/Dashboard";
 import StaffManagement from "./views/admin/staff/StaffManagement";
@@ -16,7 +19,6 @@ import DetailMovie from "./views/admin/movie/DetailMovie";
 import Banner from "./views/admin/banner/Banner";
 import EditMovie from "./views/admin/movie/EditMovie";
 import AddNewStaff from "./views/admin/staff/AddNewStaff";
-import InformationMovie from "./views/user/movies/InformationMovie";
 import Cinema from "./views/admin/cinema/Cinema";
 import CreateCinema from "./views/admin/cinema/CreateCinema";
 import MoviesStaff from "./views/staff/movies/MoviesStaff";
@@ -24,6 +26,7 @@ import StaffLayout from "./layouts/StaffLayout";
 import ProfileAccount from "./views/auth/ProfileAccount";
 import DashboardStaff from "./views/staff/dashboard/DashboardStaff";
 import InformationMoviesStaff from "./views/staff/movies/InformationMoviesStaff";
+
 //---------- USER ROUTE ---------
 export const UserRoutes = [
   {

@@ -40,7 +40,7 @@ export default function Movies() {
       <div className="banner">
         <span className="hotmovies narbar">
           <Link to="/" style={{ textDecoration: "none", color: "#000000" }}>
-            HOT MOVIES
+            <strong>HOT MOVIES</strong>
           </Link>
         </span>
         <Carousel>
