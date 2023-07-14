@@ -4,6 +4,12 @@ import axios from "axios";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { useNavigate } from "react-router-dom";
+import {
+  MDBBreadcrumb,
+  MDBBreadcrumbItem,
+  MDBCol,
+  MDBRow,
+} from "mdb-react-ui-kit";
 
 export default function ChangePassword() {
   const [email, setEmail] = useState("");
@@ -18,8 +24,13 @@ export default function ChangePassword() {
   const [confirmationMessage1, setConfirmationMessage1] = useState("");
   const id = localStorage.getItem("id");
   const jwt = localStorage.getItem("token");
-
+  const email1 = localStorage.getItem("email");
   const handleEmailVerification = () => {
+    if (email1 !== email) {
+      setError1("Email is not same with email login");
+      window.location.reload();
+    }
+
     axios
       .post("http://localhost:3001/send-otp", { email })
       .then((response) => {
@@ -57,7 +68,6 @@ export default function ChangePassword() {
       setError("Passwords do not match.");
       return;
     }
-
     axios
       .put(
         `http://localhost:8080/api/user/profiles/update/changepassword/${id}`,
@@ -87,12 +97,19 @@ export default function ChangePassword() {
 
   return (
     <Container>
+      <Row style={{ paddingTop: "50px" }}>
+        <MDBBreadcrumb className="bg-light rounded-3 p-3 mb-4">
+          <MDBBreadcrumbItem>
+            <a href="/">Movies</a>
+          </MDBBreadcrumbItem>
+          <MDBBreadcrumbItem active>Change Password</MDBBreadcrumbItem>
+        </MDBBreadcrumb>
+      </Row>
       <Row>
-        <Col style={{ border: "1px solid black" }}>
+        <Col style={{}}>
           <Row
             style={{
-              borderBottom: "1px solid black",
-              backgroundColor: "#d4d6d3",
+              borderBottom: "1px ridge gray",
             }}
           >
             <Col>
@@ -112,14 +129,9 @@ export default function ChangePassword() {
                     onChange={(e) => setEmail(e.target.value)}
                   />
                   <Form.Text className="text-muted">
-                    We'll never share your email with anyone else.
                     {error1 && <div className="text-danger mt-2">{error1}</div>}
                   </Form.Text>
                 </Form.Group>
-
-                {confirmationMessage && (
-                  <Form.Text>{confirmationMessage}</Form.Text>
-                )}
 
                 {confirmationMessage ? (
                   <Form.Group controlId="formBasicOtp">
@@ -130,13 +142,13 @@ export default function ChangePassword() {
                       value={otp}
                       onChange={(e) => setOtp(e.target.value)}
                     />
-                    {error2 && (
-                      <Form.Text className="text-danger">{error2}</Form.Text>
+                    {confirmationMessage && (
+                      <Form.Text>{confirmationMessage}</Form.Text>
                     )}
+                    <br />
                     <Button
-                      variant="primary"
                       onClick={handleOtpVerification}
-                      className="mt-3"
+                      className="mt-3 btn btn-dark"
                       disabled={!otp}
                     >
                       Verify OTP
@@ -144,9 +156,10 @@ export default function ChangePassword() {
                   </Form.Group>
                 ) : (
                   <Button
-                    variant="primary"
                     onClick={handleEmailVerification}
                     disabled={!email}
+                    className="btn btn-dark"
+                    style={{ marginTop: "10px" }}
                   >
                     Send OTP
                   </Button>
@@ -181,9 +194,9 @@ export default function ChangePassword() {
 
                 {isEmailVerified && (
                   <Button
-                    variant="primary"
                     type="button"
                     onClick={handleSubmit}
+                    className="btn btn-dark"
                   >
                     Change Password
                   </Button>

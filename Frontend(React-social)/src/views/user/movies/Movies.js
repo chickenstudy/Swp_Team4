@@ -9,6 +9,9 @@ import Button from "react-bootstrap/Button";
 import axios from "axios";
 import { useContext } from "react";
 import { ApplicationContext } from "../../../App";
+import picture from "./A.jpg";
+import picture1 from "./B.jpg";
+import { useMediaQuery } from "react-responsive";
 
 export default function Movies() {
   const { banners } = useContext(ApplicationContext);
@@ -34,7 +37,28 @@ export default function Movies() {
   const showMore = () => {
     setVisible((prevValue) => prevValue + 8);
   };
+  const isDesktop = useMediaQuery({ minWidth: 1400 });
+  const [searchTerm, setSearchTerm] = useState("");
+  const [searchResults, setSearchResults] = useState([]);
 
+  useEffect(() => {
+    if (searchTerm !== "") {
+      axios
+        .get(`http://localhost:8080/api/movie/searchMovie/${searchTerm}`)
+        .then((response) => {
+          setSearchResults(response.data);
+        })
+        .catch((error) => {
+          console.error(error);
+        });
+    } else {
+      setSearchResults([]);
+    }
+  }, [searchTerm]);
+
+  const handleInputChange = (event) => {
+    setSearchTerm(event.target.value);
+  };
   return (
     <div>
       <div className="banner">
@@ -59,10 +83,80 @@ export default function Movies() {
       <h2 className="title my-3" style={{ textAlign: "center" }}>
         NOW SHOWING
       </h2>
+      <div style={{ textAlign: "center" }}>
+        <input
+          type="text"
+          placeholder="Tìm kiếm phim..."
+          value={searchTerm}
+          onChange={handleInputChange}
+        />
 
+        {searchResults.length > 0 ? (
+          <Row>
+            {searchResults.slice(0, visible).map((item) => (
+              <Col className="my-3" md={3} key={item.id}>
+                <div className="movie_box">
+                  <div class="mydivouter ">
+                    <img
+                      style={{ width: "100%", height: "350px" }}
+                      src={item.poster}
+                      alt="Movie Poster"
+                    />
+                    <div className="mybuttonoverlap">
+                      <button
+                        className="btn btn-dark rounded-0"
+                        onClick={LoadDetail.bind(this, item.id)}
+                        style={{
+                          width: "135px",
+                          border: "2px solid rgb(206, 161, 11)",
+                        }}
+                        variant="dark"
+                      >
+                        <a style={{ textDecoration: "none" }}>Đặt vé</a>
+                      </button>
+                    </div>
+                  </div>
+
+                  <dt
+                    style={{
+                      borderBottom: "1px solid #ddd",
+                      wordWrap: "break-word",
+                      paddingLeft: "2px",
+                    }}
+                  >
+                    {item.name}
+                  </dt>
+                  <dd style={{ paddingLeft: "2px" }}>
+                    {item.times} | {item.show_date}
+                  </dd>
+                </div>
+              </Col>
+            ))}
+          </Row>
+        ) : (
+          <p>Không có kết quả tìm kiếm.</p>
+        )}
+      </div>
       <div className="listmovie">
         <Row>
-          <Col md={2}></Col>
+          <Col
+            md={2}
+            className="d-flex justify-content-center align-items-center"
+          >
+            {isDesktop && (
+              <img
+                src={picture}
+                style={{
+                  width: "600px",
+                  height: "200px",
+                  transform: "rotate(90deg)",
+                  position: "relative",
+                  left: "-1px",
+                }}
+                alt="Picture"
+              />
+            )}
+          </Col>{" "}
           <Col md={8}>
             <Row>
               {movies &&
@@ -83,7 +177,8 @@ export default function Movies() {
                               width: "135px",
                               border: "2px solid rgb(206, 161, 11)",
                             }}
-                            variant="dark">
+                            variant="dark"
+                          >
                             <a style={{ textDecoration: "none" }}>Đặt vé</a>
                           </button>
                         </div>
@@ -94,7 +189,8 @@ export default function Movies() {
                           borderBottom: "1px solid #ddd",
                           wordWrap: "break-word",
                           paddingLeft: "2px",
-                        }}>
+                        }}
+                      >
                         {item.name}
                       </dt>
                       <dd style={{ paddingLeft: "2px" }}>
@@ -105,7 +201,24 @@ export default function Movies() {
                 ))}
             </Row>
           </Col>
-          <Col md={2}></Col>
+          <Col
+            md={2}
+            className="d-flex justify-content-center align-items-center"
+          >
+            {isDesktop && (
+              <img
+                src={picture1}
+                style={{
+                  width: "600px",
+                  height: "200px",
+                  transform: "rotate(90deg)",
+                  position: "relative",
+                  left: "-1px",
+                }}
+                alt="Picture"
+              />
+            )}
+          </Col>{" "}
         </Row>
       </div>
       <div className="d-flex flex-column align-items-center">

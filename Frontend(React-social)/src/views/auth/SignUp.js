@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Modal, Form, Button } from "react-bootstrap";
+import { Modal, Form, Button, Row, Col } from "react-bootstrap";
 import axios from "axios";
 import { Redirect } from "react-router-dom";
 
@@ -155,158 +155,191 @@ export default function SignUp() {
 
   return (
     <>
-      <Button variant="none" onClick={handleShow}>
+      <Button
+        variant="none"
+        onClick={handleShow}
+        style={{ color: "rgb(245, 245, 245)" }}
+      >
         Sign Up
       </Button>
 
-      <Modal show={showModal} onHide={handleClose}>
+      <Modal size="lg" show={showModal} onHide={handleClose}>
         <Modal.Header closeButton>
           <Modal.Title>Sign Up</Modal.Title>
         </Modal.Header>
         <Modal.Body>
           <Form onSubmit={handleSubmit} className="signup-form">
-            <Form.Group controlId="formBasicName">
-              <Form.Label>Name</Form.Label>
-              <Form.Control
-                type="text"
-                placeholder="Enter your name"
-                value={username}
-                onChange={(e) => setUsername(e.target.value)}
-              />
-            </Form.Group>
-
-            <Form.Group controlId="formBasicEmail">
-              <Form.Label>Email address</Form.Label>
-              <Form.Control
-                type="email"
-                placeholder="Enter email"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-              />
-              <Form.Text className="text-muted">
-                We'll never share your email with anyone else.
-                {error1 && <div className="text-danger mt-2">{error1}</div>}
-              </Form.Text>
-            </Form.Group>
-
-            {confirmationMessage && (
-              <Form.Text>{confirmationMessage}</Form.Text>
-            )}
-
-            {confirmationMessage ? (
-              <Form.Group controlId="formBasicOtp">
-                <Form.Label>OTP</Form.Label>
-                <Form.Control
-                  type="text"
-                  placeholder="Enter OTP"
-                  value={otp}
-                  onChange={(e) => setOtp(e.target.value)}
-                />
-                {error2 && (
-                  <Form.Text className="text-danger">{error2}</Form.Text>
-                )}
-                <Button
-                  variant="primary"
-                  onClick={handleOtpVerification}
-                  className="mt-3"
-                  disabled={!otp}
-                >
-                  Verify OTP
-                </Button>
-              </Form.Group>
-            ) : (
-              <Button
-                variant="primary"
-                onClick={handleEmailVerification}
-                disabled={!email}
-              >
-                Send OTP
-              </Button>
-            )}
-
-            <Form.Group controlId="formBasicPassword">
-              <Form.Label>Password</Form.Label>
-              <Form.Control
-                type="password"
-                placeholder="Password"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-              />
-            </Form.Group>
-
-            <Form.Group controlId="formBasicConfirmPassword">
-              <Form.Label>Confirm Password</Form.Label>
-              <Form.Control
-                type="password"
-                placeholder="Confirm Password"
-                value={confirmPassword}
-                onChange={(e) => setConfirmPassword(e.target.value)}
-              />
-              {error && <Form.Text className="text-danger">{error}</Form.Text>}
-            </Form.Group>
-
-            <Form.Group controlId="formBasicSex">
-              <Form.Label>Sex</Form.Label>
-              <Form.Control
-                as="select"
-                custom
-                value={sex}
-                onChange={handleSexChange}
-              >
-                <option value="">Choose option</option>
-                <option value={0}>Female</option>
-                <option value={1}>Male</option>
-                <option value={2}>Other</option>
-              </Form.Control>
-            </Form.Group>
-
-            <Form.Group controlId="formBasicAddress">
-              <Form.Label>Address</Form.Label>
-              <Form.Control
-                type="text"
-                placeholder="Enter your Address"
-                value={address}
-                onChange={(e) => setAddress(e.target.value)}
-              />
-            </Form.Group>
-
-            <Form.Group controlId="formBasicPicture">
-              <Form.Label>Profile Picture</Form.Label>
-              <InputGroup>
-                <FormControl
-                  type="file"
-                  accept="image/*"
-                  onChange={handlePictureChange}
-                  isInvalid={!!error2}
-                />
-              </InputGroup>
-              {error2 && (
-                <Form.Text className="text-danger">{error2}</Form.Text>
-              )}
-            </Form.Group>
-
-            <Form.Group controlId="formBasicPhoneNumber">
-              <Form.Label>Phone Number</Form.Label>
-              <Form.Control
-                type="text"
-                placeholder="Enter your phone number "
-                value={phoneNumber}
-                onChange={(e) => setPhonenumber(e.target.value)}
-              />
-            </Form.Group>
-
-            <Form.Group controlId="formBasicDob">
-              <Form.Label>Date of Birth</Form.Label>
-              <Form.Control
-                type="date"
-                placeholder="Date of Birth"
-                value={dob}
-                onChange={(e) => setDob(e.target.value)}
-              />
-            </Form.Group>
+            <Row>
+              <Row>
+                <Col>
+                  <Form.Group controlId="formBasicName">
+                    <Form.Label>Name</Form.Label>
+                    <Form.Control
+                      type="text"
+                      placeholder="Enter your name"
+                      value={username}
+                      onChange={(e) => setUsername(e.target.value)}
+                    />
+                  </Form.Group>
+                </Col>
+                <Col>
+                  {" "}
+                  <Form.Group controlId="formBasicEmail">
+                    <Form.Label>Email address</Form.Label>
+                    <Form.Control
+                      type="email"
+                      placeholder="Enter email"
+                      value={email}
+                      onChange={(e) => setEmail(e.target.value)}
+                    />
+                    <Form.Text className="text-muted">
+                      We'll never share your email with anyone else.
+                      {error1 && (
+                        <div className="text-danger mt-2">{error1}</div>
+                      )}
+                    </Form.Text>
+                  </Form.Group>
+                  {confirmationMessage && (
+                    <Form.Text>{confirmationMessage}</Form.Text>
+                  )}
+                  {confirmationMessage ? (
+                    <Form.Group controlId="formBasicOtp">
+                      <Form.Label>OTP</Form.Label>
+                      <Form.Control
+                        type="text"
+                        placeholder="Enter OTP"
+                        value={otp}
+                        onChange={(e) => setOtp(e.target.value)}
+                      />
+                      {error2 && (
+                        <Form.Text className="text-danger">{error2}</Form.Text>
+                      )}
+                      <Button
+                        onClick={handleOtpVerification}
+                        className="btn btn-dark mt-3"
+                        disabled={!otp}
+                      >
+                        Verify OTP
+                      </Button>
+                    </Form.Group>
+                  ) : (
+                    <Button
+                      className="btn btn-dark"
+                      onClick={handleEmailVerification}
+                      disabled={!email}
+                      size="sm"
+                    >
+                      Send OTP
+                    </Button>
+                  )}
+                </Col>
+              </Row>
+              <Row>
+                <Col>
+                  {" "}
+                  <Form.Group controlId="formBasicPassword">
+                    <Form.Label>Password</Form.Label>
+                    <Form.Control
+                      type="password"
+                      placeholder="Password"
+                      value={password}
+                      onChange={(e) => setPassword(e.target.value)}
+                    />
+                  </Form.Group>
+                </Col>
+                <Col>
+                  {" "}
+                  <Form.Group controlId="formBasicConfirmPassword">
+                    <Form.Label>Confirm Password</Form.Label>
+                    <Form.Control
+                      type="password"
+                      placeholder="Confirm Password"
+                      value={confirmPassword}
+                      onChange={(e) => setConfirmPassword(e.target.value)}
+                    />
+                    {error && (
+                      <Form.Text className="text-danger">{error}</Form.Text>
+                    )}
+                  </Form.Group>
+                </Col>
+              </Row>
+              <Row>
+                <Col>
+                  {" "}
+                  <Form.Group controlId="formBasicSex">
+                    <Form.Label>Sex</Form.Label>
+                    <Form.Control
+                      as="select"
+                      custom
+                      value={sex}
+                      onChange={handleSexChange}
+                    >
+                      <option value="">Choose option</option>
+                      <option value={0}>Female</option>
+                      <option value={1}>Male</option>
+                      <option value={2}>Other</option>
+                    </Form.Control>
+                  </Form.Group>
+                </Col>
+                <Col>
+                  {" "}
+                  <Form.Group controlId="formBasicAddress">
+                    <Form.Label>Address</Form.Label>
+                    <Form.Control
+                      type="text"
+                      placeholder="Enter your Address"
+                      value={address}
+                      onChange={(e) => setAddress(e.target.value)}
+                    />
+                  </Form.Group>
+                </Col>
+              </Row>
+              <Row>
+                <Col>
+                  {" "}
+                  <Form.Group controlId="formBasicPhoneNumber">
+                    <Form.Label>Phone Number</Form.Label>
+                    <Form.Control
+                      type="text"
+                      placeholder="Enter your phone number "
+                      value={phoneNumber}
+                      onChange={(e) => setPhonenumber(e.target.value)}
+                    />
+                  </Form.Group>
+                </Col>
+                <Col>
+                  {" "}
+                  <Form.Group controlId="formBasicDob">
+                    <Form.Label>Date of Birth</Form.Label>
+                    <Form.Control
+                      type="date"
+                      placeholder="Date of Birth"
+                      value={dob}
+                      onChange={(e) => setDob(e.target.value)}
+                    />
+                  </Form.Group>
+                </Col>
+              </Row>
+              <Row>
+                <Form.Group controlId="formBasicPicture">
+                  <Form.Label>Profile Picture</Form.Label>
+                  <InputGroup>
+                    <FormControl
+                      type="file"
+                      accept="image/*"
+                      onChange={handlePictureChange}
+                      isInvalid={!!error2}
+                    />
+                  </InputGroup>
+                  {error2 && (
+                    <Form.Text className="text-danger">{error2}</Form.Text>
+                  )}
+                </Form.Group>
+              </Row>
+            </Row>
 
             {isEmailVerified && (
-              <Button variant="primary" type="submit">
+              <Button className="btn btn-dark" type="submit">
                 Sign Up
               </Button>
             )}

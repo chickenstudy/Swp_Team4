@@ -10,7 +10,10 @@ import logo from "../user/Logo_Team.jpg";
 export default function Menu() {
   const { user } = React.useContext(ApplicationContext);
   return (
-    <div id="container" style={{ backgroundColor: "rgb(242, 196, 141)" }}>
+    <div
+      id="container"
+      style={{ background: "linear-gradient(90deg, #000000, #737373)" }}
+    >
       <div className="row">
         <div className="col" style={{ textAlign: "left", paddingTop: "1px" }}>
           <span>
@@ -19,19 +22,25 @@ export default function Menu() {
             </Link>
           </span>
           <span>
-            <Link to="/booking">BOOKING</Link>
+            <Link to="/booking" style={{ color: "rgb(245, 245, 245)" }}>
+              BOOKING
+            </Link>
           </span>
           <span>
-            <Link to="/">MOVIES</Link>
+            <Link to="/" style={{ color: "rgb(245, 245, 245)" }}>
+              MOVIES
+            </Link>
           </span>
           <span>
-            <Link to="/cinemas">CINEMAS</Link>
+            <Link to="/cinemas" style={{ color: "rgb(245, 245, 245)" }}>
+              CINEMAS
+            </Link>
           </span>
         </div>
         <div className="col-4" style={{ textAlign: "center" }}></div>
         <div className="col-4" style={{ textAlign: "right" }}>
           {Array.isArray(user) && user.length == 0 ? (
-            <Container style={{ paddingTop: "5px" }}>
+            <Container style={{ paddingTop: "5px", color: "white" }}>
               <SignIn></SignIn> | <SignUp></SignUp>
             </Container>
           ) : (

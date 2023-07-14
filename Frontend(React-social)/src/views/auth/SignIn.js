@@ -38,6 +38,8 @@ export default function SignIn() {
 
       const { data } = response;
       const user = data.user;
+
+      localStorage.setItem("email", user.email);
       localStorage.setItem("token", user.token);
       localStorage.setItem("id", user.userId);
       if (!user) {
@@ -75,56 +77,59 @@ export default function SignIn() {
   const handleShow = () => setShow(true);
   return (
     <>
-      <Button variant="none" onClick={handleShow}>
+      <Button
+        variant="none"
+        onClick={handleShow}
+        style={{ color: "rgb(245, 245, 245)" }}
+      >
         Sign In
       </Button>
       <Modal show={show} onHide={handleClose}>
-        <Modal.Header closeButton>
-          <Modal.Title>Sign In</Modal.Title>
-        </Modal.Header>
-        <Modal.Body>
-          <Form onSubmit={handleSubmit}>
-            <Form.Group controlId="formBasicEmail">
-              <Form.Label>Email address</Form.Label>
-              <Form.Control
-                type="email"
-                placeholder="Enter email"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-              />
-            </Form.Group>
+        <div>
+          <Modal.Header closeButton>
+            <Modal.Title>Sign In</Modal.Title>
+          </Modal.Header>
+          <Modal.Body>
+            <Form onSubmit={handleSubmit}>
+              <Form.Group controlId="formBasicEmail">
+                <Form.Label>Email address</Form.Label>
+                <Form.Control
+                  type="email"
+                  placeholder="Enter email"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                />
+              </Form.Group>
 
-            <Form.Group
-              controlId="formBasicPassword"
-              style={{ paddingBottom: "20px" }}
-            >
-              <Form.Label>Password</Form.Label>
-              <Form.Control
-                type="password"
-                placeholder="Password"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-              />
-            </Form.Group>
+              <Form.Group style={{ paddingBottom: "20px" }}>
+                <Form.Label>Password</Form.Label>
+                <Form.Control
+                  type="password"
+                  placeholder="Password"
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                />
+              </Form.Group>
 
-            {error && <div className="alert alert-danger">{error}</div>}
+              {error && <div className="alert alert-danger">{error}</div>}
 
-            <Link
-              to="/forgot-password"
-              style={{
-                textDecoration: "none",
-                color: "cadetblue",
-              }}
-            >
-              Forgot password?
-            </Link>
+              <Link
+                to="/forgot-password"
+                style={{
+                  textDecoration: "none",
+                  color: "cadetblue",
+                }}
+              >
+                Forgot password?
+              </Link>
 
-            <br />
-            <Button variant="primary" type="submit">
-              Sign In
-            </Button>
-          </Form>
-        </Modal.Body>
+              <br />
+              <Button type="submit" className="btn btn-dark">
+                Sign In
+              </Button>
+            </Form>
+          </Modal.Body>
+        </div>
       </Modal>
     </>
   );

@@ -237,6 +237,7 @@ export default function ProfileAccount() {
                           placeholder="Enter email"
                           value={email}
                           onChange={(e) => setEmail(e.target.value)}
+                          disabled
                         />
                         <Form.Text className="text-muted">
                           We'll never share your email with anyone else.
@@ -316,7 +317,12 @@ export default function ProfileAccount() {
                 </MDBCardBody>
               </MDBCard>
             </MDBCol>
-            <Button variant="primary" size="lg" onClick={handleUpdate}>
+            <Button
+              variant="primary"
+              size="lg"
+              onClick={handleUpdate}
+              className="btn btn-dark"
+            >
               Update Profile
             </Button>
           </MDBRow>

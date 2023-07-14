@@ -1,14 +1,22 @@
 import React from "react";
 import "./sidebar.css";
 import "bootstrap/dist/css/bootstrap.min.css";
-import { NavLink } from "react-router-dom";
-import { Nav } from "react-bootstrap";
+import { NavLink, useNavigate } from "react-router-dom";
+import { Nav, Button } from "react-bootstrap";
+import { BsBoxArrowRight } from "react-icons/bs";
+import { useContext } from "react";
+import { ApplicationContext } from "../../../App";
 
 function SideBar() {
+  const { user, makeSignOut } = useContext(ApplicationContext);
+  const navigate = useNavigate();
+  const makeSignOutClick = () => {
+    makeSignOut();
+    navigate("/");
+  };
   return (
     <aside className="sidebar">
       <Nav>
-
         <NavLink to="/admin" className="nav-link" activeClassName="active">
           DASHBOARD
         </NavLink>
@@ -32,6 +40,18 @@ function SideBar() {
           <p>FEEDBACK</p>
         </NavLink>
       </Nav>
+
+      <div className="logout-button">
+        <Button
+          variant="outline-light"
+          className="logout-btn"
+          style={{ position: "relative", left: "18px", top: "474px" }}
+          onClick={makeSignOutClick}
+        >
+          <BsBoxArrowRight className="logout-icon" />
+          Logout
+        </Button>
+      </div>
     </aside>
   );
 }

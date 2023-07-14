@@ -4,6 +4,7 @@ import { Link, useNavigate } from "react-router-dom";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import axios from "axios";
+import { Button, Form } from "react-bootstrap";
 
 export default function MoviesStaff() {
   const [movies, setMovies] = useState([]);
@@ -27,8 +28,7 @@ export default function MoviesStaff() {
     <div>
       <div className="listmovie">
         <Row>
-          <Col md={2}></Col>
-          <Col md={8}>
+          <Col md={8} style={{ paddingLeft: "20px" }}>
             <Row>
               {movies &&
                 movies.map((item) => (
@@ -73,7 +73,52 @@ export default function MoviesStaff() {
                 ))}
             </Row>
           </Col>
-          <Col md={2}></Col>
+
+          <Col md={4} style={{ borderLeft: "1px solid black3" }}>
+            <Form>
+              <Form.Group>
+                <div style={{ textAlign: "center" }}>
+                  <Form.Label>
+                    <h1>Code Ticket</h1>
+                  </Form.Label>
+                </div>
+                <Form.Control type="text"></Form.Control>
+                <Form.Text className="text-muted">
+                  <div style={{ textAlign: "center", paddingTop: "30px" }}>
+                    <h3>Ticket Information </h3>
+                  </div>
+                  <div style={{ paddingTop: "30px" }}>
+                    <p>
+                      <span style={{ fontWeight: "bold" }}>Cinema:</span>
+                    </p>{" "}
+                    <p>
+                      <span style={{ fontWeight: "bold" }}>Movie: </span>
+                    </p>
+                    <p>
+                      <span style={{ fontWeight: "bold" }}>Date: </span>
+                    </p>
+                    <p>
+                      <span style={{ fontWeight: "bold" }}>Time: </span>
+                    </p>
+                    <p>
+                      <span>
+                        <h7>Seat booked:</h7>
+                      </span>{" "}
+                    </p>
+                    <p>
+                      <span>Number of ticket(s) booked:</span>
+                      <span id="count"> </span>
+                    </p>
+                    <p class="text">
+                      Total: <span id="total"></span>
+                      <span>,000 VND</span>
+                    </p>
+                  </div>
+                </Form.Text>
+                <Button className="btn btn-dark">Payment</Button>
+              </Form.Group>
+            </Form>
+          </Col>
         </Row>
       </div>
     </div>

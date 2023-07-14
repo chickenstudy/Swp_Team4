@@ -5,6 +5,8 @@ import Nav from "react-bootstrap/Nav";
 import Navbar from "react-bootstrap/Navbar";
 import NavDropdown from "react-bootstrap/NavDropdown";
 import logo from "../staff/Logo_Team.jpg";
+import { FormControl } from "react-bootstrap";
+import Account from "../../views/auth/Account";
 
 function Menu() {
   return (
@@ -15,27 +17,17 @@ function Menu() {
             <img src={logo} style={{ width: "50px" }}></img>
           </span>
         </Navbar.Brand>
-        <Navbar.Toggle aria-controls="navbarScroll" />
-        <Navbar.Collapse id="navbarScroll">
-          <Nav
-            className="me-auto my-2 my-lg-0"
-            style={{ maxHeight: "100px" }}
-            navbarScroll
-          >
+        <Navbar.Collapse id="basic-navbar-nav">
+          <Nav className="me-auto my-2 my-lg-0" style={{ maxHeight: "100px" }}>
             <Nav.Link href="/staffmanagement">Dashbroad</Nav.Link>
             <Nav.Link href="/staffmanagement/movies">Movies</Nav.Link>
-            <Nav.Link href="#" disabled>
-              Link
-            </Nav.Link>
           </Nav>
-          <Form className="d-flex">
-            <Form.Control
-              type="search"
+          <Form style={{ paddingRight: "500px" }}>
+            <FormControl
+              type="text"
               placeholder="Search"
-              className="me-2"
-              aria-label="Search"
+              style={{ paddingRight: "300px" }}
             />
-            <Button variant="outline-success">Search</Button>
           </Form>
         </Navbar.Collapse>
       </Container>
