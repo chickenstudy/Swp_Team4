@@ -43,18 +43,18 @@ public class BannerServiceImpl implements BannerService {
         return wrapper;
     }
 
-//     @Override
-//     public List<BannerDTOResponse> getListBanner() {
-//         // TODO Auto-generated method stub
-//         List<Banner> listBanner = bannerRepository.findAll();
+    @Override
+    public List<BannerDTOResponse> getListBanner() {
+        // TODO Auto-generated method stub
+        List<Banner> listBanner = bannerRepository.findAll();
 
-//         List<BannerDTOResponse> bannerDTOResponses = new ArrayList<>();
+        List<BannerDTOResponse> bannerDTOResponses = new ArrayList<>();
 
-//         for (Banner banner : listBanner) {
-//             bannerDTOResponses.add(BannerMapper.toBannerDTOReponse(banner));
-//         }
-//         return bannerDTOResponses;
-//     }
+        for (Banner banner : listBanner) {
+            bannerDTOResponses.add(BannerMapper.toBannerDTOReponse(banner));
+        }
+        return bannerDTOResponses;
+    }
 
 // @Override
 //     public Map<String, BannerDTOResponseCreate> getUpdateBanner(BannerDTOUpdate bannerDTOUpdate)

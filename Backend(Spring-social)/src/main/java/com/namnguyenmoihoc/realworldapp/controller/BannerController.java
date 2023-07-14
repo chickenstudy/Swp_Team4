@@ -36,10 +36,10 @@ public class BannerController {
         return bannerService.createBanner(bannerDTOCreateMap);
     }
 
-//     @GetMapping("/listBanner")
-//     public List<BannerDTOResponse> getListBanner() {
-//         return bannerService.getListBanner();
-//     }
+    @GetMapping("/listBanner")
+    public List<BannerDTOResponse> getListBanner() {
+        return bannerService.getListBanner();
+    }
 
 //     @PutMapping("/updateBanner/{bannerid}")
 //     public Map<String, BannerDTOResponseCreate> getUpdateBanner(@PathVariable int bannerid,

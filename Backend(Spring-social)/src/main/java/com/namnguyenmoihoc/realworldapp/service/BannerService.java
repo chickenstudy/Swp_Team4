@@ -14,7 +14,7 @@ public interface BannerService {
         public Map<String, BannerDTOResponseCreate> createBanner(Map<String, BannerDTOCreate> bannerDTOCreateMap)
                         throws UnsupportedEncodingException;
 
-//         public List<BannerDTOResponse> getListBanner();
+        public List<BannerDTOResponse> getListBanner();
 
 //         public Map<String, BannerDTOResponseCreate> getUpdateBanner(BannerDTOUpdate bannerDTOUpdate)
 //                         throws CustomNotFoundException;
