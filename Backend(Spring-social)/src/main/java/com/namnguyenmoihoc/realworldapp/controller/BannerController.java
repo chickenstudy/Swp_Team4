@@ -41,14 +41,14 @@ public class BannerController {
         return bannerService.getListBanner();
     }
 
-//     @PutMapping("/updateBanner/{bannerid}")
-//     public Map<String, BannerDTOResponseCreate> getUpdateBanner(@PathVariable int bannerid,
-//             @RequestBody BannerDTOUpdate bannerDTOUpdate)
-//             throws CustomNotFoundException {
-//         bannerDTOUpdate.setBannerid(bannerid);
-//         System.out.println(bannerDTOUpdate);
-//         return bannerService.getUpdateBanner(bannerDTOUpdate);
-//     }
+    @PutMapping("/updateBanner/{bannerid}")
+    public Map<String, BannerDTOResponseCreate> getUpdateBanner(@PathVariable int bannerid,
+            @RequestBody BannerDTOUpdate bannerDTOUpdate)
+            throws CustomNotFoundException {
+        bannerDTOUpdate.setBannerid(bannerid);
+        System.out.println(bannerDTOUpdate);
+        return bannerService.getUpdateBanner(bannerDTOUpdate);
+    }
 
     @DeleteMapping("/deletebanner/{bannerid}")
     public void getDeleteBanner(@PathVariable(value = "bannerid") int bannerid)

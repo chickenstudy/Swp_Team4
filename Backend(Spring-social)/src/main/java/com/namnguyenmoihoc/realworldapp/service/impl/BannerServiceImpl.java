@@ -56,25 +56,25 @@ public class BannerServiceImpl implements BannerService {
         return bannerDTOResponses;
     }
 
-// @Override
-//     public Map<String, BannerDTOResponseCreate> getUpdateBanner(BannerDTOUpdate bannerDTOUpdate)
-//             throws CustomNotFoundException {
-//         // TODO Auto-generated method stub
-//         Optional<Banner> bannerOptional = bannerRepository.findByBannerid(bannerDTOUpdate.getBannerid());
-//                 System.out.println(bannerOptional);
+@Override
+    public Map<String, BannerDTOResponseCreate> getUpdateBanner(BannerDTOUpdate bannerDTOUpdate)
+            throws CustomNotFoundException {
+        // TODO Auto-generated method stub
+        Optional<Banner> bannerOptional = bannerRepository.findByBannerid(bannerDTOUpdate.getBannerid());
+                System.out.println(bannerOptional);
 
-//         if (bannerOptional.isEmpty()) {
-//             throw new CustomNotFoundException(CustomError.builder().code("404").message("Banner not found").build());
-//         }
+        if (bannerOptional.isEmpty()) {
+            throw new CustomNotFoundException(CustomError.builder().code("404").message("Banner not found").build());
+        }
 
-//         // return buidProfileResponse(userOptional.get());
+        // return buidProfileResponse(userOptional.get());
 
-//         Banner banner = bannerOptional.get();
-//         BannerMapper.updateBannerDetails(banner, bannerDTOUpdate);
+        Banner banner = bannerOptional.get();
+        BannerMapper.updateBannerDetails(banner, bannerDTOUpdate);
 
-//         banner = bannerRepository.save(banner);
-//         return BannerMapper.buildBannerResponse(banner);
-//     }
+        banner = bannerRepository.save(banner);
+        return BannerMapper.buildBannerResponse(banner);
+    }
 
     
 

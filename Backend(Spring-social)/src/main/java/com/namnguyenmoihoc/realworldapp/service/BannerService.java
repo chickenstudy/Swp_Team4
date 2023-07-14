@@ -16,8 +16,8 @@ public interface BannerService {
 
         public List<BannerDTOResponse> getListBanner();
 
-//         public Map<String, BannerDTOResponseCreate> getUpdateBanner(BannerDTOUpdate bannerDTOUpdate)
-//                         throws CustomNotFoundException;
+        public Map<String, BannerDTOResponseCreate> getUpdateBanner(BannerDTOUpdate bannerDTOUpdate)
+                        throws CustomNotFoundException;
 
         public void getDeleteBanner(int bannerid) throws CustomNotFoundException;
 
