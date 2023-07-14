@@ -78,17 +78,17 @@ public class BannerServiceImpl implements BannerService {
 
     
 
-//     @Override
-//     public void getDeleteBanner(int bannerid) throws CustomNotFoundException {
-//         // TODO Auto-generated method stub
-//         Optional<Banner> bannerOptional = bannerRepository.findById(bannerid);
+    @Override
+    public void getDeleteBanner(int bannerid) throws CustomNotFoundException {
+        // TODO Auto-generated method stub
+        Optional<Banner> bannerOptional = bannerRepository.findById(bannerid);
 
-//         if (bannerOptional.isEmpty()) {
-//             throw new CustomNotFoundException(CustomError.builder().code("404").message("Banner not found").build());
-//         }
+        if (bannerOptional.isEmpty()) {
+            throw new CustomNotFoundException(CustomError.builder().code("404").message("Banner not found").build());
+        }
 
-//         bannerRepository.deleteById(bannerid);
-//     }
+        bannerRepository.deleteById(bannerid);
+    }
 
     @Override
     public Map<String, BannerDTOResponse> getBannerByID(int bannerid) throws CustomNotFoundException {

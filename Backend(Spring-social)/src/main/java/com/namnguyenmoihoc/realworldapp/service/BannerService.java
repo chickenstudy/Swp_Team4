@@ -19,7 +19,7 @@ public interface BannerService {
 //         public Map<String, BannerDTOResponseCreate> getUpdateBanner(BannerDTOUpdate bannerDTOUpdate)
 //                         throws CustomNotFoundException;
 
-//         public void getDeleteBanner(int bannerid) throws CustomNotFoundException;
+        public void getDeleteBanner(int bannerid) throws CustomNotFoundException;
 
         public Map<String, BannerDTOResponse> getBannerByID(int bannerid) throws CustomNotFoundException;
 }

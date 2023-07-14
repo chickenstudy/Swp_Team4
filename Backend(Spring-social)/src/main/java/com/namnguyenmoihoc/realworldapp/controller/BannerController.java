@@ -50,13 +50,13 @@ public class BannerController {
 //         return bannerService.getUpdateBanner(bannerDTOUpdate);
 //     }
 
-//     @DeleteMapping("/deletebanner/{bannerid}")
-//     public void getDeleteBanner(@PathVariable(value = "bannerid") int bannerid)
-//             throws CustomNotFoundException {
+    @DeleteMapping("/deletebanner/{bannerid}")
+    public void getDeleteBanner(@PathVariable(value = "bannerid") int bannerid)
+            throws CustomNotFoundException {
 
-//         bannerService.getDeleteBanner(bannerid);
+        bannerService.getDeleteBanner(bannerid);
 
-//     }
+    }
 
    @GetMapping("/listBanner/{bannerid}")
     public Map<String, BannerDTOResponse> getListBannerByID(@PathVariable(value = "bannerid") int bannerid)
