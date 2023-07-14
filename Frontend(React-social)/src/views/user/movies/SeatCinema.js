@@ -11,6 +11,10 @@ export default function SeatCinema() {
   const [loadingSeats, setLoadingSeats] = useState(true);
   const [seats, setSeats] = useState([]);
 
+  const cinema = sessionStorage.getItem("cinema");
+  const date = sessionStorage.getItem("date");
+  const time = sessionStorage.getItem("time");
+  const movie = sessionStorage.getItem("movie");
   useEffect(() => {
     calculateTotalPrice();
   }, [count]);
@@ -152,15 +156,14 @@ export default function SeatCinema() {
       }}
     >
       <div class="space" style={{ marginTop: "170px" }}></div>
-      <div class="movie-container-aaa">
-        <label>Movie Selected:</label>
-        <input
-          type="text"
-          placeholder="Movie"
-          disabled
-          style={{ border: "10px", textAlign: "center" }}
-        />
-      </div>
+
+      <label>Movie Selected:</label>
+      <input
+        type="text"
+        readOnly
+        style={{ border: "10px", width: "500px", textAlign: "center" }}
+        value={movie}
+      />
 
       <ul class="showcase">
         <li>
@@ -193,21 +196,21 @@ export default function SeatCinema() {
           </Modal.Header>
           <Modal.Body>
             <h3>Ticket Confimation </h3>
-            <h5>You’re booking tickets for:</h5>
             <p>
-              <span style={{ fontWeight: "bold" }}>Cinema:</span> aaaa
+              <span style={{ fontWeight: "bold" }}>Cinema: {cinema}</span>
             </p>{" "}
             <p>
-              <span style={{ fontWeight: "bold" }}>Movie:</span> aaaa
+              <span style={{ fontWeight: "bold" }}>Movie: {movie}</span>
             </p>
             <p>
-              <span style={{ fontWeight: "bold" }}>Date:</span> aaaa
+              <span style={{ fontWeight: "bold" }}>Date: {date}</span>
             </p>
             <p>
-              <span style={{ fontWeight: "bold" }}>Time:</span> aaaa
+              <span style={{ fontWeight: "bold" }}>Time: {time}</span>
             </p>
             <p>
               <span>
+                <h7>Seat booked:</h7>
                 {selectedSeats.map((seat, index) => (
                   <li key={index}>{`Row: ${seat.row}, Col: ${seat.col}`}</li>
                 ))}

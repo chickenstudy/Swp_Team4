@@ -17,6 +17,7 @@ export default function InformationMoviesStaff() {
   const [showVideoModal, setShowVideoModal] = useState(false);
   const [date, setDate] = useState([]); // [1, 2, 3, 4, 5, 6, 7
   const [time, setTime] = useState("");
+  const movie = sessionStorage.setItem("movie", data?.movie?.name);
   const cinema = "tuann";
   const dateMovies = sessionStorage.setItem("date", date);
   const timeStart = sessionStorage.setItem("time", time);

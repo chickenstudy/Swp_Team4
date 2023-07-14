@@ -1,6 +1,9 @@
 import { Col, Container, Row, Form, Button } from "react-bootstrap";
 import React, { useState } from "react";
 import axios from "axios";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import { useNavigate } from "react-router-dom";
 
 export default function ChangePassword() {
   const [email, setEmail] = useState("");
@@ -11,8 +14,10 @@ export default function ChangePassword() {
   const [error2, setError2] = useState("");
   const [isEmailVerified, setIsEmailVerified] = useState(false);
   const [otp, setOtp] = useState("");
-
   const [confirmationMessage, setConfirmationMessage] = useState("");
+  const [confirmationMessage1, setConfirmationMessage1] = useState("");
+  const id = localStorage.getItem("id");
+  const jwt = localStorage.getItem("token");
 
   const handleEmailVerification = () => {
     axios
@@ -46,6 +51,39 @@ export default function ChangePassword() {
         setIsEmailVerified(false);
       });
   };
+  const navigate = useNavigate();
+  const handleSubmit = () => {
+    if (password !== confirmPassword) {
+      setError("Passwords do not match.");
+      return;
+    }
+
+    axios
+      .put(
+        `http://localhost:8080/api/user/profiles/update/changepassword/${id}`,
+        {
+          password: password,
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${jwt}`,
+          },
+        }
+      )
+      .then((response) => {
+        console.log(response.data);
+        toast.success("Change Password successfully", {
+          onClose: () => {
+            navigate("/");
+            // Thực hiện các xử lý sau khi cập nhật thành công
+          },
+        }); // Thực hiện các xử lý sau khi cập nhật thành công
+      })
+      .catch((error) => {
+        console.log(error);
+        setConfirmationMessage1("Error changing password. Please try again.");
+      });
+  };
 
   return (
     <Container>
@@ -58,7 +96,7 @@ export default function ChangePassword() {
             }}
           >
             <Col>
-              <h2 style={{ textAlign: "center" }}> Change Password</h2>
+              <h2 style={{ textAlign: "center" }}>Change Password</h2>
             </Col>
           </Row>
 
@@ -113,6 +151,7 @@ export default function ChangePassword() {
                     Send OTP
                   </Button>
                 )}
+
                 <Form.Group controlId="formBasicPassword">
                   <Form.Label>Password</Form.Label>
                   <Form.Control
@@ -135,8 +174,17 @@ export default function ChangePassword() {
                     <Form.Text className="text-danger">{error}</Form.Text>
                   )}
                 </Form.Group>
+
+                {confirmationMessage1 && (
+                  <Form.Text>{confirmationMessage1}</Form.Text>
+                )}
+
                 {isEmailVerified && (
-                  <Button variant="primary" type="submit">
+                  <Button
+                    variant="primary"
+                    type="button"
+                    onClick={handleSubmit}
+                  >
                     Change Password
                   </Button>
                 )}
@@ -145,6 +193,7 @@ export default function ChangePassword() {
           </Row>
         </Col>
       </Row>
+      <ToastContainer />
     </Container>
   );
 }

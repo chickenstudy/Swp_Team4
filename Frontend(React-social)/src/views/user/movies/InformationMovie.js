@@ -75,7 +75,7 @@ const Informationmovie = () => {
     sessionStorage.setItem("date", date);
     sessionStorage.setItem("cinema", cinema);
     sessionStorage.setItem("time", showtime);
-    sessionStorage.setItem("movieName", movieName);
+    sessionStorage.setItem("movie", movieName);
   };
 
   const handleDateChange = (event) => {
@@ -171,7 +171,7 @@ const Informationmovie = () => {
                       paddingLeft: "10px",
                     }}
                     value={selectedDate}
-              onChange={handleDateChange}
+                    onChange={handleDateChange}
                   />
                 </Col>
                 <Col md={3}>
@@ -196,13 +196,20 @@ const Informationmovie = () => {
                         {showtime.map((showtimeitem) => (
                           <span className="ml-3">
                             {" "}
-                            <Link to = "/seat">
+                            <Link to="/seat">
                               <Button
-                              onClick = {() => handleTicketClick(selectedDate, cinemaitem.name, showtimeitem.starttime, data?.movie?.name) }
+                                onClick={() =>
+                                  handleTicketClick(
+                                    selectedDate,
+                                    cinemaitem.name,
+                                    showtimeitem.starttime,
+                                    data?.movie?.name
+                                  )
+                                }
                                 style={{ border: "1px solid black" }}
-                                variant="light">
+                                variant="light"
+                              >
                                 {showtimeitem.starttime}
-                           
                               </Button>
                             </Link>
                           </span>

@@ -37,7 +37,6 @@ export default function SignIn() {
       );
 
       const { data } = response;
-      console.log(data);
       const user = data.user;
       localStorage.setItem("token", user.token);
       localStorage.setItem("id", user.userId);
