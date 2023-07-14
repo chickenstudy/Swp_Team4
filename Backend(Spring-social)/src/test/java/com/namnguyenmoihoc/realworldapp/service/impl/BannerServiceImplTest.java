@@ -113,22 +113,22 @@ public class BannerServiceImplTest {
     //     verify(bannerRepository, times(1)).save(any(Banner.class));
     // }
 
-    // @Test
-    // public void testGetDeleteBanner() throws CustomNotFoundException {
-    //     // Prepare test data
-    //     int bannerId = 1;
+    @Test
+    public void testGetDeleteBanner() throws CustomNotFoundException {
+        // Prepare test data
+        int bannerId = 1;
 
-    //     Optional<Banner> bannerOptional = Optional.of(new Banner());
-    //     // Mock the bannerRepository.findById() method
-    //     when(bannerRepository.findById(bannerId)).thenReturn(bannerOptional);
+        Optional<Banner> bannerOptional = Optional.of(new Banner());
+        // Mock the bannerRepository.findById() method
+        when(bannerRepository.findById(bannerId)).thenReturn(bannerOptional);
 
-    //     // Perform the getDeleteBanner() method
-    //     bannerService.getDeleteBanner(bannerId);
+        // Perform the getDeleteBanner() method
+        bannerService.getDeleteBanner(bannerId);
 
-    //     // Verify that the bannerRepository.deleteById() method was called once with the
-    //     // correct parameter
-    //     verify(bannerRepository, times(1)).deleteById(bannerId);
-    // }
+        // Verify that the bannerRepository.deleteById() method was called once with the
+        // correct parameter
+        verify(bannerRepository, times(1)).deleteById(bannerId);
+    }
 
     // @Test
     // public void testGetBannerByID() throws CustomNotFoundException {
