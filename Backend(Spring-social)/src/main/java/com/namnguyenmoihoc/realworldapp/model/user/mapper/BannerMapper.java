@@ -57,6 +57,16 @@ public class BannerMapper {
         return BannerDTOResponseCreate.builder().picture(pictureEncode).active(banner.getActive()).build();
     }
 
+    public static Map<String, BannerDTOResponseCreate> buildBannerResponse(Banner banner) {
+        String picture = Base64.getEncoder().encodeToString(banner.getPicture());
+        Map<String, BannerDTOResponseCreate> wrapper = new HashMap<>();
+
+        BannerDTOResponseCreate bannerDTOResponse = BannerDTOResponseCreate.builder().picture(picture).build();
+
+        wrapper.put("update:", bannerDTOResponse);
+        return wrapper;
+    }
+
     public static void updateBannerDetails(Banner banner, BannerDTOUpdate bannerDTOUpdate) {
         String pictureStr = bannerDTOUpdate.getPicture();
 

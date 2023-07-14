@@ -36,32 +36,33 @@ public class BannerController {
         return bannerService.createBanner(bannerDTOCreateMap);
     }
 
-    @GetMapping("/listBanner")
-    public List<BannerDTOResponse> getListBanner() {
-        return bannerService.getListBanner();
-    }
+//     @GetMapping("/listBanner")
+//     public List<BannerDTOResponse> getListBanner() {
+//         return bannerService.getListBanner();
+//     }
 
-    @PutMapping("/updateBanner/{bannerid}")
-    public Map<String, BannerDTOResponseCreate> getUpdateBanner(@PathVariable int bannerid,
-            @RequestBody BannerDTOUpdate bannerDTOUpdate)
-            throws CustomNotFoundException {
-        bannerDTOUpdate.setBannerid(bannerid);
-        return bannerService.getUpdateAccount(bannerDTOUpdate);
-    }
+//     @PutMapping("/updateBanner/{bannerid}")
+//     public Map<String, BannerDTOResponseCreate> getUpdateBanner(@PathVariable int bannerid,
+//             @RequestBody BannerDTOUpdate bannerDTOUpdate)
+//             throws CustomNotFoundException {
+//         bannerDTOUpdate.setBannerid(bannerid);
+//         System.out.println(bannerDTOUpdate);
+//         return bannerService.getUpdateBanner(bannerDTOUpdate);
+//     }
 
-    @DeleteMapping("/deletebanner/{bannerid}")
-    public void getDeleteBanner(@PathVariable(value = "bannerid") int bannerid)
-            throws CustomNotFoundException {
+//     @DeleteMapping("/deletebanner/{bannerid}")
+//     public void getDeleteBanner(@PathVariable(value = "bannerid") int bannerid)
+//             throws CustomNotFoundException {
 
-        bannerService.getDeleteBanner(bannerid);
+//         bannerService.getDeleteBanner(bannerid);
 
-    }
+//     }
 
-    @GetMapping("/listBanner/{bannerid}")
-    public Map<String, BannerDTOResponseCreate> getListBannerByID(@PathVariable(value = "bannerid") int bannerid)
-            throws CustomNotFoundException {
-        return bannerService.getBannerByID(bannerid);
+//    @GetMapping("/listBanner/{bannerid}")
+//     public Map<String, BannerDTOResponse> getListBannerByID(@PathVariable(value = "bannerid") int bannerid)
+//             throws CustomNotFoundException {
+//         return bannerService.getBannerByID(bannerid);
 
-    }
+//     }
 
 }
