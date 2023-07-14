@@ -90,21 +90,21 @@ public class BannerServiceImpl implements BannerService {
 //         bannerRepository.deleteById(bannerid);
 //     }
 
-//     @Override
-//     public Map<String, BannerDTOResponse> getBannerByID(int bannerid) throws CustomNotFoundException {
-//         Optional<Banner> bannerOptional = bannerRepository.findById(bannerid);
+    @Override
+    public Map<String, BannerDTOResponse> getBannerByID(int bannerid) throws CustomNotFoundException {
+        Optional<Banner> bannerOptional = bannerRepository.findById(bannerid);
 
-//         if (bannerOptional.isEmpty()) {
-//             throw new CustomNotFoundException(CustomError.builder().code("404").message("Banner not found").build());
-//         }
-//         Banner banner = bannerOptional.get();
+        if (bannerOptional.isEmpty()) {
+            throw new CustomNotFoundException(CustomError.builder().code("404").message("Banner not found").build());
+        }
+        Banner banner = bannerOptional.get();
 
-//         BannerDTOResponse bannerDTO = BannerMapper.toBannerDTOReponse(banner);
-//         Map<String, BannerDTOResponse> result = new HashMap<>();
-//         result.put("banner", bannerDTO);
+        BannerDTOResponse bannerDTO = BannerMapper.toBannerDTOReponse(banner);
+        Map<String, BannerDTOResponse> result = new HashMap<>();
+        result.put("banner", bannerDTO);
 
-//         return result;
+        return result;
 
-//     }
+    }
 
 }

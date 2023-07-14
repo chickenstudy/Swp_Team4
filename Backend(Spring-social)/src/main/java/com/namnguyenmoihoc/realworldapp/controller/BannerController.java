@@ -58,11 +58,11 @@ public class BannerController {
 
 //     }
 
-//    @GetMapping("/listBanner/{bannerid}")
-//     public Map<String, BannerDTOResponse> getListBannerByID(@PathVariable(value = "bannerid") int bannerid)
-//             throws CustomNotFoundException {
-//         return bannerService.getBannerByID(bannerid);
+   @GetMapping("/listBanner/{bannerid}")
+    public Map<String, BannerDTOResponse> getListBannerByID(@PathVariable(value = "bannerid") int bannerid)
+            throws CustomNotFoundException {
+        return bannerService.getBannerByID(bannerid);
 
-//     }
+    }
 
 }

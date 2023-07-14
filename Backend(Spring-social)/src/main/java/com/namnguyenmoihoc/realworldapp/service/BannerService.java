@@ -21,5 +21,5 @@ public interface BannerService {
 
 //         public void getDeleteBanner(int bannerid) throws CustomNotFoundException;
 
-//         public Map<String, BannerDTOResponse> getBannerByID(int bannerid) throws CustomNotFoundException;
+        public Map<String, BannerDTOResponse> getBannerByID(int bannerid) throws CustomNotFoundException;
 }
