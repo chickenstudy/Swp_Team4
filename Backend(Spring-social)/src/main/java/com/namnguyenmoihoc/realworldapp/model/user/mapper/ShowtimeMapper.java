@@ -1,59 +1,59 @@
-package com.namnguyenmoihoc.realworldapp.model.user.mapper;
+// package com.namnguyenmoihoc.realworldapp.model.user.mapper;
 
-import java.util.HashMap;
-import java.util.Map;
+// import java.util.HashMap;
+// import java.util.Map;
 
-import com.namnguyenmoihoc.realworldapp.entity.Showtime;
-import com.namnguyenmoihoc.realworldapp.model.Showtime.ShowtimeDTOCreate;
-import com.namnguyenmoihoc.realworldapp.model.Showtime.ShowtimeDTOResponse;
-import com.namnguyenmoihoc.realworldapp.model.Showtime.ShowtimeDTOResponseNoID;
+// import com.namnguyenmoihoc.realworldapp.entity.Showtime;
+// import com.namnguyenmoihoc.realworldapp.model.Showtime.ShowtimeDTOCreate;
+// import com.namnguyenmoihoc.realworldapp.model.Showtime.ShowtimeDTOResponse;
+// import com.namnguyenmoihoc.realworldapp.model.Showtime.ShowtimeDTOResponseNoID;
 
 
-public class ShowtimeMapper {
+// public class ShowtimeMapper {
 
-    public static Showtime toShowtime(ShowtimeDTOCreate showDTOcreateMap) {
-        Showtime showtime = Showtime.builder()
-                .showtimeid(showDTOcreateMap.getShowtimeid())
-                .starttime(showDTOcreateMap.getStarttime())
+//     public static Showtime toShowtime(ShowtimeDTOCreate showDTOcreateMap) {
+//         Showtime showtime = Showtime.builder()
+//                 .showtimeid(showDTOcreateMap.getShowtimeid())
+//                 .starttime(showDTOcreateMap.getStarttime())
 
-                .endtime(showDTOcreateMap.getEndtime())
+//                 .endtime(showDTOcreateMap.getEndtime())
 
-                .build();
-        return showtime;
-    }
+//                 .build();
+//         return showtime;
+//     }
 
-    public static ShowtimeDTOResponseNoID toMovieDTOReponseNoID(Showtime showtime) {
-        return ShowtimeDTOResponseNoID.builder()
-                .starttime(showtime.getStarttime())
-                .endtime(showtime.getEndtime())
+//     public static ShowtimeDTOResponseNoID toMovieDTOReponseNoID(Showtime showtime) {
+//         return ShowtimeDTOResponseNoID.builder()
+//                 .starttime(showtime.getStarttime())
+//                 .endtime(showtime.getEndtime())
 
-                .build();
-    }
+//                 .build();
+//     }
 
-    public static ShowtimeDTOResponse toMovieDTOReponse(Showtime showtime) {
-        return ShowtimeDTOResponse.builder()
-                .showtimeid(showtime.getShowtimeid())
-                .starttime(showtime.getStarttime())
-                .endtime(showtime.getEndtime())
-                .build();
-    }
+//     public static ShowtimeDTOResponse toMovieDTOReponse(Showtime showtime) {
+//         return ShowtimeDTOResponse.builder()
+//                 .showtimeid(showtime.getShowtimeid())
+//                 .starttime(showtime.getStarttime())
+//                 .endtime(showtime.getEndtime())
+//                 .build();
+//     }
 
-    public static void updateShowtimeDetails(Showtime showtime, ShowtimeDTOCreate showtimeDTOCreate) {
+//     public static void updateShowtimeDetails(Showtime showtime, ShowtimeDTOCreate showtimeDTOCreate) {
         
-        showtime.setStarttime(showtimeDTOCreate.getStarttime());
-        showtime.setEndtime(showtimeDTOCreate.getEndtime());
-    }
+//         showtime.setStarttime(showtimeDTOCreate.getStarttime());
+//         showtime.setEndtime(showtimeDTOCreate.getEndtime());
+//     }
 
-    public static Map<String, ShowtimeDTOResponseNoID> toMovieDTOReponseUpdate(Showtime showtime) {
-         Map<String, ShowtimeDTOResponseNoID> wrapper = new HashMap<>();
-        ShowtimeDTOResponseNoID showtimeDTOResponse = ShowtimeDTOResponseNoID.builder()
+//     public static Map<String, ShowtimeDTOResponseNoID> toMovieDTOReponseUpdate(Showtime showtime) {
+//          Map<String, ShowtimeDTOResponseNoID> wrapper = new HashMap<>();
+//         ShowtimeDTOResponseNoID showtimeDTOResponse = ShowtimeDTOResponseNoID.builder()
 
-                .starttime(showtime.getStarttime())
-                .endtime(showtime.getEndtime())
-                .build();
+//                 .starttime(showtime.getStarttime())
+//                 .endtime(showtime.getEndtime())
+//                 .build();
 
-       wrapper.put("update", showtimeDTOResponse);
-        return wrapper;
-    }
+//        wrapper.put("update", showtimeDTOResponse);
+//         return wrapper;
+//     }
 
-}
+// }

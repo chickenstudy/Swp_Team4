@@ -1,6 +1,8 @@
 package com.namnguyenmoihoc.realworldapp.controller;
 
 import java.io.UnsupportedEncodingException;
+import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.List;
 import java.util.Map;
 
@@ -12,10 +14,12 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.namnguyenmoihoc.realworldapp.entity.Showtime;
 import com.namnguyenmoihoc.realworldapp.exception.custom.CustomNotFoundException;
+import com.namnguyenmoihoc.realworldapp.model.Showtime.ShowtimeDTO;
 import com.namnguyenmoihoc.realworldapp.model.Showtime.ShowtimeDTOCreate;
 import com.namnguyenmoihoc.realworldapp.model.Showtime.ShowtimeDTOResponse;
 import com.namnguyenmoihoc.realworldapp.model.Showtime.ShowtimeDTOResponseNoID;
@@ -29,33 +33,17 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 @CrossOrigin
 public class ShowtimeController {
-    private final ShowtimeService showtimeService;
+  private final ShowtimeService showtimeService;
 
-    @PostMapping("/create")
-    public Map<String, ShowtimeDTOResponseNoID> createShowtime(
-            @RequestBody Map<String, ShowtimeDTOCreate> showtimeDTOCreate) throws UnsupportedEncodingException {
-        return showtimeService.createShowtime(showtimeDTOCreate);
-    }
+  @GetMapping("/start")
+  public List<String> getStartTimes(@RequestParam Integer movieid, @RequestParam Integer cinemaid,
+      @RequestParam String startdate) {
+    return showtimeService.getStartTimes(movieid, cinemaid,LocalDate.parse(startdate));
+  }
+  @GetMapping
+  public List<ShowtimeDTO> getSchedules(@RequestParam Integer movieid, @RequestParam Integer cinemaid,
+                                        @RequestParam String startdate, @RequestParam String starttime) {
+      return showtimeService.getSchedules(movieid, cinemaid, startdate, starttime);
+  }
 
-    @GetMapping("/listShowtime")
-    public List<ShowtimeDTOResponse> getListShowtime() {
-        return showtimeService.getListShowtime();
-    }
-
-    @PutMapping("/updateShowtime/{showtimeid}")
-    public Map<String, ShowtimeDTOResponseNoID> getUpdateShowtime(@PathVariable(value = "showtimeid") int showtimeId,
-            @RequestBody ShowtimeDTOCreate showtimeDTOCreate)
-            throws CustomNotFoundException {
-        showtimeDTOCreate.setShowtimeid(showtimeId);
-
-        return showtimeService.getUpdateShowtime(showtimeDTOCreate);
-    }
-
-    @DeleteMapping("/deleteShowtime/{showtimeid}")
-    public void deleteShowtime(@PathVariable(value = "showtimeid") int showtimeId)
-            throws CustomNotFoundException {
-
-        showtimeService.getDeleteShowtime(showtimeId);
-
-    }
 }
