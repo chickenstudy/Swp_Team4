@@ -5,8 +5,12 @@ import Nav from "react-bootstrap/Nav";
 import Navbar from "react-bootstrap/Navbar";
 import NavDropdown from "react-bootstrap/NavDropdown";
 import logo from "../staff/Logo_Team.jpg";
-import { FormControl } from "react-bootstrap";
-import Account from "../../views/auth/Account";
+import { Col, FormControl, Row } from "react-bootstrap";
+import AccountStaff from "../../views/staff/account_staff/AccountStaff";
+import { useState } from "react";
+import { useEffect } from "react";
+import axios from "axios";
+import { isVisible } from "@testing-library/user-event/dist/utils";
 
 function Menu() {
   return (
@@ -22,15 +26,13 @@ function Menu() {
             <Nav.Link href="/staffmanagement">Dashbroad</Nav.Link>
             <Nav.Link href="/staffmanagement/movies">Movies</Nav.Link>
           </Nav>
-          <Form style={{ paddingRight: "500px" }}>
-            <FormControl
-              type="text"
-              placeholder="Search"
-              style={{ paddingRight: "300px" }}
-            />
-          </Form>
         </Navbar.Collapse>
       </Container>
+      <Row>
+        <Col>
+          <AccountStaff />
+        </Col>
+      </Row>
     </Navbar>
   );
 }

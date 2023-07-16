@@ -9,7 +9,7 @@ export default function Booking() {
   const [movie, setMovie] = useState([]);
   const [cinema, setCinema] = useState([]);
   const [selectedMovie, setSelectedMovie] = useState(null); // Thêm biến trạng thái selectedMovie
-
+  const [selectedCinema, setSelectedCinema] = useState(null);
   useEffect(() => {
     axios
       .get("http://localhost:8080/api/movie/listMovie")
@@ -33,7 +33,12 @@ export default function Booking() {
   }, []);
 
   const handleMovieSelect = (movie) => {
-    setSelectedMovie(movie); // Cập nhật giá trị selectedMovie khi phim được chọn
+    setSelectedMovie(movie);
+    const movie1 = sessionStorage.setItem("movie", movie.name); // Cập nhật giá trị selectedMovie khi phim được chọn
+  };
+  const handleCinemaSelect = (cinema) => {
+    setSelectedCinema(cinema);
+    const movie1 = sessionStorage.setItem("cinema", cinema.name); // Cập nhật giá trị selectedMovie khi phim được chọn
   };
 
   return (
@@ -56,8 +61,12 @@ export default function Booking() {
                 >
                   <Button
                     variant="none"
-                    style={{ width: "415px" }}
-                    onClick={() => handleMovieSelect(item)} // Gọi hàm handleMovieSelect khi phim được chọn
+                    style={{
+                      width: "415px",
+                      backgroundColor:
+                        selectedMovie === item.id ? "yellow" : "inherit",
+                    }} // Thay đổi màu nền của nút phim nếu được chọn
+                    onClick={() => handleMovieSelect(item)}
                   >
                     <img src={item.poster} style={{ width: "30px" }}></img>
                     {item.name}
@@ -82,7 +91,11 @@ export default function Booking() {
                       key={item.cinemaid}
                       style={{ border: "1px solid silver" }}
                     >
-                      <Button variant="none" style={{ width: "415px" }}>
+                      <Button
+                        variant="none"
+                        style={{ width: "415px" }}
+                        onClick={() => handleCinemaSelect(item)}
+                      >
                         {item.name}
                       </Button>
                     </Form.Group>

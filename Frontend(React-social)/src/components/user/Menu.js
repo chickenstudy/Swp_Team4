@@ -22,18 +22,19 @@ export default function Menu() {
             </Link>
           </span>
           <span>
+            <Link to="/" style={{ color: "rgb(245, 245, 245)" }}>
+              MOVIES
+            </Link>
+          </span>
+
+          <span>
             <Link to="/booking" style={{ color: "rgb(245, 245, 245)" }}>
               BOOKING
             </Link>
           </span>
           <span>
-            <Link to="/" style={{ color: "rgb(245, 245, 245)" }}>
-              MOVIES
-            </Link>
-          </span>
-          <span>
-            <Link to="/cinemas" style={{ color: "rgb(245, 245, 245)" }}>
-              CINEMAS
+            <Link to="/history" style={{ color: "rgb(245, 245, 245)" }}>
+              TICKET HISTORY
             </Link>
           </span>
         </div>

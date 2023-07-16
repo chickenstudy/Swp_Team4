@@ -3,7 +3,7 @@ import HeaderOnly from "./layouts/HeaderOnly";
 import AdminLayout from "./layouts/AdminLayout";
 
 // ---------- USER ----------
-import Cinemas from "./views/user/cinemas/Cinemas";
+import Cinemas from "./views/user/cinemas/History";
 import Movies from "./views/user/movies/Movies";
 import Booking from "./views/user/booking/Booking";
 import SeatCinema from "./views/user/movies/SeatCinema";
@@ -27,6 +27,7 @@ import ProfileAccount from "./views/auth/ProfileAccount";
 import DashboardStaff from "./views/staff/dashboard/DashboardStaff";
 import InformationMoviesStaff from "./views/staff/movies/InformationMoviesStaff";
 import ChangePassword from "./views/auth/ChangePassword";
+import History from "./views/user/cinemas/History";
 //---------- USER ROUTE ---------
 export const UserRoutes = [
   {
@@ -41,8 +42,8 @@ export const UserRoutes = [
   },
 
   {
-    path: "/cinemas",
-    component: Cinemas,
+    path: "/history",
+    component: History,
     layout: UserLayout,
   },
   {

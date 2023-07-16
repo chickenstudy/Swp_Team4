@@ -49,7 +49,7 @@ export default function Movies() {
           setSearchResults(response.data);
         })
         .catch((error) => {
-          console.error(error);
+          console.error(eraror);
         });
     } else {
       setSearchResults([]);
@@ -86,7 +86,7 @@ export default function Movies() {
       <div style={{ textAlign: "center" }}>
         <input
           type="text"
-          placeholder="Tìm kiếm phim..."
+          placeholder="Search Moives..."
           value={searchTerm}
           onChange={handleInputChange}
         />
@@ -134,7 +134,7 @@ export default function Movies() {
             ))}
           </Row>
         ) : (
-          <p>Không có kết quả tìm kiếm.</p>
+          <p>No results search.</p>
         )}
       </div>
       <div className="listmovie">

@@ -4,3 +4,7 @@
     text-align: center;
     width: 100%;
   } */
+.selectedMovie {
+  background-color: rgb(90, 59, 144);
+  color: white;
+}
