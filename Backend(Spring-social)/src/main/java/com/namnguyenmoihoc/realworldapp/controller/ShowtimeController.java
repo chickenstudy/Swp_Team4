@@ -35,7 +35,7 @@ import lombok.RequiredArgsConstructor;
 public class ShowtimeController {
   private final ShowtimeService showtimeService;
 
-  @GetMapping("/start")
+  @GetMapping("/starttime")
   public List<String> getStartTimes(@RequestParam Integer movieid, @RequestParam Integer cinemaid,
       @RequestParam String startdate) {
     return showtimeService.getStartTimes(movieid, cinemaid,LocalDate.parse(startdate));

@@ -17,8 +17,7 @@ import com.namnguyenmoihoc.realworldapp.model.Showtime.ShowtimeDTO;
 @Repository
 public interface ShowtimeRepository extends JpaRepository<Showtime, Integer> {
 
-        @Query("SELECT DISTINCT s.starttime FROM Showtime s WHERE s.movie.movieid=:movieid AND s.cinema.cinemaid" +
-                        "= :cinemaid AND s.startdate=:startdate")
+        @Query("SELECT DISTINCT s.starttime FROM Showtime s WHERE s.movie.movieid=:movieid AND s.cinema.cinemaid= :cinemaid AND s.startdate=:startdate")
         List<LocalTime> getStartTimeByMovie(@Param("movieid") Integer movieid, @Param("cinemaid") Integer cinemaid,
                         @Param("startdate") LocalDate startdate);
 

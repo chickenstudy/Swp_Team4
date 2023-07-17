@@ -17,10 +17,7 @@ import org.springframework.stereotype.Service;
 import com.namnguyenmoihoc.realworldapp.entity.Showtime;
 import com.namnguyenmoihoc.realworldapp.exception.custom.CustomNotFoundException;
 import com.namnguyenmoihoc.realworldapp.model.Showtime.ShowtimeDTO;
-import com.namnguyenmoihoc.realworldapp.model.Showtime.ShowtimeDTOCreate;
-import com.namnguyenmoihoc.realworldapp.model.Showtime.ShowtimeDTOResponse;
-import com.namnguyenmoihoc.realworldapp.model.Showtime.ShowtimeDTOResponseNoID;
-import com.namnguyenmoihoc.realworldapp.model.user.CustomError;
+
 
 import com.namnguyenmoihoc.realworldapp.repository.ShowtimeRepository;
 import com.namnguyenmoihoc.realworldapp.service.ShowtimeService;
@@ -46,11 +43,18 @@ public class ShowtimeServiceImpl implements ShowtimeService {
     public List<ShowtimeDTO> getSchedules(Integer movieid, Integer cinemaid, String startdate, String starttime) {
         LocalDate parsedStartDate = LocalDate.parse(startdate);
         LocalTime parsedStartTime = LocalTime.parse(starttime);
-        return showtimeRepository
-                .getSchedulesByMovie(movieid, cinemaid,
-                        parsedStartDate, parsedStartTime)
-                .stream().map(showtime -> modelMapper.map(showtime, ShowtimeDTO.class))
-                .collect(Collectors.toList());
-    }
 
+        List<Showtime> showtimes = showtimeRepository.getSchedulesByMovie(movieid, cinemaid, parsedStartDate,
+                parsedStartTime);
+
+        List<ShowtimeDTO> showtimeDTOs = new ArrayList<>();
+        for (Showtime showtime : showtimes) {
+            ShowtimeDTO showtimeDTO = modelMapper.map(showtime, ShowtimeDTO.class);
+            showtimeDTO.setId(showtime.getShowtimeid()); // Lấy ID của showtime và đặt nó vào showtimeDTO
+            showtimeDTOs.add(showtimeDTO);
+        }
+
+        return showtimeDTOs;
+
+    }
 }
