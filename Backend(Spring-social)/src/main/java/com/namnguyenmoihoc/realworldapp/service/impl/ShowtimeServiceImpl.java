@@ -4,10 +4,9 @@ import java.time.LocalDate;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
-import java.util.HashMap;
+
 import java.util.List;
-import java.util.Map;
-import java.util.Optional;
+
 import java.util.stream.Collectors;
 
 import org.modelmapper.ModelMapper;
@@ -15,7 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.namnguyenmoihoc.realworldapp.entity.Showtime;
-import com.namnguyenmoihoc.realworldapp.exception.custom.CustomNotFoundException;
+
 import com.namnguyenmoihoc.realworldapp.model.Showtime.ShowtimeDTO;
 
 
