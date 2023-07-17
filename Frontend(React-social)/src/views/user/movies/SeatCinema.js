@@ -29,7 +29,6 @@ export default function SeatCinema() {
         console.log(err.message);
       });
   }, []);
-  console.log(seats);
   const handleSeatClick = (row, col) => {
     const seat = seats.find((seat) => seat.row === row && seat.col === col);
 
@@ -64,7 +63,6 @@ export default function SeatCinema() {
 
   const getActive = (row, col) => {
     const seat = seats.find((seat) => {
-      console.log(seat);
       return seat.row == row && seat.col == col;
     });
     if (!seat) return 1;
