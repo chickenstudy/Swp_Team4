@@ -15,7 +15,6 @@ export default function Banner() {
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
   const [picture, setPicture] = useState([]);
-  const { bannerid } = useParams();
   const [data, setData] = useState([]);
   const [banner, setBanner] = useState("");
   const { banners, setBanners } = useContext(ApplicationContext);
@@ -126,9 +125,9 @@ export default function Banner() {
       >
         <thead>
           <tr>
-            <td className="bg-dark text-white">Id</td>
-            <td className="bg-dark text-white w-100">Banner</td>
-            <td className="bg-dark text-white">Action</td>
+            <th className="bg-dark text-white">Id</th>
+            <th className="bg-dark text-white w-100">Banner</th>
+            <th className="bg-dark text-white">Action</th>
           </tr>
         </thead>
         <tbody>

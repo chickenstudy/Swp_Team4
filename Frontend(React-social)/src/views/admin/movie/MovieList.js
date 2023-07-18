@@ -61,13 +61,13 @@ const MovieList = () => {
           <table className="table table-bordered">
             <thead >
               <tr >
-                <td className="bg-dark text-white">Id</td>
-                <td className="bg-dark text-white">Poster</td>
-                <td className="bg-dark text-white">Name</td>
-                <td className="bg-dark text-white">Genre</td>
-                <td className="bg-dark text-white">Country</td>
-                <td className="bg-dark text-white">Show Date</td>
-                <td className="action bg-dark text-white">Actions</td>
+                <th className="bg-dark text-white">Id</th>
+                <th className="bg-dark text-white">Poster</th>
+                <th className="bg-dark text-white">Name</th>
+                <th className="bg-dark text-white">Genre</th>
+                <th className="bg-dark text-white">Country</th>
+                <th className="bg-dark text-white">Show Date</th>
+                <th className="action bg-dark text-white">Actions</th>
               </tr>
             </thead>
             <tbody>

@@ -8,7 +8,7 @@ import { useContext } from "react";
 import { ApplicationContext } from "../../../App";
 
 function SideBar() {
-  const { user, makeSignOut } = useContext(ApplicationContext);
+  const { makeSignOut } = useContext(ApplicationContext);
   const navigate = useNavigate();
   const makeSignOutClick = () => {
     makeSignOut();
@@ -45,7 +45,7 @@ function SideBar() {
         <Button
           variant="outline-light"
           className="logout-btn"
-          style={{ position: "relative", left: "18px", top: "474px" }}
+          style={{ position: "relative", left: "18px", top: "380px" }}
           onClick={makeSignOutClick}
         >
           <BsBoxArrowRight className="logout-icon" />

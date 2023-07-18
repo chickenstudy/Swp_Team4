@@ -275,8 +275,8 @@ export default function SignUp() {
                       onChange={handleSexChange}
                     >
                       <option value="">Choose option</option>
-                      <option value={0}>Female</option>
                       <option value={1}>Male</option>
+                      <option value={0}>Female</option>
                       <option value={2}>Other</option>
                     </Form.Control>
                   </Form.Group>

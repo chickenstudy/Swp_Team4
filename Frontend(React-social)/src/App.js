@@ -53,8 +53,7 @@ function App() {
 
   return (
     <ApplicationContext.Provider
-      value={{ user, setUser, makeSignIn, makeSignOut, banners, setBanners }}
-    >
+      value={{ user, setUser, makeSignIn, makeSignOut, banners, setBanners }}>
       <div style={{ backgroundColor: "rgb(246, 241, 241)" }}>
         <React.Fragment>
           <BrowserRouter>
@@ -97,7 +96,6 @@ function App() {
                         <Page />
                       </Layout>
                     }
-
                     // element={
                     //   user.roleID == 1 && route.isProtected ? ( // Check if user is authenticated
                     //     <Layout>
