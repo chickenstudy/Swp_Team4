@@ -8,10 +8,14 @@ import Carousel from "react-bootstrap/Carousel";
 import { AiOutlineFieldTime } from "react-icons/ai";
 import axios from "axios";
 import ReactPlayer from "react-player";
-import { Modal } from "react-bootstrap";
+import { Modal, Toast } from "react-bootstrap";
 import "./informationMovie.css";
+import { useContext } from "react";
+import { ApplicationContext } from "../../../App";
+import { ToastContainer, toast } from "react-toastify";
 
 const InformationMovie = () => {
+  const { user } = useContext(ApplicationContext);
   const { id } = useParams();
   const [data, setData] = useState([]);
   const [data1, setData1] = useState([]);
@@ -112,7 +116,6 @@ const InformationMovie = () => {
         },
       })
       .then((res) => {
-        console.log(res.data);
         setData1(res.data[0]);
         setSelected(true);
       })
@@ -120,10 +123,13 @@ const InformationMovie = () => {
         console.log(err.message);
       });
   }, [id, selectedCinema, startTime, selectedDate]);
-  console.log(data1.id);
   const showtimeid = sessionStorage.setItem("showtimeid", data1?.id);
   const navigate = useNavigate();
-  if (selected === true) {
+  console.log(user);
+  if (user.length === 0) {
+    // alert("Please login to book ticket");
+    toast.error("Please login to book ticket");
+  } else if (selected === true) {
     navigate("/seat");
   }
   const handleOpenVideoModal = () => {
@@ -226,7 +232,7 @@ const InformationMovie = () => {
                     onChange={handleDateChange}
                     value={selectedDate}
                   >
-                    <option value="">Chọn ngày</option>
+                    <option value="">Choose a date</option>
                     {datelist.map((dateitem) => (
                       <option key={dateitem.date} value={dateitem.date}>
                         {dateitem.date}
@@ -244,7 +250,7 @@ const InformationMovie = () => {
                     onChange={handleCinemaChange}
                     value={selectedCinema ? selectedCinema.cinemaid : ""}
                   >
-                    <option value="">Chọn rạp chiếu</option>
+                    <option value="">Choose a cinema</option>
                     {cinema.map((cinemaitem) => (
                       <option
                         key={cinemaitem.cinemaid}
@@ -296,6 +302,7 @@ const InformationMovie = () => {
           <Col xs={2}></Col>
         </Row>
       </Container>
+      <ToastContainer />
     </div>
   );
 };

@@ -20,6 +20,8 @@ const InformationMovieStaff = () => {
   const cinema = sessionStorage.setItem("cinema", cinema_name);
   const cinema1 = sessionStorage.setItem("cinemaid", cinema_id);
 
+  const [error, setError] = useState(null);
+
   const datelist = [
     {
       date: "2023-07-19",
@@ -74,10 +76,18 @@ const InformationMovieStaff = () => {
         },
       })
       .then((res) => {
-        setShowtime(res.data);
+        if (!res.data || res.data.length === 0) {
+          setError("There are currently no show times for this movie");
+        } else {
+          setShowtime(res.data);
+        }
       })
       .catch((err) => {
-        console.log(err.message);
+        if (err.response && err.response.status === 500) {
+          setError("There are currently no show times for this movie");
+        } else {
+          console.log(err.message);
+        }
       });
   }, [id, selectedCinema, selectedDate]);
 
@@ -107,56 +117,54 @@ const InformationMovieStaff = () => {
           <div style={{ textAlign: "center" }}>
             <h1>{data?.movie?.name}</h1>
           </div>
-          <Col className="my-4">
-            <Row className="mt-4">
-              <Col md={3}>
-                <h4>Select Date: </h4>
-                <select
-                  style={{
-                    height: "40px",
-                    width: "100%",
-                    paddingLeft: "10px",
-                  }}
-                  onChange={handleDateChange}
-                  value={selectedDate}
-                >
-                  <option value="">Chọn ngày</option>
-                  {datelist.map((dateitem) => (
-                    <option key={dateitem.date} value={dateitem.date}>
-                      {dateitem.date}
-                    </option>
-                  ))}
-                </select>
-              </Col>
-              <Col md={3}>
+
+          <Row className="mt-4">
+            <Col md={3}>
+              <h4>Select Date: </h4>
+              <select
+                style={{
+                  height: "40px",
+                  width: "100%",
+                  paddingLeft: "10px",
+                }}
+                onChange={handleDateChange}
+                value={selectedDate}
+              >
+                <option value="">Choose a date</option>
+                {datelist.map((dateitem) => (
+                  <option key={dateitem.date} value={dateitem.date}>
+                    {dateitem.date}
+                  </option>
+                ))}
+              </select>
+            </Col>
+            <Col md={3}>
+              <Row>
                 <h4>Select ShowTime:</h4>
                 {selectedDate && (
-                  <Col xs={2}>
+                  <Col xs={12} style={{ paddingBottom: "10px" }}>
                     {showtime.map((showtimeitem) => (
-                      <span className="ml-3" key={showtimeitem.showtimeid}>
-                        {" "}
-                        <Button
-                          onClick={() =>
-                            handleTicketClick(
-                              selectedDate,
-                              cinema_name,
-                              showtimeitem,
-                              data?.movie?.name
-                              // Thêm cinemaid vào session storage
-                            )
-                          }
-                          style={{ border: "1px solid black" }}
-                          variant="light"
-                        >
-                          {showtimeitem}
-                        </Button>
-                      </span>
+                      <Button
+                        onClick={() =>
+                          handleTicketClick(
+                            selectedDate,
+                            cinema_name,
+                            showtimeitem,
+                            data?.movie?.name
+                            // Thêm cinemaid vào session storage
+                          )
+                        }
+                        style={{ border: "1px solid black" }}
+                        variant="light"
+                      >
+                        {showtimeitem}
+                      </Button>
                     ))}
                   </Col>
                 )}
-              </Col>
-            </Row>
-          </Col>
+              </Row>
+            </Col>
+          </Row>
         </Row>
       </Container>
       <SeatCinema />
