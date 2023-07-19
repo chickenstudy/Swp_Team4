@@ -54,76 +54,73 @@ const MovieList = () => {
           <div className="divbtn text-end mx-4">
             <Link
               to="/movie/addmovie"
-              className="btn btn-success rounded-0 mb-2">
+              className="btn btn-success rounded-0 mb-2"
+            >
               Add new movie
             </Link>
           </div>
           <table className="table table-bordered">
-            <thead >
-              <tr >
-                <td className="bg-dark text-white">Id</td>
-                <td className="bg-dark text-white">Poster</td>
-                <td className="bg-dark text-white">Name</td>
-                <td className="bg-dark text-white">Genre</td>
-                <td className="bg-dark text-white">Country</td>
-                <td className="bg-dark text-white">Show Date</td>
-                <td className="action bg-dark text-white">Actions</td>
+            <thead>
+              <tr>
+                <th className="bg-dark text-white">Id</th>
+                <th className="bg-dark text-white">Poster</th>
+                <th className="bg-dark text-white">Name</th>  
+                <th className="bg-dark text-white">Genre</th>
+                <th className="bg-dark text-white">Country</th>
+                <th className="bg-dark text-white">Show Date</th>
+                <th className="action bg-dark text-white">Actions</th>
               </tr>
             </thead>
             <tbody>
-              {
-                data.map((item) => (
-                  <tr key={item.id}>
-                    <td style={{ width: "10px" }}>{item.id}</td>
-                    <td style={{ width: "110px" }}>
-                      {
-                        <img
-                          src={item.poster}
-                          alt="Image"
-                          style={{ width: "100%" }}
+              {data.map((item) => (
+                <tr key={item.id}>
+                  <td style={{ width: "10px" }}>{item.id}</td>
+                  <td style={{ width: "110px" }}>
+                    {
+                      <img
+                        src={item.poster}
+                        alt="Image"
+                        style={{ width: "100%" }}
+                      />
+                    }
+                  </td>
+                  <td style={{ width: "110px" }}>{item.name}</td>
+                  <td style={{ width: "100px" }}>{item.type}</td>
+                  <td style={{ width: "90px" }}>{item.country}</td>
+                  <td style={{ width: "90px" }}>{item.show_date}</td>
+                  <td style={{ width: "110px" }} className="action">
+                    <div>
+                      <a
+                        onClick={() => {
+                          LoadDetail(item.id);
+                        }}
+                      >
+                        <BiDetail className="btn btn-primary mx-1" size={50} />
+                      </a>
+
+                      <a
+                        onClick={() => {
+                          LoadEdit(item.id);
+                        }}
+                      >
+                        <BiEdit className="btn btn-warning mx-1" size={50} />
+                      </a>
+
+                      <a
+                        className=""
+                        onClick={() => {
+                          Removefunction(item.id);
+                        }}
+                      >
+                        <RiDeleteBinLine
+                          className="btn btn-danger mx-1"
+                          size={50}
                         />
-                      }
-                    </td>
-                    <td style={{ width: "110px" }}>{item.name}</td>
-                    <td style={{ width: "100px" }}>{item.type}</td>
-                    <td style={{ width: "90px" }}>{item.country}</td>
-                    <td style={{ width: "90px" }}>{item.show_date}</td>
-                    <td style={{ width: "110px" }} className="action">
-                      <div>
-                        <a
-                          onClick={() => {
-                            LoadDetail(item.id);
-                          }}>
-                          <BiDetail
-                            className="btn btn-primary mx-1"
-                            size={50}
-                          />
-                        </a>
-
-                        <a
-                          onClick={() => {
-                            LoadEdit(item.id);
-                          }}>
-                          <BiEdit
-                            className="btn btn-warning mx-1"
-                            size={50}
-                          />
-                        </a>
-
-                        <a
-                          className=""
-                          onClick={() => {
-                            Removefunction(item.id);
-                          }}>
-                          <RiDeleteBinLine
-                            className="btn btn-danger mx-1"
-                            size={50}
-                          />
-                        </a>
-                      </div>
-                    </td>
-                  </tr>
-                ))}
+                      </a>
+                    </div>
+                  </td>
+                </tr>
+              ))}
             </tbody>
           </table>
         </div>

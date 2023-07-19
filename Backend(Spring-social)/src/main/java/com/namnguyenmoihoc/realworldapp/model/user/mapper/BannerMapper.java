@@ -22,7 +22,7 @@ public class BannerMapper {
 
             byte[] decodePicture = Base64.getDecoder().decode(encodePictureStr);// string to byte[]
 
-            Banner banner = Banner.builder().picture(decodePicture).active(Byte.valueOf("0")).build();
+            Banner banner = Banner.builder().picture(decodePicture).active(Byte.valueOf("1")).build();
             return banner;
 
         } catch (Exception e) {

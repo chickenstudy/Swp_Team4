@@ -48,9 +48,10 @@ function App() {
   };
   const makeSignOut = () => {
     localStorage.removeItem("token");
+    sessionStorage.removeItem("roleId");
     setUser([]);
   };
-
+  const roleID = sessionStorage.getItem("roleId");
   return (
     <ApplicationContext.Provider
       value={{ user, setUser, makeSignIn, makeSignOut, banners, setBanners }}
@@ -92,21 +93,21 @@ function App() {
                   <Route
                     key={index}
                     path={route.path}
-                    element={
-                      <Layout>
-                        <Page />
-                      </Layout>
-                    }
-
                     // element={
-                    //   user.roleID == 1 && route.isProtected ? ( // Check if user is authenticated
-                    //     <Layout>
-                    //       <Page />
-                    //     </Layout>
-                    //   ) : (
-                    //     <Navigate to="/" /> // Redirect to login page if user is not authenticated
-                    //   )
+                    //   <Layout>
+                    //     <Page />
+                    //   </Layout>
                     // }
+
+                    element={
+                      roleID == 1 && route.isProtected ? ( // Check if user is authenticated
+                        <Layout>
+                          <Page />
+                        </Layout>
+                      ) : (
+                        <Navigate to="/" /> // Redirect to login page if user is not authenticated
+                      )
+                    }
                   />
                 );
               })}
@@ -122,10 +123,19 @@ function App() {
                   <Route
                     key={index}
                     path={route.path}
+                    // element={
+                    //   <Layout>
+                    //     <Page />
+                    //   </Layout>
+                    // }
                     element={
-                      <Layout>
-                        <Page />
-                      </Layout>
+                      roleID == 2 && route.isProtected ? ( // Check if user is authenticated
+                        <Layout>
+                          <Page />
+                        </Layout>
+                      ) : (
+                        <Navigate to="/" /> // Redirect to login page if user is not authenticated
+                      )
                     }
                   />
                 );

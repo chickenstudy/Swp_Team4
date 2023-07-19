@@ -146,15 +146,18 @@ export const StaffRoutes = [
     path: "/staffmanagement",
     component: DashboardStaff,
     layout: StaffLayout,
+    isProtected: true,
   },
   {
     path: "/staffmanagement/movies",
     component: MoviesStaff,
     layout: StaffLayout,
+    isProtected: true,
   },
   {
     path: "/staffmanagement/movies/informationmovie/:id",
     component: InformationMoviesStaff,
     layout: StaffLayout,
+    isProtected: true,
   },
 ];

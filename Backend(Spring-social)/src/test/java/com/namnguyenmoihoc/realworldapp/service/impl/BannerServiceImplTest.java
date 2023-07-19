@@ -7,27 +7,25 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
-import static org.mockito.ArgumentMatchers.any;
+
+import static org.junit.jupiter.api.Assertions.assertThrows;
+
 import static org.mockito.Mockito.*;
 
-import java.io.UnsupportedEncodingException;
+
 import java.util.ArrayList;
-import java.util.HashMap;
+
 import java.util.List;
-import java.util.Map;
+
 import java.util.Optional;
 
 import com.namnguyenmoihoc.realworldapp.entity.Banner;
 import com.namnguyenmoihoc.realworldapp.exception.custom.CustomNotFoundException;
-import com.namnguyenmoihoc.realworldapp.model.banner.BannerDTOCreate;
+
 import com.namnguyenmoihoc.realworldapp.model.banner.BannerDTOResponse;
-import com.namnguyenmoihoc.realworldapp.model.banner.BannerDTOResponseCreate;
-import com.namnguyenmoihoc.realworldapp.model.banner.BannerDTOUpdate;
-import com.namnguyenmoihoc.realworldapp.model.user.CustomError;
-import com.namnguyenmoihoc.realworldapp.model.user.mapper.BannerMapper;
+
 import com.namnguyenmoihoc.realworldapp.repository.BannerRepository;
 import com.namnguyenmoihoc.realworldapp.service.BannerService;
-import com.namnguyenmoihoc.realworldapp.service.impl.BannerServiceImpl;
 
 public class BannerServiceImplTest {
 
@@ -43,37 +41,8 @@ public class BannerServiceImplTest {
     public void setUp() {
         MockitoAnnotations.openMocks(this);
         bannerService = new BannerServiceImpl(bannerRepository);
+       
     }
-
-    /*
-    @Test
-     public void testCreateBanner() throws UnsupportedEncodingException {
-         // Prepare test data
-         BannerDTOCreate bannerDTOCreate = new BannerDTOCreate();
-         bannerDTOCreate.setActive(1);
-         ban
-         // Set properties of bannerDTOCreate object
-
-         Map<String, BannerDTOCreate> bannerDTOCreateMap = new HashMap<>();
-         bannerDTOCreateMap.put("banner", bannerDTOCreate);
-
-         Banner banner = new Banner();
-         // Set properties of banner object based on bannerDTOCreate
-
-         BannerDTOResponseCreate expectedResponse = new BannerDTOResponseCreate();
-         // Set properties of expectedResponse object based on banner
-
-        // Mock the bannerRepository.save() method
-         when(bannerRepository.save(any(Banner.class))).thenReturn(banner);
-
-         // Perform the createBanner() method
-         Map<String, BannerDTOResponseCreate> actualResponse = bannerService.createBanner(bannerDTOCreateMap);
-
-         // Assertions
-         Assertions.assertEquals(expectedResponse, actualResponse.get("banner"));
-         verify(bannerRepository, times(1)).save(any(Banner.class));
-     }
-     */
 
     @Test
     public void testGetListBanner() {
@@ -94,33 +63,6 @@ public class BannerServiceImplTest {
         Assertions.assertEquals(expectedResponse.size(), actualResponse.size());
     }
 
-    // @Test
-    // public void testGetUpdateBanner() throws CustomNotFoundException {
-    //     // Prepare test data
-    //     BannerDTOUpdate bannerDTOUpdate = new BannerDTOUpdate();
-    //     // Set properties of bannerDTOUpdate object
-
-    //     Optional<Banner> bannerOptional = Optional.of(new Banner());
-    //     // Set properties of bannerOptional object based on bannerDTOUpdate
-
-    //     Map<String, BannerDTOResponseCreate> expectedResponse = new HashMap<>();
-    //     // Set properties of expectedResponse object based on bannerOptional
-
-    //     // Mock the bannerRepository.findByBannerid() method
-    //     when(bannerRepository.findByBannerid(anyInt())).thenReturn(bannerOptional);
-
-    //     // Mock the bannerRepository.save() method
-    //     when(bannerRepository.save(any(Banner.class))).thenReturn(bannerOptional.get());
-
-    //     // Perform the getUpdateBanner() method
-    //     Map<String, BannerDTOResponseCreate> actualResponse = bannerService.getUpdateBanner(bannerDTOUpdate);
-
-    //     // Assertions
-    //     Assertions.assertEquals(expectedResponse, actualResponse);
-    //     verify(bannerRepository, times(1)).findByBannerid(anyInt());
-    //     verify(bannerRepository, times(1)).save(any(Banner.class));
-    // }
-
     @Test
     public void testGetDeleteBanner() throws CustomNotFoundException {
         // Prepare test data
@@ -138,25 +80,31 @@ public class BannerServiceImplTest {
         verify(bannerRepository, times(1)).deleteById(bannerId);
     }
 
-    // @Test
-    // public void testGetBannerByID() throws CustomNotFoundException {
-    //     // Prepare test data
-    //     int bannerId = 1;
+    @Test
+    void testGetBannerByID() throws CustomNotFoundException {
+        int bannerid = 1;
 
-    //     Optional<Banner> bannerOptional = Optional.of(new Banner());
-    //     // Set properties of bannerOptional object based on bannerId
+        // Prepare the mock behavior for the repository
+        Banner banner = new Banner();
+        banner.setBannerid(bannerid);
+        banner.setPicture("picture".getBytes());
+        banner.setActive((byte) 1);
+        // Set other properties of the banner as needed
 
-    //     BannerDTOResponse expectedResponse = new BannerDTOResponse();
-    //     // Set properties of expectedResponse object based on bannerOptional
+        
+    }
 
-    //     // Mock the bannerRepository.findById() method
-    //     when(bannerRepository.findById(bannerId)).thenReturn(bannerOptional);
+    @Test
+    void testGetBannerByIDNotFound() {
+        int bannerid = 1;
 
-    //     // Perform the getBannerByID() method
-    //     Map<String, BannerDTOResponse> actualResponse = bannerService.getBannerByID(bannerId);
+        // Prepare the mock behavior for the repository
+        when(bannerRepository.findById(bannerid)).thenReturn(Optional.empty());
 
-    //     // Assertions
-    //     Assertions.assertEquals(expectedResponse, actualResponse.get("banner"));
-    //     verify(bannerRepository, times(1)).findById(bannerId);
-    // }
+        // Call the method under test and assert that it throws CustomNotFoundException
+        assertThrows(CustomNotFoundException.class, () -> {
+            bannerService.getBannerByID(bannerid);
+        });
+    }
+
 }

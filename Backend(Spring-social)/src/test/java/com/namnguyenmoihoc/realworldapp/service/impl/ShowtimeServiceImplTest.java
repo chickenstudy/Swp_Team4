@@ -1,128 +1,105 @@
-// package com.namnguyenmoihoc.realworldapp.service.impl;
+package com.namnguyenmoihoc.realworldapp.service.impl;
 
-// import static org.junit.jupiter.api.Assertions.assertEquals;
-// import static org.junit.jupiter.api.Assertions.assertNotNull;
-// import static org.junit.jupiter.api.Assertions.assertTrue;
-// import static org.mockito.ArgumentMatchers.any;
-// import static org.mockito.Mockito.verify;
-// import static org.mockito.Mockito.when;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.MockitoAnnotations;
+import org.modelmapper.ModelMapper;
 
-// import java.util.ArrayList;
-// import java.util.HashMap;
-// import java.util.List;
-// import java.util.Map;
-// import java.util.Optional;
+import com.namnguyenmoihoc.realworldapp.entity.Cinema;
+import com.namnguyenmoihoc.realworldapp.entity.Movie;
+import com.namnguyenmoihoc.realworldapp.entity.Showtime;
+import com.namnguyenmoihoc.realworldapp.model.Showtime.ShowtimeDTO;
+import com.namnguyenmoihoc.realworldapp.repository.ShowtimeRepository;
 
-// import org.junit.jupiter.api.Assertions;
-// import org.junit.jupiter.api.Test;
-// import org.mockito.InjectMocks;
-// import org.mockito.Mock;
-// import org.springframework.boot.test.context.SpringBootTest;
+import java.time.LocalDate;
+import java.time.LocalTime;
 
-// import com.namnguyenmoihoc.realworldapp.entity.Cinema;
-// import com.namnguyenmoihoc.realworldapp.entity.Showtime;
-// import com.namnguyenmoihoc.realworldapp.exception.custom.CustomNotFoundException;
-// import com.namnguyenmoihoc.realworldapp.model.Showtime.ShowtimeDTOCreate;
-// import com.namnguyenmoihoc.realworldapp.model.Showtime.ShowtimeDTOResponse;
-// import com.namnguyenmoihoc.realworldapp.model.Showtime.ShowtimeDTOResponseNoID;
+import java.util.Arrays;
+import java.util.List;
 
-// import com.namnguyenmoihoc.realworldapp.model.user.mapper.ShowtimeMapper;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.mockito.Mockito.when;
 
-// import com.namnguyenmoihoc.realworldapp.repository.ShowtimeRepository;
+public class ShowtimeServiceImplTest {
 
-// @SpringBootTest
-// public class ShowtimeServiceImplTest {
-//   @InjectMocks
-//   private ShowtimeServiceImpl showtimeServiceImpl;
+    @Mock
+    private ShowtimeRepository showtimeRepository;
 
-//   @Mock
-//   private ShowtimeRepository showtimeRepository;
+      @Mock
+    private ModelMapper modelMapper;
 
-//   @Test
-//   void testCreateShowtime() {
-//     ShowtimeDTOCreate showtimeDTOCreate = new ShowtimeDTOCreate();
-//     showtimeDTOCreate.setStarttime("7h");
-//     showtimeDTOCreate.setEndtime("9h");
+    @InjectMocks
+    private ShowtimeServiceImpl showtimeService;
 
-//     // Create the cinema DTO map and add the cinema DTO to it
-//     Map<String, ShowtimeDTOCreate> showMap = new HashMap<>();
-//     showMap.put("showtime", showtimeDTOCreate);
+    @BeforeEach
+    public void setUp() {
+        MockitoAnnotations.openMocks(this);
+    }
 
-//     // Convert the cinema DTO to a cinema object
-//     Showtime showtime = ShowtimeMapper.toShowtime(showtimeDTOCreate);
+    @Test
+    void testGetStartTimes() {
+        Integer movieId = 1;
+        Integer cinemaId = 2;
+        LocalDate startDate = LocalDate.of(2023, 7, 19);
 
-//     // Set up the mock behavior for the cinema repository
-//     when(showtimeRepository.save(any(Showtime.class))).thenReturn(showtime);
+        // Mock the behavior of showtimeRepository.getStartTimeByMovie()
+        List<LocalTime> mockStartTimes = Arrays.asList(
+                LocalTime.of(10, 0),
+                LocalTime.of(13, 30),
+                LocalTime.of(17, 45)
+        );
+        when(showtimeRepository.getStartTimeByMovie(movieId, cinemaId, startDate))
+                .thenReturn(mockStartTimes);
 
-//     // Call the createCinema() method to test
-//     Map<String, ShowtimeDTOResponseNoID> result = showtimeServiceImpl.createShowtime(showMap);
+        // Call the method to be tested
+        List<String> result = showtimeService.getStartTimes(movieId, cinemaId, startDate);
 
-//     // Check the result
-//     assertEquals(1, result.size()); // Check that the result map has 1 element
-//     assertTrue(result.containsKey("showtime"));
+        // Expected start times after formatting
+        List<String> expectedStartTimes = Arrays.asList("10:00", "13:30", "17:45");
 
-//   }
+        // Assert the result
+        assertEquals(expectedStartTimes, result);
+    }
 
-//   @Test
-//   void testGetDeleteShowtime() throws CustomNotFoundException {
+    @Test
+    void testGetSchedules() {
+        Movie movie = new Movie();
+        movie.setMovieid(1);
 
-//     Showtime showtime = new Showtime();
-//     showtime.setShowtimeid(1);
-//     ;
+        Cinema cinema = new Cinema();
+        cinema.setCinemaid(2);
 
-//     // Mock the movieRepository.findById() method to return the movie
-//     when(showtimeRepository.findById(1)).thenReturn(Optional.of(showtime));
+        String startDateStr = "2023-07-19";
+        String startTimeStr = "10:00";
 
-//     // Call the method under test
-//     showtimeServiceImpl.getDeleteShowtime(1);
-    
+        LocalDate parsedStartDate = LocalDate.parse(startDateStr);
+        LocalTime parsedStartTime = LocalTime.parse(startTimeStr);
 
-//     // Verify the behavior
-//     verify(showtimeRepository).findById(1); // Verify that movieRepository.findById() was called
-//     verify(showtimeRepository).deleteById(1);
-//   }
+        // Mock the behavior of showtimeRepository.getSchedulesByMovie()
+        List<Showtime> mockShowtimes = Arrays.asList(
+                new Showtime(1, parsedStartTime,  parsedStartDate,movie, cinema),
+                new Showtime(2,  parsedStartTime.plusHours(2),parsedStartDate, movie, cinema)
+        );
+        when(showtimeRepository.getSchedulesByMovie(movie.getMovieid(), cinema.getCinemaid(), parsedStartDate, parsedStartTime))
+                .thenReturn(mockShowtimes);
 
-//   @Test
-//   void testGetListShowtime() {
-//     Showtime showtime1 = new Showtime();
-//     showtime1.setShowtimeid(1);
-//     showtime1.setStarttime("7h");
-//     showtime1.setEndtime("9h");
+        // Mock the behavior of modelMapper.map()
+        ShowtimeDTO mockShowtimeDTO1 = new ShowtimeDTO();
+        mockShowtimeDTO1.setId(1);
+        ShowtimeDTO mockShowtimeDTO2 = new ShowtimeDTO();
+        mockShowtimeDTO2.setId(2);
+        when(modelMapper.map(mockShowtimes.get(0), ShowtimeDTO.class)).thenReturn(mockShowtimeDTO1);
+        when(modelMapper.map(mockShowtimes.get(1), ShowtimeDTO.class)).thenReturn(mockShowtimeDTO2);
 
-//     Showtime showtime2 = new Showtime();
-//     showtime2.setShowtimeid(2);
-//     showtime2.setStarttime("13h");
-//     showtime2.setEndtime("15h");
+        // Call the method to be tested
+        List<ShowtimeDTO> result = showtimeService.getSchedules(movie.getMovieid(), cinema.getCinemaid(), startDateStr, startTimeStr);
 
-//     // Create a list of cinema objects
-//     List<Showtime> listShowtime = new ArrayList<>();
-//     listShowtime.add(showtime1);
-//     listShowtime.add(showtime2);
+        // Expected ShowtimeDTOs after mapping
+        List<ShowtimeDTO> expectedShowtimeDTOs = Arrays.asList(mockShowtimeDTO1, mockShowtimeDTO2);
 
-//     // Set up the mock behavior for the cinema repository
-//     when(showtimeRepository.findAll()).thenReturn(listShowtime);
-
-//     // Call the getListCinemas() method to test
-//     List<ShowtimeDTOResponse> result = showtimeServiceImpl.getListShowtime();
-
-//     // Check the result
-//     assertNotNull(result);
-//     assertEquals(2, result.size()); // Check that the result list has 2 elements
-
-//     ShowtimeDTOResponse showtimeDTO1 = result.get(0);
-//     assertNotNull(showtimeDTO1);
-//     assertEquals(showtime1.getShowtimeid(), showtimeDTO1.getShowtimeid());
-//     assertEquals(showtime1.getStarttime(), showtimeDTO1.getStarttime());
-//     assertEquals(showtime1.getEndtime(), showtimeDTO1.getEndtime());
-
-//     ShowtimeDTOResponse showtimeDTO2 = result.get(1);
-//     assertNotNull(showtimeDTO2);
-//      assertEquals(showtime2.getShowtimeid(), showtimeDTO2.getShowtimeid());
-//     assertEquals(showtime2.getStarttime(), showtimeDTO2.getStarttime());
-//     assertEquals(showtime2.getEndtime(), showtimeDTO2.getEndtime());
-    
-
-//   }
-
-  
-// }
+        // Assert the result
+        assertEquals(expectedShowtimeDTOs, result);
+    }
+}
