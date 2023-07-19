@@ -2,8 +2,6 @@ package com.namnguyenmoihoc.realworldapp.entity;
 
 import java.util.Date;
 
-
-
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
@@ -29,19 +27,22 @@ public class Movie {
     private int movieid;
 
     private String author;
+    @Column(nullable = false)
     private String name;
-
+    @Column(nullable = false)
     @Lob
     private byte[] poster;
+    @Column(nullable = false)
     private String description;
     private String type;
     @Temporal(TemporalType.DATE)
 
     @Column(name = "show_date")
     private Date show_date;
-
+    @Column(nullable = false)
     @Lob
     private byte[] banner;
+    @Column(nullable = false)
     private String trailer;
     private String country;
     private String times;

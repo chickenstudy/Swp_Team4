@@ -14,6 +14,8 @@ import com.namnguyenmoihoc.realworldapp.entity.Movie;
 public interface MovieRepository extends JpaRepository<Movie ,Integer>{
 
     public Optional<Movie> findByMovieid(int movieid);
+
+    public Object findByName(String movieName);
     
 
     
