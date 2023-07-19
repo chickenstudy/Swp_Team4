@@ -3,6 +3,7 @@ package com.namnguyenmoihoc.realworldapp.service.impl;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
@@ -33,6 +34,9 @@ public class BannerServiceImplTest {
     @Mock
     private BannerRepository bannerRepository;
 
+    @InjectMocks
+    private BannerServiceImpl bannerServiceImpl;
+
     private BannerService bannerService;
 
     @BeforeEach
@@ -41,31 +45,35 @@ public class BannerServiceImplTest {
         bannerService = new BannerServiceImpl(bannerRepository);
     }
 
-    // @Test
-    // public void testCreateBanner() throws UnsupportedEncodingException {
-    //     // Prepare test data
-    //     BannerDTOCreate bannerDTOCreate = new BannerDTOCreate();
-    //     // Set properties of bannerDTOCreate object
+    /*
+    @Test
+     public void testCreateBanner() throws UnsupportedEncodingException {
+         // Prepare test data
+         BannerDTOCreate bannerDTOCreate = new BannerDTOCreate();
+         bannerDTOCreate.setActive(1);
+         ban
+         // Set properties of bannerDTOCreate object
 
-    //     Map<String, BannerDTOCreate> bannerDTOCreateMap = new HashMap<>();
-    //     bannerDTOCreateMap.put("banner", bannerDTOCreate);
+         Map<String, BannerDTOCreate> bannerDTOCreateMap = new HashMap<>();
+         bannerDTOCreateMap.put("banner", bannerDTOCreate);
 
-    //     Banner banner = new Banner();
-    //     // Set properties of banner object based on bannerDTOCreate
+         Banner banner = new Banner();
+         // Set properties of banner object based on bannerDTOCreate
 
-    //     BannerDTOResponseCreate expectedResponse = new BannerDTOResponseCreate();
-    //     // Set properties of expectedResponse object based on banner
+         BannerDTOResponseCreate expectedResponse = new BannerDTOResponseCreate();
+         // Set properties of expectedResponse object based on banner
 
-    //     // Mock the bannerRepository.save() method
-    //     when(bannerRepository.save(any(Banner.class))).thenReturn(banner);
+        // Mock the bannerRepository.save() method
+         when(bannerRepository.save(any(Banner.class))).thenReturn(banner);
 
-    //     // Perform the createBanner() method
-    //     Map<String, BannerDTOResponseCreate> actualResponse = bannerService.createBanner(bannerDTOCreateMap);
+         // Perform the createBanner() method
+         Map<String, BannerDTOResponseCreate> actualResponse = bannerService.createBanner(bannerDTOCreateMap);
 
-    //     // Assertions
-    //     Assertions.assertEquals(expectedResponse, actualResponse.get("banner"));
-    //     verify(bannerRepository, times(1)).save(any(Banner.class));
-    // }
+         // Assertions
+         Assertions.assertEquals(expectedResponse, actualResponse.get("banner"));
+         verify(bannerRepository, times(1)).save(any(Banner.class));
+     }
+     */
 
     @Test
     public void testGetListBanner() {

@@ -18,6 +18,7 @@ import org.springframework.stereotype.Service;
 
 import com.namnguyenmoihoc.realworldapp.entity.Roles;
 import com.namnguyenmoihoc.realworldapp.entity.Account;
+import com.namnguyenmoihoc.realworldapp.exception.custom.ChangePasswordMessage;
 import com.namnguyenmoihoc.realworldapp.exception.custom.CustomBadRequestException;
 import com.namnguyenmoihoc.realworldapp.exception.custom.CustomNotFoundException;
 import com.namnguyenmoihoc.realworldapp.model.profileAccount.ProfileDTOResponse;
@@ -111,6 +112,7 @@ public class UserServiceImpl implements UserService {
         Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         if (principal instanceof UserDetails) {
             String email = ((UserDetails) principal).getUsername();
+            System.out.println(email+":email");
             Account user = userRepository.findByEmail(email).get();
             return buidDTOResponse(user);
         }
@@ -223,7 +225,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public void changePassword(int userid, AccountDTONewPassword accountNewPassword)
+    public Map<String, ChangePasswordMessage> changePassword(int userid, AccountDTONewPassword accountNewPassword)
             throws CustomNotFoundException {
         // TODO Auto-generated method stub
 
@@ -247,8 +249,15 @@ public class UserServiceImpl implements UserService {
             System.out.println("password : " + accountNewPassword);
             user = userRepository.save(user);
         }
-    
+        return changepassword();
+    }
 
+    private Map<String, ChangePasswordMessage> changepassword() {
+        Map<String, ChangePasswordMessage> wrapper = new HashMap<>();
+        System.out.println("adsjfoi");
+        ChangePasswordMessage changePasswordMessage = new ChangePasswordMessage(CustomError.builder().code("200").message("Password Change Successfully!!!").build());
+        wrapper.put("message", changePasswordMessage);
+        return wrapper;
     }
 
 }

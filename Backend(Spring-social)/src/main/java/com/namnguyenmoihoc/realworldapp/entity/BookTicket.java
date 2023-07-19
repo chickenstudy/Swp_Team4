@@ -9,6 +9,7 @@ import org.hibernate.annotations.OnDeleteAction;
 import org.springframework.data.annotation.CreatedDate;
 
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -23,27 +24,38 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Data
-@Builder
 @Entity
-@Table(name = "orderdata")
-@NoArgsConstructor
-@AllArgsConstructor
-@DynamicUpdate
-@DynamicInsert
 @Getter
 @Setter
-public class OrderDetail {
+@AllArgsConstructor
+@NoArgsConstructor
+@Builder
+@Table(name = "ticket")
+@DynamicUpdate
+@DynamicInsert
+public class BookTicket {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int orderid;
+    private int ticketid;
 
     @CreatedDate
-    private LocalDateTime purchasedate;
-
-    private float total;
+    private LocalDateTime createddate;
 
     @ManyToOne
-    @JoinColumn(nullable = false,name="userid")
     @OnDelete(action = OnDeleteAction.CASCADE)
-    private Account userid;
+    @JoinColumn(nullable = false,name = "seatid")
+    private Seat seatid;
+
+    @ManyToOne
+    @OnDelete(action = OnDeleteAction.CASCADE)
+    @JoinColumn(nullable = false,name = "showtimeid")
+    private Showtime showtimeid;
+
+    @ManyToOne(fetch = FetchType.EAGER)
+    @OnDelete(action = OnDeleteAction.CASCADE)
+    @JoinColumn(name="orderid")
+    private OrderDetail orderid;
+
+    private String ticketcode;
+    private byte ticketactive;
 }
