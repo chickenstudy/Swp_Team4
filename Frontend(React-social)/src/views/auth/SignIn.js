@@ -56,7 +56,7 @@ export default function SignIn() {
           navigate("/admin");
           break;
         case 2:
-          navigate("/staff");
+          navigate("/staffmanagement");
           break;
         case 3:
           navigate("/");

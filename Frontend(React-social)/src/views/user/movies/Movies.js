@@ -82,7 +82,7 @@ export default function Movies() {
       </div>
 
       <h2 className="title my-3" style={{ textAlign: "center" }}>
-        NOW SHOWING
+        <strong>NOW SHOWING</strong>
       </h2>
       <div style={{ textAlign: "center" }}>
         <input
@@ -93,46 +93,57 @@ export default function Movies() {
         />
 
         {searchResults.length > 0 ? (
+        
           <Row>
-            {searchResults.slice(0, visible).map((item) => (
-              <Col className="my-3" md={3} key={item.id}>
-                <div className="movie_box">
-                  <div class="mydivouter ">
-                    <img
-                      style={{ width: "100%", height: "350px" }}
-                      src={item.poster}
-                      alt="Movie Poster"
-                    />
-                    <div className="mybuttonoverlap">
-                      <button
-                        className="btn btn-dark rounded-0"
-                        onClick={LoadDetail.bind(this, item.id)}
-                        style={{
-                          width: "135px",
-                          border: "2px solid rgb(206, 161, 11)",
-                        }}
-                        variant="dark"
-                      >
-                        <a style={{ textDecoration: "none" }}>Đặt vé</a>
-                      </button>
-                    </div>
-                  </div>
-
-                  <dt
-                    style={{
-                      borderBottom: "1px solid #ddd",
-                      wordWrap: "break-word",
-                      paddingLeft: "2px",
-                    }}
-                  >
-                    {item.name}
-                  </dt>
-                  <dd style={{ paddingLeft: "2px" }}>
-                    {item.times} | {item.show_date}
-                  </dd>
-                </div>
+            <Col
+              md={2}
+              className="d-flex justify-content-center align-items-center"></Col>
+           
+              <Col md={8}>
+                <Row>
+                  {searchResults.slice(0, visible).map((item) => (
+                    <Col className="my-3" md={3} key={item.id}>
+                      <div className="movie_box">
+                        <div class="mydivouter ">
+                          <img
+                            style={{ width: "100%", height: "350px" }}
+                            src={item.poster}
+                            alt="Movie Poster"
+                          />
+                          <div className="mybuttonoverlap">
+                            <button
+                              className="btn btn-dark rounded-0"
+                              onClick={LoadDetail.bind(this, item.id)}
+                              style={{
+                                width: "135px",
+                                border: "2px solid rgb(206, 161, 11)",
+                              }}
+                              variant="dark">
+                              <a style={{ textDecoration: "none" }}>Đặt vé</a>
+                            </button>
+                          </div>
+                        </div>
+  
+                        <dt
+                          style={{
+                            borderBottom: "1px solid #ddd",
+                            wordWrap: "break-word",
+                            paddingLeft: "2px",
+                          }}>
+                          {item.name}
+                        </dt>
+                        <dd style={{ paddingLeft: "2px" }}>
+                          {item.times} | {item.show_date}
+                        </dd>
+                      </div>
+                    </Col>
+                  ))}
+                </Row>
               </Col>
-            ))}
+            
+            <Col
+              md={2}
+              className="d-flex justify-content-center align-items-center"></Col>
           </Row>
         ) : (
           <p>No results search.</p>
@@ -142,8 +153,7 @@ export default function Movies() {
         <Row>
           <Col
             md={2}
-            className="d-flex justify-content-center align-items-center"
-          >
+            className="d-flex justify-content-center align-items-center">
             {isDesktop && (
               <img
                 src={picture}
@@ -162,7 +172,7 @@ export default function Movies() {
             <Row>
               {movies &&
                 movies.slice(0, visible).map((item) => (
-                  <Col className="my-3" md={3} key={item.id}>
+                  <Col md={3} className="my-3" key={item.id}>
                     <div className="movie_box">
                       <div class="mydivouter ">
                         <img
@@ -178,8 +188,7 @@ export default function Movies() {
                               width: "135px",
                               border: "2px solid rgb(206, 161, 11)",
                             }}
-                            variant="dark"
-                          >
+                            variant="dark">
                             <a style={{ textDecoration: "none" }}>Đặt vé</a>
                           </button>
                         </div>
@@ -190,8 +199,7 @@ export default function Movies() {
                           borderBottom: "1px solid #ddd",
                           wordWrap: "break-word",
                           paddingLeft: "2px",
-                        }}
-                      >
+                        }}>
                         {item.name}
                       </dt>
                       <dd style={{ paddingLeft: "2px" }}>
@@ -204,8 +212,7 @@ export default function Movies() {
           </Col>
           <Col
             md={2}
-            className="d-flex justify-content-center align-items-center"
-          >
+            className="d-flex justify-content-center align-items-center">
             {isDesktop && (
               <img
                 src={picture1}

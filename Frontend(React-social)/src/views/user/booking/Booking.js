@@ -8,7 +8,7 @@ import axios from "axios";
 export default function Booking() {
   const [movie, setMovie] = useState([]);
   const [cinema, setCinema] = useState([]);
-  const [selectedMovie, setSelectedMovie] = useState(null); // Thêm biến trạng thái selectedMovie
+  const [selectedMovie, setSelectedMovie] = useState(null);
   const [selectedCinema, setSelectedCinema] = useState(null);
   useEffect(() => {
     axios

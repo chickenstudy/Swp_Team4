@@ -4,24 +4,56 @@ import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import Button from "react-bootstrap/Button";
-import Carousel from "react-bootstrap/Carousel";
-import { AiOutlineFieldTime } from "react-icons/ai";
 import axios from "axios";
-import ReactPlayer from "react-player";
-import { Form, Modal } from "react-bootstrap";
+import "./InformationMoviesStaff.css";
 import SeatCinema from "../../user/movies/SeatCinema";
 
-export default function InformationMoviesStaff() {
+const InformationMovieStaff = () => {
   const { id } = useParams();
   const [data, setData] = useState([]);
+  const [data1, setData1] = useState([]);
+  const cinema_name = "tuaann";
+  const cinema_id = 1;
   const [showtime, setShowtime] = useState([]);
-  const [showVideoModal, setShowVideoModal] = useState(false);
-  const [date, setDate] = useState([]); // [1, 2, 3, 4, 5, 6, 7
-  const [time, setTime] = useState("");
-  const movie = sessionStorage.setItem("movie", data?.movie?.name);
-  const cinema = sessionStorage.setItem("cinema", "tuann");
-  const dateMovies = sessionStorage.setItem("date", date);
-  const timeStart = sessionStorage.setItem("time", time);
+  const [selectedDate, setSelectedDate] = useState("");
+  const [selectedCinema, setSelectedCinema] = useState("");
+  const cinema = sessionStorage.setItem("cinema", cinema_name);
+  const cinema1 = sessionStorage.setItem("cinemaid", cinema_id);
+
+  const [error, setError] = useState(null);
+
+  const datelist = [
+    {
+      date: "2023-07-19",
+    },
+    {
+      date: "2023-07-20",
+    },
+    {
+      date: "2023-07-21",
+    },
+    {
+      date: "2023-07-22",
+    },
+    {
+      date: "2023-07-23",
+    },
+  ];
+
+  const handleDateChange = (event) => {
+    setSelectedDate(event.target.value);
+  };
+
+  const movieId = sessionStorage.setItem("movieid", id);
+  const [startTime, setStartTime] = useState("");
+  const handleTicketClick = (date, cinema_name, showtime, movieName) => {
+    // Save values to session storage
+    setStartTime(showtime);
+    sessionStorage.setItem("date", date);
+    sessionStorage.setItem("cinema_name", cinema_name);
+    sessionStorage.setItem("time", showtime);
+    sessionStorage.setItem("movie", movieName);
+  };
 
   useEffect(() => {
     axios
@@ -32,63 +64,112 @@ export default function InformationMoviesStaff() {
       .catch((err) => {
         console.log(err.message);
       });
-  }, []);
+  }, [id]);
 
   useEffect(() => {
     axios
-      .get("http://localhost:8080/api/showtime/listShowtime")
+      .get("http://localhost:8080/api/showtime/starttime", {
+        params: {
+          movieid: id,
+          cinemaid: cinema_id,
+          startdate: selectedDate,
+        },
+      })
       .then((res) => {
-        setShowtime(res.data);
+        if (!res.data || res.data.length === 0) {
+          setError("There are currently no show times for this movie");
+        } else {
+          setShowtime(res.data);
+        }
+      })
+      .catch((err) => {
+        if (err.response && err.response.status === 500) {
+          setError("There are currently no show times for this movie");
+        } else {
+          console.log(err.message);
+        }
+      });
+  }, [id, selectedCinema, selectedDate]);
+
+  useEffect(() => {
+    axios
+      .get("http://localhost:8080/api/showtime", {
+        params: {
+          movieid: id,
+          cinemaid: cinema_id,
+          starttime: startTime,
+          startdate: selectedDate,
+        },
+      })
+      .then((res) => {
+        setData1(res.data[0]);
       })
       .catch((err) => {
         console.log(err.message);
       });
-  }, []);
-
-  const handleOpenVideoModal = () => {
-    setShowVideoModal(true);
-  };
-  const handleCloseVideoModal = () => {
-    setShowVideoModal(false);
-  };
+  }, [id, selectedCinema, startTime, selectedDate]);
+  const showtimeid = sessionStorage.setItem("showtimeid", data1?.id);
 
   return (
-    <div id="">
+    <>
       <Container>
-        <Row style={{ marginBottom: "20px" }}>
-          <Col>
-            {" "}
-            <h3>LỊCH CHIẾU: </h3>
-            <input
-              type="date"
-              style={{
-                height: "40px",
-                width: "100%",
-                paddingLeft: "10px",
-              }}
-              value={date}
-              onChange={(e) => setDate(e.target.value)}
-            />
-          </Col>
-          <Col>
-            {" "}
-            <h3>Time to start:</h3>
-            {showtime.map((item) => (
-              <span className="ml-3">
-                <Button
-                  style={{ border: "1px solid black" }}
-                  variant="light"
-                  value={item.starttime}
-                  onClick={(e) => setTime(e.target.value)}
-                >
-                  {item.starttime}
-                </Button>
-              </span>
-            ))}
-          </Col>
+        <Row>
+          <div style={{ textAlign: "center" }}>
+            <h1>{data?.movie?.name}</h1>
+          </div>
+
+          <Row className="mt-4">
+            <Col md={3}>
+              <h4>Select Date: </h4>
+              <select
+                style={{
+                  height: "40px",
+                  width: "100%",
+                  paddingLeft: "10px",
+                }}
+                onChange={handleDateChange}
+                value={selectedDate}
+              >
+                <option value="">Choose a date</option>
+                {datelist.map((dateitem) => (
+                  <option key={dateitem.date} value={dateitem.date}>
+                    {dateitem.date}
+                  </option>
+                ))}
+              </select>
+            </Col>
+            <Col md={3}>
+              <Row>
+                <h4>Select ShowTime:</h4>
+                {selectedDate && (
+                  <Col xs={12} style={{ paddingBottom: "10px" }}>
+                    {showtime.map((showtimeitem) => (
+                      <Button
+                        onClick={() =>
+                          handleTicketClick(
+                            selectedDate,
+                            cinema_name,
+                            showtimeitem,
+                            data?.movie?.name
+                            // Thêm cinemaid vào session storage
+                          )
+                        }
+                        style={{ border: "1px solid black" }}
+                        variant="light"
+                      >
+                        {showtimeitem}
+                      </Button>
+                    ))}
+                  </Col>
+                )}
+              </Row>
+            </Col>
+          </Row>
         </Row>
-        <SeatCinema />
       </Container>
-    </div>
+      <SeatCinema />
+    </>
   );
-}
+};
+
+export default InformationMovieStaff;

@@ -1,22 +1,23 @@
 package com.namnguyenmoihoc.realworldapp.service.impl;
 
+import java.time.LocalDate;
+import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
 
+import java.util.List;
+
+import java.util.stream.Collectors;
+
+import org.modelmapper.ModelMapper;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-
 import com.namnguyenmoihoc.realworldapp.entity.Showtime;
-import com.namnguyenmoihoc.realworldapp.exception.custom.CustomNotFoundException;
-import com.namnguyenmoihoc.realworldapp.model.Showtime.ShowtimeDTOCreate;
-import com.namnguyenmoihoc.realworldapp.model.Showtime.ShowtimeDTOResponse;
-import com.namnguyenmoihoc.realworldapp.model.Showtime.ShowtimeDTOResponseNoID;
-import com.namnguyenmoihoc.realworldapp.model.user.CustomError;
 
-import com.namnguyenmoihoc.realworldapp.model.user.mapper.ShowtimeMapper;
+import com.namnguyenmoihoc.realworldapp.model.Showtime.ShowtimeDTO;
+
+
 import com.namnguyenmoihoc.realworldapp.repository.ShowtimeRepository;
 import com.namnguyenmoihoc.realworldapp.service.ShowtimeService;
 
@@ -25,60 +26,34 @@ import lombok.RequiredArgsConstructor;
 @Service
 @RequiredArgsConstructor
 public class ShowtimeServiceImpl implements ShowtimeService {
+
     private final ShowtimeRepository showtimeRepository;
+    @Autowired
+    private final ModelMapper modelMapper;
 
     @Override
-    public Map<String, ShowtimeDTOResponseNoID> createShowtime(Map<String, ShowtimeDTOCreate> showtimeDTOCreate) {
-        ShowtimeDTOCreate showDTOcreateMap = showtimeDTOCreate.get("showtime");
-        Showtime showtime = ShowtimeMapper.toShowtime(showDTOcreateMap);
-        showtime = showtimeRepository.save(showtime);
-
-        Map<String, ShowtimeDTOResponseNoID> wrapper = new HashMap<>();
-        ShowtimeDTOResponseNoID showtimeDTOResponse = ShowtimeMapper.toMovieDTOReponseNoID(showtime);
-        wrapper.put("showtime", showtimeDTOResponse);
-        return wrapper;
+    public List<String> getStartTimes(Integer movieid, Integer cinemaid, LocalDate startdate) {
+        List<LocalTime> startTimes = showtimeRepository.getStartTimeByMovie(movieid, cinemaid, startdate);
+        return startTimes.stream().map(localTime -> localTime.format(DateTimeFormatter.ofPattern("HH:mm")))
+                .collect(Collectors.toList());
     }
 
     @Override
-    public List<ShowtimeDTOResponse> getListShowtime() {
-        List<Showtime> listShowtimes = showtimeRepository.findAll();
+    public List<ShowtimeDTO> getSchedules(Integer movieid, Integer cinemaid, String startdate, String starttime) {
+        LocalDate parsedStartDate = LocalDate.parse(startdate);
+        LocalTime parsedStartTime = LocalTime.parse(starttime);
 
-        List<ShowtimeDTOResponse> showtimeDTOResponses = new ArrayList<>();
+        List<Showtime> showtimes = showtimeRepository.getSchedulesByMovie(movieid, cinemaid, parsedStartDate,
+                parsedStartTime);
 
-        for (Showtime showtime : listShowtimes) {
-            showtimeDTOResponses.add(ShowtimeMapper.toMovieDTOReponse(showtime));
-        }
-        return showtimeDTOResponses;
-
-    }
-
-    @Override
-    public Map<String, ShowtimeDTOResponseNoID> getUpdateShowtime(ShowtimeDTOCreate showtimeDTOCreate)
-            throws CustomNotFoundException {
-        Optional<Showtime> showtimeOptional = showtimeRepository.findById(showtimeDTOCreate.getShowtimeid());
-
-        if (showtimeOptional.isEmpty()) {
-            throw new CustomNotFoundException(CustomError.builder().code("404").message("Showtime not found").build());
+        List<ShowtimeDTO> showtimeDTOs = new ArrayList<>();
+        for (Showtime showtime : showtimes) {
+            ShowtimeDTO showtimeDTO = modelMapper.map(showtime, ShowtimeDTO.class);
+            showtimeDTO.setId(showtime.getShowtimeid()); // Lấy ID của showtime và đặt nó vào showtimeDTO
+            showtimeDTOs.add(showtimeDTO);
         }
 
-        Showtime showtime  =showtimeOptional.get();
+        return showtimeDTOs;
 
-        ShowtimeMapper.updateShowtimeDetails(showtime, showtimeDTOCreate);
-
-        showtime = showtimeRepository.save(showtime);
-        return ShowtimeMapper.toMovieDTOReponseUpdate(showtime);
     }
-
-    @Override
-    public void getDeleteShowtime(int showtimeId) throws CustomNotFoundException {
-         Optional<Showtime> showtimeOptional = showtimeRepository.findById(showtimeId);
-
-        if (showtimeOptional.isEmpty()) {
-            throw new CustomNotFoundException(CustomError.builder().code("404").message("Showtime not found").build());
-        }
-
-       showtimeRepository.deleteById(showtimeId);
-      
-    }
-
 }

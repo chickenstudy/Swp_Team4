@@ -2,7 +2,7 @@
 /* eslint-disable jsx-a11y/img-redundant-alt */
 /* eslint-disable jsx-a11y/alt-text */
 import React, { useContext, useEffect, useState } from "react";
-import {useParams} from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import axios from "axios";
 import Button from "react-bootstrap/Button";
 import Modal from "react-bootstrap/Modal";
@@ -18,6 +18,7 @@ export default function Banner() {
   const [data, setData] = useState([]);
   const [banner, setBanner] = useState("");
   const { banners, setBanners } = useContext(ApplicationContext);
+  const navigate = useNavigate();
   useEffect(() => {
     if (data.movie) {
       setBanner(data.movie.banner || "");
@@ -46,7 +47,6 @@ export default function Banner() {
     }
   };
 
-
   const handlesubmit = (e) => {
     e.preventDefault();
     const databanner = {
@@ -62,12 +62,11 @@ export default function Banner() {
     })
       .then((res) => {
         alert("Saved successfully.");
-        window.location.reload();
+        window.location.reload("/banner");
       })
       .catch((err) => {
         console.log(err.message);
       });
-
   };
 
   const Removefunction = (bannerid) => {
@@ -77,7 +76,7 @@ export default function Banner() {
       })
         .then((res) => {
           alert("Removed successfully.");
-          window.location.reload();
+          window.location.reload("/banner");
         })
         .catch((err) => {
           console.log(err.message);
@@ -145,7 +144,6 @@ export default function Banner() {
                   }
                 </td>
                 <td style={{ width: "100%" }}>
-
                   <Form>
                     <Form.Check
                       type="switch"

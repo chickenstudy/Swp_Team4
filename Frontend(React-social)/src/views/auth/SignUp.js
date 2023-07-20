@@ -67,7 +67,14 @@ export default function SignUp() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-
+    if (
+      email === null ||
+      email === "" ||
+      email === undefined ||
+      email === " "
+    ) {
+      setError1("Your email is Null");
+    }
     if (password === confirmPassword) {
       const data = {
         user: {
