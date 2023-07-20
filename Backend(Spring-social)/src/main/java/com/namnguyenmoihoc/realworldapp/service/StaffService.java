@@ -7,11 +7,13 @@ import java.util.Map;
 
 import javax.sql.rowset.serial.SerialException;
 
-
+import com.namnguyenmoihoc.realworldapp.entity.BookTicket;
+import com.namnguyenmoihoc.realworldapp.exception.custom.CustomMessageError;
 import com.namnguyenmoihoc.realworldapp.exception.custom.CustomNotFoundException;
 import com.namnguyenmoihoc.realworldapp.model.profileAccount.ProfileDTOResponse;
 import com.namnguyenmoihoc.realworldapp.model.staff.StaffDTOCreate;
 import com.namnguyenmoihoc.realworldapp.model.staff.StaffDTOResponse;
+import com.namnguyenmoihoc.realworldapp.model.ticket.CheckoutDTO;
 
 
 public interface StaffService {
@@ -23,5 +25,7 @@ public interface StaffService {
     Map<String, StaffDTOResponse> getUpdateAccount(StaffDTOCreate staffDTOUpdateAccount) throws CustomNotFoundException;
 
     void getDeleteMovie(int staffId) throws CustomNotFoundException;
+
+    Map<String, BookTicket> checkoutTicket(CheckoutDTO checkoutString) throws CustomMessageError;
     
 }

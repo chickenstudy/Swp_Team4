@@ -15,18 +15,22 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.namnguyenmoihoc.realworldapp.entity.Account;
-
+import com.namnguyenmoihoc.realworldapp.entity.BookTicket;
+import com.namnguyenmoihoc.realworldapp.exception.custom.CustomMessageError;
 import com.namnguyenmoihoc.realworldapp.exception.custom.CustomNotFoundException;
 
 import com.namnguyenmoihoc.realworldapp.model.profileAccount.ProfileDTOResponse;
 import com.namnguyenmoihoc.realworldapp.model.staff.StaffDTOCreate;
 import com.namnguyenmoihoc.realworldapp.model.staff.StaffDTOResponse;
+import com.namnguyenmoihoc.realworldapp.model.ticket.CheckoutDTO;
 import com.namnguyenmoihoc.realworldapp.model.user.CustomError;
 
 import com.namnguyenmoihoc.realworldapp.model.user.mapper.StaffMapper;
 
 import com.namnguyenmoihoc.realworldapp.repository.StaffRepository;
+import com.namnguyenmoihoc.realworldapp.repository.TicketRepository;
 import com.namnguyenmoihoc.realworldapp.service.StaffService;
+import com.namnguyenmoihoc.realworldapp.service.TicketService;
 
 import lombok.RequiredArgsConstructor;
 
@@ -35,6 +39,7 @@ import lombok.RequiredArgsConstructor;
 public class StaffServiceImpl implements StaffService {
     private final StaffRepository staffRepository;
     private final PasswordEncoder passwordEncoder;
+    private final TicketRepository ticketRepository;
 
     @Override
     public List<ProfileDTOResponse> getListStaff() {
@@ -85,19 +90,46 @@ public class StaffServiceImpl implements StaffService {
         Account staff = staffOptional.get();
         StaffMapper.updateStaffDetails(staff, staffDTOUpdateAccount);
         staff = staffRepository.save(staff);
-
         return StaffMapper.buidDTOUpdateResponse(staff);
-
     }
 
     @Override
     public void getDeleteMovie(int staffId) throws CustomNotFoundException {
         Optional<Account> movieOptional = staffRepository.findById(staffId);
-
         if (movieOptional.isEmpty()) {
             throw new CustomNotFoundException(CustomError.builder().code("404").message("Staff not found").build());
         }
-
         staffRepository.deleteById(staffId);
+    }
+
+    @Override
+    public Map<String, BookTicket> checkoutTicket(CheckoutDTO checkoutString)
+            throws CustomMessageError {
+        String checkoutCodeRequest = checkoutString.getTicketCodeString();
+
+        Optional<BookTicket> ticket = ticketRepository.findByTicketcode(checkoutCodeRequest);
+        
+        if (ticket.isEmpty()) {
+            System.out.println("here ne");
+            throw new CustomMessageError(CustomError.builder().code("404").message("Can't found this ticket").build());
+        }
+
+        if (ticket.get().getTicketactive() == 0) {
+            System.out.println("here");
+            throw new CustomMessageError(
+                    CustomError.builder().code("404").message("This ticket is already checkout").build());
+        }
+
+        System.out.println("ticket code: " + ticket.get().getTicketcode());
+        BookTicket checkoutTicket = ticket.get();
+        checkoutTicket.setTicketactive((byte) 0);
+        ticketRepository.save(checkoutTicket);
+        return buidCheckoutTicketResponse(checkoutTicket);
+    }
+    
+    private Map<String, BookTicket> buidCheckoutTicketResponse(BookTicket checkoutTicket) {
+        Map<String, BookTicket> wrapper = new HashMap<>();
+        wrapper.put("checkoutedTicket", checkoutTicket);
+        return wrapper;
     }
 }

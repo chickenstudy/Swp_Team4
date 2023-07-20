@@ -19,6 +19,8 @@ public interface TicketRepository extends JpaRepository<BookTicket, Integer>{
     
     @Query("SELECT t FROM BookTicket t WHERE t.orderid.orderid IN (SELECT b.orderid FROM OrderDetail b WHERE b.userid.id = :userId) ORDER BY t.ticketid DESC")
     public List<BookTicket> findBookTicketsByAccountid(@Param("userId") Integer userId);
+
+    public Optional<BookTicket> findByTicketcode(String ticketcode);
 }
 
 //@Query("SELECT t.* FROM ticket t WHERE t.orderid IN ( SELECT b.orderid FROM orderdata b WHERE b.userid =:userId )ORDER BY t.ticketid DESC")
