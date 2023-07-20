@@ -48,14 +48,14 @@ export default function StaffManagement() {
       <table className="table table-bordered">
         <thead>
           <tr>
-            <td>Id</td>
-            <td>Avatar</td>
-            <td>Name</td>
-            <td>Email</td>
-            <td>Sex</td>
-            <td>Address</td>
-            <td>Phone number</td>
-            <td className="action">Actions</td>
+            <th className="bg-dark text-white">Id</th>
+            <th className="bg-dark text-white">Avatar</th>
+            <th className="bg-dark text-white">Name</th>
+            <th className="bg-dark text-white">Email</th>
+            <th className="bg-dark text-white">Sex</th>
+            <th className="bg-dark text-white">Address</th>
+            <th className="bg-dark text-white">Phone number</th>
+            <th className="action bg-dark text-white">Actions</th>
           </tr>
         </thead>
         <tbody>

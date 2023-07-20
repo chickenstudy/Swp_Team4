@@ -54,8 +54,7 @@ function App() {
   const roleID = sessionStorage.getItem("roleId");
   return (
     <ApplicationContext.Provider
-      value={{ user, setUser, makeSignIn, makeSignOut, banners, setBanners }}
-    >
+      value={{ user, setUser, makeSignIn, makeSignOut, banners, setBanners }}>
       <div style={{ backgroundColor: "rgb(246, 241, 241)" }}>
         <React.Fragment>
           <BrowserRouter>

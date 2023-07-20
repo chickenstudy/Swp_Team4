@@ -111,6 +111,7 @@ export default function EditMovie() {
                       <div className="form-group">
                         <label>Name</label>
                         <input
+                        required
                           value={name}
                           onMouseDown={(e) => valchange(true)}
                           onChange={(e) => setName(e.target.value)}

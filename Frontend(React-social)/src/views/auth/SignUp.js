@@ -1,8 +1,6 @@
 import React, { useState } from "react";
 import { Modal, Form, Button, Row, Col } from "react-bootstrap";
 import axios from "axios";
-import { Redirect } from "react-router-dom";
-
 import { useNavigate } from "react-router-dom";
 import { InputGroup, FormControl } from "react-bootstrap";
 import "../../styles/SignUp.css";
@@ -165,8 +163,7 @@ export default function SignUp() {
       <Button
         variant="none"
         onClick={handleShow}
-        style={{ color: "rgb(245, 245, 245)" }}
-      >
+        style={{ color: "rgb(245, 245, 245)" }}>
         Sign Up
       </Button>
 
@@ -194,6 +191,7 @@ export default function SignUp() {
                   <Form.Group controlId="formBasicEmail">
                     <Form.Label>Email address</Form.Label>
                     <Form.Control
+                      required
                       type="email"
                       placeholder="Enter email"
                       value={email}
@@ -224,8 +222,7 @@ export default function SignUp() {
                       <Button
                         onClick={handleOtpVerification}
                         className="btn btn-dark mt-3"
-                        disabled={!otp}
-                      >
+                        disabled={!otp}>
                         Verify OTP
                       </Button>
                     </Form.Group>
@@ -234,8 +231,7 @@ export default function SignUp() {
                       className="btn btn-dark"
                       onClick={handleEmailVerification}
                       disabled={!email}
-                      size="sm"
-                    >
+                      size="sm">
                       Send OTP
                     </Button>
                   )}
@@ -279,11 +275,10 @@ export default function SignUp() {
                       as="select"
                       custom
                       value={sex}
-                      onChange={handleSexChange}
-                    >
+                      onChange={handleSexChange}>
                       <option value="">Choose option</option>
-                      <option value={0}>Female</option>
                       <option value={1}>Male</option>
+                      <option value={0}>Female</option>
                       <option value={2}>Other</option>
                     </Form.Control>
                   </Form.Group>
