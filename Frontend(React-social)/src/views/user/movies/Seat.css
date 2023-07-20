@@ -23,11 +23,11 @@
 }
 
 .row-mark {
-  margin-right: 10px;
   font-size: 1.1em;
   height: 30px;
   width: 30px;
   margin: 3px;
+  margin-right: 10px;
   border-radius: 30px;
   border: #000 solid;
   color: #fff;

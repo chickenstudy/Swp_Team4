@@ -7,7 +7,6 @@ export default function EditMovie() {
   const navigate = useNavigate();
   const [data, setData] = useState([]);
 
-  // const [id, setId] = useState("");
   const [name, setName] = useState("");
   const [trailer, setTrailer] = useState("");
   const [poster, setPoster] = useState("");
@@ -66,7 +65,7 @@ export default function EditMovie() {
       .then((res) => {
         alert("Saved successfully.");
         navigate("/listmovie");
-        console.log(data)
+        console.log(data);
       })
       .catch((err) => {
         console.log(err.message);
@@ -114,7 +113,8 @@ export default function EditMovie() {
                           value={name}
                           onMouseDown={(e) => valchange(true)}
                           onChange={(e) => setName(e.target.value)}
-                          className="form-control"></input>
+                          className="form-control"
+                        ></input>
                       </div>
                     </div>
 
@@ -219,7 +219,8 @@ export default function EditMovie() {
                     <div className="col-lg-12 my-3">
                       <div className="form-group">
                         <label>Description</label>
-                        <textarea rows="6"
+                        <textarea
+                          rows="6"
                           value={description}
                           onChange={(e) => setDescription(e.target.value)}
                           className="form-control"

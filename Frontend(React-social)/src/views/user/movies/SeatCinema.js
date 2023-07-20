@@ -8,7 +8,6 @@ export default function SeatCinema() {
   const [count, setCount] = useState(0);
   const [selectedSeats, setSelectedSeats] = useState([]);
   const [totalPrice, setTotalPrice] = useState(0);
-  const [loadingSeats, setLoadingSeats] = useState(true);
   const [seats, setSeats] = useState([]);
 
   const cinema = sessionStorage.getItem("cinema");
@@ -209,8 +208,8 @@ export default function SeatCinema() {
             <p>
               <span>
                 <h7>Seat booked:</h7>
-                {selectedSeats.map((seat, index) => (
-                  <li key={index}>{`Row: ${seat.row}, Col: ${seat.col}`}</li>
+                {selectedSeats.map((seat, id) => (
+                  <li key={id}>{`Row: ${seat.row}, Col: ${seat.col}`}</li>
                 ))}
               </span>{" "}
             </p>

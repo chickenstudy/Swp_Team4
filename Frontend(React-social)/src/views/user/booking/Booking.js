@@ -10,6 +10,24 @@ export default function Booking() {
   const [cinema, setCinema] = useState([]);
   const [selectedMovie, setSelectedMovie] = useState(null);
   const [selectedCinema, setSelectedCinema] = useState(null);
+  const datelist = [
+    {
+      date: "2023-07-19",
+    },
+    {
+      date: "2023-07-20",
+    },
+    {
+      date: "2023-07-21",
+    },
+    {
+      date: "2023-07-22",
+    },
+    {
+      date: "2023-07-23",
+    },
+  ];
+
   useEffect(() => {
     axios
       .get("http://localhost:8080/api/movie/listMovie")
@@ -103,22 +121,22 @@ export default function Booking() {
               </>
             )}
           </Col>
-          {/* <Col md={4}>
+          <Col md={4}>
             <Form.Group style={{ backgroundColor: "pink" }}>
               <Form.Label style={{ paddingLeft: "130px" }}>
                 Select Session
               </Form.Label>
             </Form.Group>
-            {data &&
-              data.map((item) => (
-                <Form.Group key={item.id} style={{ border: "1px solid black" }}>
+            {datelist &&
+              datelist.map((item) => (
+                <Form.Group style={{ border: "1px solid black" }}>
                   <Button variant="none" style={{ width: "415px" }}>
                     <img src={item.poster} style={{ width: "30px" }}></img>
-                    {item.name}
+                    {item.date}
                   </Button>
                 </Form.Group>
               ))}
-          </Col> */}
+          </Col>
         </Row>
       </Container>
     </>

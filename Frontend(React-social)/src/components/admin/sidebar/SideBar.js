@@ -8,7 +8,7 @@ import { useContext } from "react";
 import { ApplicationContext } from "../../../App";
 
 function SideBar() {
-  const { user, makeSignOut } = useContext(ApplicationContext);
+  const { makeSignOut } = useContext(ApplicationContext);
   const navigate = useNavigate();
   const makeSignOutClick = () => {
     makeSignOut();

@@ -132,13 +132,13 @@ export default function Banner() {
         </thead>
         <tbody>
           {data &&
-            data.map((item) => (
-              <tr key={item.bannerid}>
-                <td>{item.bannerid}</td>
+            data.map((b) => (
+              <tr key={b.bannerid}>
+                <td>{b.bannerid}</td>
                 <td className="">
                   {
                     <img
-                      src={item.picture}
+                      src={b.picture}
                       alt="Image"
                       style={{ width: "100%" }}
                     />
@@ -148,18 +148,18 @@ export default function Banner() {
                   <Form>
                     <Form.Check
                       type="switch"
-                      id={item.bannerid}
+                      id={b.bannerid}
                       checked={banners
                         .map((banner) => banner.bannerid)
-                        .includes(item.bannerid)}
+                        .includes(b.bannerid)}
                       label="On screen"
                       onChange={(event) => {
                         if (event.target.checked == true) {
-                          banners.push(item.picture);
+                          banners.push(b.picture);
 
                           setBanners(banners);
                         } else {
-                          banners.pop(item.picture);
+                          banners.pop(b.picture);
                           setBanners(banners);
                         }
                       }}
@@ -169,7 +169,7 @@ export default function Banner() {
                   <a
                     className=""
                     onClick={() => {
-                      Removefunction(item.bannerid);
+                      Removefunction(b.bannerid);
                     }}
                   >
                     <RiDeleteBinLine

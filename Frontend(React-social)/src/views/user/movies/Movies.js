@@ -49,7 +49,7 @@ export default function Movies() {
           setSearchResults(response.data);
         })
         .catch((error) => {
-          console.error(eraror);
+          console.error(error);
         });
     } else {
       setSearchResults([]);
@@ -112,7 +112,7 @@ export default function Movies() {
                         }}
                         variant="dark"
                       >
-                        <a style={{ textDecoration: "none" }}>Đặt vé</a>
+                        <a style={{ textDecoration: "none" }}>Book ticket</a>
                       </button>
                     </div>
                   </div>
@@ -179,7 +179,9 @@ export default function Movies() {
                             }}
                             variant="dark"
                           >
-                            <a style={{ textDecoration: "none" }}>Đặt vé</a>
+                            <a style={{ textDecoration: "none" }}>
+                              Book ticket
+                            </a>
                           </button>
                         </div>
                       </div>

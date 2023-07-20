@@ -1,8 +1,6 @@
-import React, { Fragment } from "react";
+import React, { Fragment, useEffect } from "react";
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
-import { StaffRoutes, UserRoutes } from "./routes";
-import { AdminRoutes } from "./routes";
-import { useEffect } from "react";
+import { StaffRoutes, UserRoutes, AdminRoutes } from "./routes";
 import axios from "axios";
 
 export const ApplicationContext = React.createContext([]);
@@ -31,6 +29,7 @@ function App() {
           },
         })
         .then((response) => {
+          sessionStorage.setItem("roleId", response.data.user.roleID);
           localStorage.setItem("token", response.data.user.token);
           setUser(response.data.user);
         })
@@ -42,7 +41,7 @@ function App() {
 
   const [user, setUser] = React.useState([]);
 
-  const email = localStorage.setItem("email", user.email);
+  localStorage.setItem("email", user.email);
   const makeSignIn = (user) => {
     setUser(user);
   };

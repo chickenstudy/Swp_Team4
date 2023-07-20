@@ -17,9 +17,8 @@ const InformationMovieStaff = () => {
   const [showtime, setShowtime] = useState([]);
   const [selectedDate, setSelectedDate] = useState("");
   const [selectedCinema, setSelectedCinema] = useState("");
-  const cinema = sessionStorage.setItem("cinema", cinema_name);
-  const cinema1 = sessionStorage.setItem("cinemaid", cinema_id);
-
+  sessionStorage.setItem("cinema", cinema_name);
+  sessionStorage.setItem("cinemaid", cinema_id);
   const [error, setError] = useState(null);
 
   const datelist = [
@@ -44,7 +43,7 @@ const InformationMovieStaff = () => {
     setSelectedDate(event.target.value);
   };
 
-  const movieId = sessionStorage.setItem("movieid", id);
+  sessionStorage.setItem("movieid", id);
   const [startTime, setStartTime] = useState("");
   const handleTicketClick = (date, cinema_name, showtime, movieName) => {
     // Save values to session storage

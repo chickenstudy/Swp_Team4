@@ -54,7 +54,7 @@ const InformationMovie = () => {
     );
     setSelectedCinema(selectedCinema || null);
   };
-  const movieId = sessionStorage.setItem("movieid", id);
+  sessionStorage.setItem("movieid", id);
   const [startTime, setStartTime] = useState("");
   const handleTicketClick = (date, cinema, showtime, movieName, cinemaid) => {
     // Save values to session storage
