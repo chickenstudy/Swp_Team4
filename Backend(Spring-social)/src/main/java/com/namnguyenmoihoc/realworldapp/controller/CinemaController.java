@@ -47,7 +47,6 @@ public class CinemaController {
             @RequestBody CinemaDTO cinemaDTO)
             throws CustomNotFoundException {
         cinemaDTO.setCinemaid(cinemaId);
-
         return cinemaService.getUpdateCinema(cinemaDTO);
     }
 

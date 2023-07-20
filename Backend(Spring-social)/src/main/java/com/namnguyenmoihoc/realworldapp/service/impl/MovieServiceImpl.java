@@ -91,6 +91,7 @@ public class MovieServiceImpl implements MovieService {
 
     @Override
     public Map<String, MovieDTOResponse> getMovieByID(int movieId) throws CustomNotFoundException {
+        
         Optional<Movie> movieOptional = movieRepository.findById(movieId);
 
         if (movieOptional.isEmpty()) {

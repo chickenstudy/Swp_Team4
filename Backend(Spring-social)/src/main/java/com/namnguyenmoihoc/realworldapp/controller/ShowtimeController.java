@@ -33,6 +33,7 @@ public class ShowtimeController {
       @RequestParam String startdate) {
     return showtimeService.getStartTimes(movieid, cinemaid,LocalDate.parse(startdate));
   }
+  
   @GetMapping
   public List<ShowtimeDTO> getSchedules(@RequestParam Integer movieid, @RequestParam Integer cinemaid,
                                         @RequestParam String startdate, @RequestParam String starttime) {

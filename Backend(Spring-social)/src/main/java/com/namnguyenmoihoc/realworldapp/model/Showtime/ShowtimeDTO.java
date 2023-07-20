@@ -1,12 +1,7 @@
 package com.namnguyenmoihoc.realworldapp.model.Showtime;
 
-import java.time.LocalDate;
-import java.time.LocalTime;
-
 import com.namnguyenmoihoc.realworldapp.entity.Cinema;
 import com.namnguyenmoihoc.realworldapp.entity.Movie;
-import com.namnguyenmoihoc.realworldapp.model.cinema.CinemaDTO;
-import com.namnguyenmoihoc.realworldapp.model.movie.MovieDTO;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;

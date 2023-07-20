@@ -56,4 +56,5 @@ public class ShowtimeServiceImpl implements ShowtimeService {
         return showtimeDTOs;
 
     }
+    
 }
