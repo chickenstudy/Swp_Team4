@@ -1,9 +1,7 @@
 import UserLayout from "./layouts/UserLayout";
-import HeaderOnly from "./layouts/HeaderOnly";
 import AdminLayout from "./layouts/AdminLayout";
 
 // ---------- USER ----------
-import Cinemas from "./views/user/cinemas/History";
 import Movies from "./views/user/movies/Movies";
 import Booking from "./views/user/booking/Booking";
 import SeatCinema from "./views/user/movies/SeatCinema";
@@ -13,7 +11,6 @@ import InformationMovie from "./views/user/movies/InformationMovie";
 import MovieList from "./views/admin/movie/MovieList";
 import Dashboard from "./views/admin/dashboard/Dashboard";
 import StaffManagement from "./views/admin/staff/StaffManagement";
-import Feedback from "./views/admin/feedback/Feedback";
 import AddNewMovie from "./views/admin/movie/AddNewMovie";
 import DetailMovie from "./views/admin/movie/DetailMovie";
 import Banner from "./views/admin/banner/Banner";
@@ -109,12 +106,6 @@ export const AdminRoutes = [
   },
 
   {
-    path: "/feedback",
-    component: Feedback,
-    layout: AdminLayout,
-    isProtected: true,
-  },
-  {
     path: "/movie/addmovie",
     component: AddNewMovie,
     layout: null,
@@ -138,6 +129,7 @@ export const AdminRoutes = [
     layout: AdminLayout,
     isProtected: true,
   },
+
 ];
 
 // Staff Routes

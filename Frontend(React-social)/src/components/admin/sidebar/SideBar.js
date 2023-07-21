@@ -24,11 +24,11 @@ function SideBar() {
         <NavLink to="/listmovie" className="nav-link" activeClassName="active">
           <p>LIST MOVIE</p>
         </NavLink>
-     
 
         <NavLink to="/staff" className="nav-link" activeClassName="active">
           <p>STAFF</p>
         </NavLink>
+
         <NavLink to="/cinema" className="nav-link" activeClassName="active">
           <p>CINEMA</p>
         </NavLink>
@@ -37,9 +37,7 @@ function SideBar() {
           <p>BANNER</p>
         </NavLink>
 
-        <NavLink to="/feedback" className="nav-link" activeClassName="active">
-          <p>FEEDBACK</p>
-        </NavLink>
+      
       </Nav>
 
       <div className="logout-button">
