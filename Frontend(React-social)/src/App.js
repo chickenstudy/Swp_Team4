@@ -2,6 +2,7 @@ import React, { Fragment, useEffect } from "react";
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import { StaffRoutes, UserRoutes, AdminRoutes } from "./routes";
 import axios from "axios";
+import { ToastContainer } from "react-bootstrap";
 
 export const ApplicationContext = React.createContext([]);
 
@@ -142,6 +143,7 @@ function App() {
             </Routes>
           </BrowserRouter>
         </React.Fragment>
+        <ToastContainer />
       </div>
     </ApplicationContext.Provider>
   );

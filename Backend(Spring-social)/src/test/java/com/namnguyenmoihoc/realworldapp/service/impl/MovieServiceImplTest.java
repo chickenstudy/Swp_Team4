@@ -1,7 +1,9 @@
 package com.namnguyenmoihoc.realworldapp.service.impl;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.ArgumentMatchers.any;
 
@@ -9,6 +11,8 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 import java.io.UnsupportedEncodingException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
@@ -32,6 +36,7 @@ import com.namnguyenmoihoc.realworldapp.model.user.mapper.MovieMapper;
 import com.namnguyenmoihoc.realworldapp.model.movie.MovieDTOResponse;
 import com.namnguyenmoihoc.realworldapp.model.movie.MovieDTOResponseCreate;
 import com.namnguyenmoihoc.realworldapp.repository.MovieRepository;
+import com.namnguyenmoihoc.realworldapp.service.MovieService;
 
 @SpringBootTest
 public class MovieServiceImplTest {
@@ -43,7 +48,7 @@ public class MovieServiceImplTest {
     private MovieRepository movieRepository;
 
     @Test
-    public void testCreateMovie() throws UnsupportedEncodingException {
+    public void testCreateMovie() throws UnsupportedEncodingException, ParseException {
         // tạo đối tượng movieDTOCreateMap
         Map<String, MovieDTOCreate> movieDTOCreateMap = new HashMap<>();
         MovieDTOCreate movieDTOCreate = new MovieDTOCreate();
@@ -56,6 +61,9 @@ public class MovieServiceImplTest {
         movieDTOCreate.setTrailer("https://www.example.com/trailer.mp4");
         movieDTOCreate.setType("Action, Adventure, Drama");
         movieDTOCreate.setTimes("3");
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd");
+        Date showDate = dateFormat.parse("2023/03/01");
+        movieDTOCreate.setShow_date(showDate);
         movieDTOCreateMap.put("movie", movieDTOCreate);
 
         // tạo đối tượng Movie
@@ -72,6 +80,127 @@ public class MovieServiceImplTest {
         assert (result.size() == 1); // chỉ có 1 phần tử trong map return
         String key = "movie";
         assert (result.containsKey(key)); // key có tồn tại trong map return
+    }
+
+    @Test
+    public void testCreateMovieWithoutName() {
+        // Tạo đối tượng movieDTOCreateMap
+        Map<String, MovieDTOCreate> movieDTOCreateMap = new HashMap<>();
+        MovieDTOCreate movieDTOCreate = new MovieDTOCreate();
+        // Thiếu trường 'name'
+        movieDTOCreate
+                .setDescription("The Avengers must undo Thanos's actions in order to restore order to the universe.");
+        movieDTOCreate.setCountry("USA");
+        movieDTOCreate.setPoster("https://www.example.com/poster.jpg");
+        movieDTOCreate.setBanner("https://www.example.com/banner.jpg");
+        movieDTOCreate.setTrailer("https://www.example.com/trailer.mp4");
+        movieDTOCreate.setType("Action, Adventure, Drama");
+        movieDTOCreate.setTimes("3");
+        movieDTOCreateMap.put("movie", movieDTOCreate);
+
+        // Gọi hàm createMovie() và kiểm tra xem có báo lỗi hay không
+        Assertions.assertThrows(Exception.class, () -> {
+            movieService.createMovie(movieDTOCreateMap);
+        });
+
+    }
+
+    @Test
+    public void testCreateMovieWithouDecption() {
+        // Tạo đối tượng movieDTOCreateMap
+        Map<String, MovieDTOCreate> movieDTOCreateMap = new HashMap<>();
+        MovieDTOCreate movieDTOCreate = new MovieDTOCreate();
+
+        movieDTOCreate.setName("Hoa");
+        // movieDTOCreate
+        // .setDescription("The Avengers must undo Thanos's actions in order to restore
+        // order to the universe.");
+        movieDTOCreate.setCountry("USA");
+        movieDTOCreate.setPoster("https://www.example.com/poster.jpg");
+        movieDTOCreate.setBanner("https://www.example.com/banner.jpg");
+        movieDTOCreate.setTrailer("https://www.example.com/trailer.mp4");
+        movieDTOCreate.setType("Action, Adventure, Drama");
+        movieDTOCreate.setTimes("3");
+        movieDTOCreateMap.put("movie", movieDTOCreate);
+
+        // Gọi hàm createMovie() và kiểm tra xem có báo lỗi hay không
+        Assertions.assertThrows(Exception.class, () -> {
+            movieService.createMovie(movieDTOCreateMap);
+        });
+
+    }
+
+    @Test
+    public void testCreateMovieWithoutPoster() {
+        // Tạo đối tượng movieDTOCreateMap
+        Map<String, MovieDTOCreate> movieDTOCreateMap = new HashMap<>();
+        MovieDTOCreate movieDTOCreate = new MovieDTOCreate();
+
+        movieDTOCreate.setName("Hoa");
+        movieDTOCreate
+                .setDescription("The Avengers must undo Thanos's actions in order to restore order to the universe.");
+        movieDTOCreate.setCountry("USA");
+        // movieDTOCreate.setPoster("https://www.example.com/poster.jpg");
+        // movieDTOCreate.setBanner("https://www.example.com/banner.jpg");
+        movieDTOCreate.setTrailer("https://www.example.com/trailer.mp4");
+        movieDTOCreate.setType("Action, Adventure, Drama");
+        movieDTOCreate.setTimes("3");
+        movieDTOCreateMap.put("movie", movieDTOCreate);
+
+        // Gọi hàm createMovie() và kiểm tra xem có báo lỗi hay không
+        Assertions.assertThrows(Exception.class, () -> {
+            movieService.createMovie(movieDTOCreateMap);
+        });
+    }
+
+    @Test
+    public void testCreateMovieWithoutDate() throws ParseException {
+        // Tạo đối tượng movieDTOCreateMap
+        Map<String, MovieDTOCreate> movieDTOCreateMap = new HashMap<>();
+        MovieDTOCreate movieDTOCreate = new MovieDTOCreate();
+
+        movieDTOCreate.setName("Hoa");
+        movieDTOCreate
+                .setDescription("The Avengers must undo Thanos's actions in order to restore order to the universe.");
+        movieDTOCreate.setCountry("USA");
+        movieDTOCreate.setPoster("https://www.example.com/poster.jpg");
+        movieDTOCreate.setBanner("https://www.example.com/banner.jpg");
+        movieDTOCreate.setTrailer("https://www.example.com/trailer.mp4");
+        movieDTOCreate.setType("Action, Adventure, Drama");
+        movieDTOCreate.setTimes("3");
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd");
+        Date showDate = dateFormat.parse("22/10/2021");
+        movieDTOCreate.setShow_date(showDate);
+        movieDTOCreateMap.put("movie", movieDTOCreate);
+
+        // Gọi hàm createMovie() và kiểm tra xem có báo lỗi hay không
+        Assertions.assertThrows(Exception.class, () -> {
+            movieService.createMovie(movieDTOCreateMap);
+        });
+    }
+
+    @Test
+    public void testCreateMovieWithoutTrailer() {
+        // Tạo đối tượng movieDTOCreateMap
+        Map<String, MovieDTOCreate> movieDTOCreateMap = new HashMap<>();
+        MovieDTOCreate movieDTOCreate = new MovieDTOCreate();
+
+        movieDTOCreate.setName("Hoa");
+        // movieDTOCreate
+        // .setDescription("The Avengers must undo Thanos's actions in order to restore
+        // order to the universe.");
+        movieDTOCreate.setCountry("USA");
+        movieDTOCreate.setPoster("https://www.example.com/poster.jpg");
+        movieDTOCreate.setBanner("https://www.example.com/banner.jpg");
+        movieDTOCreate.setTrailer("https://www.example.com/trailer.mp4");
+        movieDTOCreate.setType("Action, Adventure, Drama");
+        movieDTOCreate.setTimes("3");
+        movieDTOCreateMap.put("movie", movieDTOCreate);
+
+        // Gọi hàm createMovie() và kiểm tra xem có báo lỗi hay không
+        Assertions.assertThrows(Exception.class, () -> {
+            movieService.createMovie(movieDTOCreateMap);
+        });
     }
 
     @Test
@@ -149,7 +278,7 @@ public class MovieServiceImplTest {
         // Perform additional assertions on the movieDTOResponse object
         assertEquals(movie.getName(), movieDTOResponse.getName());
         assertEquals(movie.getDescription(), movieDTOResponse.getDescription());
-        // Continue with other assertions for the remaining properties
+
     }
 
     @Test
@@ -202,6 +331,44 @@ public class MovieServiceImplTest {
         assertEquals(movie.getCountry(), movieDTO.getCountry());
 
     }
+@Test
+void testGetMovieByIDWithout() throws CustomNotFoundException {
+    int movieid = 1;
+    Movie movie=new Movie();
+     movie.setMovieid(movieid);
+        movie.setName("Test Movie");
+        movie.setPoster("poster data".getBytes());
+        movie.setDescription("Test movie description");
+        movie.setType("Action");
+        movie.setShow_date(new Date());
+        movie.setBanner("banner data".getBytes());
+        movie.setTrailer("https://example.com/trailer");
+        movie.setCountry("Test country");
+        movie.setTimes("120");
+    // ... (Đoạn mã khởi tạo movie giữ nguyên)
+    // ...
+
+    when(movieRepository.findById(movieid)).thenReturn(Optional.of(movie));
+
+    // Test when movie with invalid ID is not found
+    Assertions.assertThrows(Exception.class, () -> {
+        movieService.getMovieByID(999); // Use an ID that doesn't exist in the test data
+    });
+
+    // Rest of the test remains unchanged
+    Map<String, MovieDTOResponse> result = movieService.getMovieByID(movieid);
+    assertNotNull(result);
+    assertEquals(1, result.size());
+    assertTrue(result.containsKey("movie"));
+
+    MovieDTOResponse movieDTO = result.get("movie");
+    assertNotNull(movieDTO);
+    assertEquals(movie.getMovieid(), movieDTO.getId());
+    assertEquals(movie.getName(), movieDTO.getName());
+    assertEquals(movie.getCountry(), movieDTO.getCountry());
+}
+
+
 
     @Test
     void testSearchMovieByName() throws CustomNotFoundException {
@@ -249,5 +416,9 @@ public class MovieServiceImplTest {
         MovieDTOResponse movieDTO2 = result.get(1);
         Assertions.assertEquals(movie2.getName(), movieDTO2.getName());
 
+    }
+    @Test
+    void testGetMovieByNameWithout() throws CustomNotFoundException {
+       
     }
 }

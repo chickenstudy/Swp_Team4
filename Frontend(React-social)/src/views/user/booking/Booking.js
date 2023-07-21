@@ -1,5 +1,3 @@
-import { Link } from "react-router-dom";
-
 import "./Booking.css";
 import { Button, Col, Container, Form, Row } from "react-bootstrap";
 import React, { useEffect, useState } from "react";
@@ -83,10 +81,18 @@ export default function Booking() {
                       width: "415px",
                       backgroundColor:
                         selectedMovie === item.id ? "yellow" : "inherit",
-                    }} // Thay đổi màu nền của nút phim nếu được chọn
+                      color: selectedMovie === item.id ? "black" : "gray",
+                    }}
                     onClick={() => handleMovieSelect(item)}
+                    className={
+                      selectedMovie === item.id ? "selected-movie" : ""
+                    }
                   >
-                    <img src={item.poster} style={{ width: "30px" }}></img>
+                    <img
+                      src={item.poster}
+                      style={{ width: "30px" }}
+                      alt="poster"
+                    />
                     {item.name}
                   </Button>
                 </Form.Group>
@@ -127,15 +133,19 @@ export default function Booking() {
                 Select Session
               </Form.Label>
             </Form.Group>
-            {datelist &&
-              datelist.map((item) => (
-                <Form.Group style={{ border: "1px solid black" }}>
-                  <Button variant="none" style={{ width: "415px" }}>
-                    <img src={item.poster} style={{ width: "30px" }}></img>
-                    {item.date}
-                  </Button>
-                </Form.Group>
-              ))}
+            {selectedCinema && (
+              <>
+                {datelist &&
+                  datelist.map((item) => (
+                    <Form.Group style={{ border: "1px solid black" }}>
+                      <Button variant="none" style={{ width: "415px" }}>
+                        <img src={item.poster} style={{ width: "30px" }}></img>
+                        {item.date}
+                      </Button>
+                    </Form.Group>
+                  ))}
+              </>
+            )}
           </Col>
         </Row>
       </Container>

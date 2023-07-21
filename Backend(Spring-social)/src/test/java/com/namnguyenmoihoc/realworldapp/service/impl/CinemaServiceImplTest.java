@@ -3,6 +3,7 @@ package com.namnguyenmoihoc.realworldapp.service.impl;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.ArgumentMatchers.any;
 
@@ -15,6 +16,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
@@ -26,7 +28,7 @@ import com.namnguyenmoihoc.realworldapp.exception.custom.CustomNotFoundException
 import com.namnguyenmoihoc.realworldapp.model.cinema.CinemaDTO;
 import com.namnguyenmoihoc.realworldapp.model.cinema.CinemaDTOResponse;
 import com.namnguyenmoihoc.realworldapp.model.cinema.CinemaDTOResponseNoId;
-
+import com.namnguyenmoihoc.realworldapp.model.movie.MovieDTOCreate;
 import com.namnguyenmoihoc.realworldapp.model.user.mapper.CinemaMapper;
 
 import com.namnguyenmoihoc.realworldapp.repository.CinemaRepository;
@@ -66,6 +68,52 @@ public class CinemaServiceImplTest {
     }
 
     @Test
+    public void testCreateCinemaWithoutName() {
+        // Tạo đối tượng movieDTOCreateMap
+        CinemaDTO cinemaDTOCreate = new CinemaDTO();
+        // cinemaDTOCreate.setName("lottle");
+        cinemaDTOCreate.setLocation("ha noi");
+        Map<String, CinemaDTO> cinemaDTOCreateMap = new HashMap<>();
+        cinemaDTOCreateMap.put("cinema", cinemaDTOCreate);
+
+        // Gọi hàm createMovie() và kiểm tra xem có báo lỗi hay không
+        Assertions.assertThrows(Exception.class, () -> {
+            cinemaService.createCinema(cinemaDTOCreateMap);
+        });
+
+    }
+    @Test
+    public void testCreateCinemaWithoutNameAndLocation() {
+        // Tạo đối tượng movieDTOCreateMap
+        CinemaDTO cinemaDTOCreate = new CinemaDTO();
+        // cinemaDTOCreate.setName("lottle");
+        // cinemaDTOCreate.setLocation("ha noi");
+        Map<String, CinemaDTO> cinemaDTOCreateMap = new HashMap<>();
+        cinemaDTOCreateMap.put("cinema", cinemaDTOCreate);
+
+        // Gọi hàm createMovie() và kiểm tra xem có báo lỗi hay không
+        Assertions.assertThrows(Exception.class, () -> {
+            cinemaService.createCinema(cinemaDTOCreateMap);
+        });
+    }
+
+    @Test
+    public void testCreateCinemaWithoutLocation() {
+        // Tạo đối tượng movieDTOCreateMap
+        CinemaDTO cinemaDTOCreate = new CinemaDTO();
+        cinemaDTOCreate.setName("lottle");
+        cinemaDTOCreate.setLocation("ha noi");
+        Map<String, CinemaDTO> cinemaDTOCreateMap = new HashMap<>();
+        cinemaDTOCreateMap.put("cinema", cinemaDTOCreate);
+
+        // Gọi hàm createMovie() và kiểm tra xem có báo lỗi hay không
+        Assertions.assertThrows(Exception.class, () -> {
+            cinemaService.createCinema(cinemaDTOCreateMap);
+        });
+
+    }
+
+    @Test
     void testGetCinemaByID() throws CustomNotFoundException {
         int cinemaId = 1;
         Cinema cinema = new Cinema();
@@ -75,6 +123,34 @@ public class CinemaServiceImplTest {
 
         when(cinemaRepository.findById(cinemaId)).thenReturn(Optional.of(cinema));
 
+        Map<String, CinemaDTOResponse> result = null; // Initialize the result variable
+
+        result = cinemaService.getCinemaByID(cinemaId);
+        assertNotNull(result);
+        assertEquals(1, result.size());
+        assertTrue(result.containsKey("cinema"));
+
+        CinemaDTOResponse cinemaDTO = result.get("cinema");
+        assertNotNull(cinemaDTO);
+        assertEquals(cinema.getCinemaid(), cinemaDTO.getCinemaid());
+        assertEquals(cinema.getName(), cinemaDTO.getName());
+        assertEquals(cinema.getLocation(), cinemaDTO.getLocation());
+
+    }
+
+    @Test
+    void testGetCinemaByIDWithout() throws CustomNotFoundException {
+        int cinemaId = 1;
+        Cinema cinema = new Cinema();
+        cinema.setCinemaid(cinemaId);
+        cinema.setName("Lottle");
+        cinema.setLocation("Ha Noi");
+
+        when(cinemaRepository.findById(cinemaId)).thenReturn(Optional.of(cinema));
+
+        Assertions.assertThrows(Exception.class, () -> {
+            cinemaService.getCinemaByID(999); // Use an ID that doesn't exist in the test data
+        });
         Map<String, CinemaDTOResponse> result = null; // Initialize the result variable
 
         result = cinemaService.getCinemaByID(cinemaId);
@@ -182,4 +258,10 @@ public class CinemaServiceImplTest {
         assertEquals(cinema.getName(), cinemaDTOResponse.getName());
         assertEquals(cinema.getLocation(), cinemaDTOResponse.getLocation());
     }
+
+    @Test
+    void testGetUpdateCinemaWithoutname() throws CustomNotFoundException {
+
+    }
+
 }

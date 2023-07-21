@@ -60,11 +60,11 @@ const MovieList = () => {
             </Link>
           </div>
           <table className="table table-bordered">
-            <thead>
-              <tr>
+            <thead >
+              <tr >
                 <th className="bg-dark text-white">Id</th>
                 <th className="bg-dark text-white">Poster</th>
-                <th className="bg-dark text-white">Name</th>  
+                <th className="bg-dark text-white">Name</th>
                 <th className="bg-dark text-white">Genre</th>
                 <th className="bg-dark text-white">Country</th>
                 <th className="bg-dark text-white">Show Date</th>

@@ -232,7 +232,9 @@ const InformationMovie = () => {
                     onChange={handleDateChange}
                     value={selectedDate}
                   >
-                    <option value="">Choose a date</option>
+                    <option value="" hidden>
+                      Choose a date
+                    </option>
                     {datelist.map((dateitem) => (
                       <option key={dateitem.date} value={dateitem.date}>
                         {dateitem.date}
@@ -250,7 +252,9 @@ const InformationMovie = () => {
                     onChange={handleCinemaChange}
                     value={selectedCinema ? selectedCinema.cinemaid : ""}
                   >
-                    <option value="">Choose a cinema</option>
+                    <option value="" hidden>
+                      Choose a cinema
+                    </option>
                     {cinema.map((cinemaitem) => (
                       <option
                         key={cinemaitem.cinemaid}

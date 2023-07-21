@@ -1,16 +1,15 @@
 import React, { useState } from "react";
-import { Modal, Form, Button, Row, Col } from "react-bootstrap";
+import { Modal, Form, Button, Row, Col, ToastContainer } from "react-bootstrap";
 import axios from "axios";
-import { Redirect } from "react-router-dom";
-
 import { useNavigate } from "react-router-dom";
 import { InputGroup, FormControl } from "react-bootstrap";
 import "../../styles/SignUp.css";
+import { toast } from "react-toastify";
+import { useRef } from "react";
 
 export default function SignUp() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [confirmPassword, setConfirmPassword] = useState("");
   const [sex, setSex] = useState("");
   const [address, setAddress] = useState("");
   const [picture, setPicture] = useState(null);
@@ -23,7 +22,7 @@ export default function SignUp() {
   const [showModal, setShowModal] = useState(false);
   const [isEmailVerified, setIsEmailVerified] = useState(false);
   const [otp, setOtp] = useState("");
-
+  const rpwd = useRef("");
   const [confirmationMessage, setConfirmationMessage] = useState("");
 
   const handleSexChange = (event) => {
@@ -75,45 +74,41 @@ export default function SignUp() {
     ) {
       setError1("Your email is Null");
     }
-    if (password === confirmPassword) {
-      const data = {
-        user: {
-          email,
-          password,
-          sex,
-          address,
-          picture,
-          username,
-          phoneNumber,
-          dob,
-        },
-      };
+    const data = {
+      user: {
+        email,
+        password,
+        sex,
+        address,
+        picture,
+        username,
+        phoneNumber,
+        dob,
+      },
+    };
 
-      axios
-        .post("http://localhost:8080/api/user/register", data)
-        .then((response) => {
-          console.log(response.message);
+    axios
+      .post("http://localhost:8080/api/user/register", data)
+      .then((response) => {
+        console.log(response.message);
 
-          if (response.status === 200) {
-            alert("Sign up successful!");
-            window.location.href = "/";
-          }
-        })
-        .catch((error) => {
-          console.error(error);
-          if (
-            error.response &&
-            error.response.data &&
-            error.response.data.message
-          ) {
-            setError1("Your email is Null");
-          } else {
-            setError1("Your email is registered");
-          }
-        });
-    } else {
-      setError("Passwords do not match.");
-    }
+        if (response.status === 200) {
+          alert("Sign up successful!");
+          window.location.href = "/";
+        }
+      })
+      .catch((error) => {
+        console.error(error);
+        if (
+          error.response &&
+          error.response.data &&
+          error.response.data.message
+        ) {
+          setError1("Your email is Null");
+        } else {
+          setError1("Your email is registered");
+        }
+      });
   };
 
   const handlePictureChange = (event) => {
@@ -139,7 +134,14 @@ export default function SignUp() {
 
     setError2(null);
   };
-
+  const handleMatchPassword = (e) => {
+    if (rpwd.current.value != password) {
+      setError("Passwords do not match.");
+      rpwd.current.focus();
+    } else {
+      setError(null);
+    }
+  };
   const handleClose = () => {
     setShowModal(false);
     setEmail("");
@@ -159,7 +161,6 @@ export default function SignUp() {
     setError2("");
     setIsEmailVerified(false);
   };
-
   return (
     <>
       <Button
@@ -194,6 +195,7 @@ export default function SignUp() {
                   <Form.Group controlId="formBasicEmail">
                     <Form.Label>Email address</Form.Label>
                     <Form.Control
+                      required
                       type="email"
                       placeholder="Enter email"
                       value={email}
@@ -261,8 +263,11 @@ export default function SignUp() {
                     <Form.Control
                       type="password"
                       placeholder="Confirm Password"
-                      value={confirmPassword}
-                      onChange={(e) => setConfirmPassword(e.target.value)}
+                      // value={confirmPassword}
+                      ref={rpwd}
+                      onBlur={() => {
+                        handleMatchPassword();
+                      }}
                     />
                     {error && (
                       <Form.Text className="text-danger">{error}</Form.Text>
@@ -282,8 +287,8 @@ export default function SignUp() {
                       onChange={handleSexChange}
                     >
                       <option value="">Choose option</option>
-                      <option value={0}>Female</option>
                       <option value={1}>Male</option>
+                      <option value={0}>Female</option>
                       <option value={2}>Other</option>
                     </Form.Control>
                   </Form.Group>

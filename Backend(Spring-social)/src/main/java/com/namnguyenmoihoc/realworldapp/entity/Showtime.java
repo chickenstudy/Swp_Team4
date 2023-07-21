@@ -29,12 +29,13 @@ import lombok.Setter;
 @Table(name = "showtime")
 public class Showtime {
     @Id
-     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int showtimeid;
+
     private LocalTime starttime;
    
     private LocalDate startdate;
-     @ManyToOne
+
+    @ManyToOne
     @OnDelete(action = OnDeleteAction.CASCADE)
     @JoinColumn(name = "movieid", nullable = false)
     private Movie movie;
@@ -43,5 +44,4 @@ public class Showtime {
     @OnDelete(action = OnDeleteAction.CASCADE)
     @JoinColumn(name = "cinemaid", nullable = false)
     private Cinema cinema;
-
 }

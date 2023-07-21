@@ -4,7 +4,8 @@
     text-align: center;
     width: 100%;
   } */
-.selectedMovie {
-  background-color: rgb(90, 59, 144);
-  color: white;
+
+/* CSS ở nơi khác trong file hoặc file riêng biệt */
+.selected-movie:hover {
+  color: blue;
 }
