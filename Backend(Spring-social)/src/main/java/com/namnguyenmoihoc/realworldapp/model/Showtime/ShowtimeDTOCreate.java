@@ -16,8 +16,9 @@ import lombok.Setter;
 
 public class ShowtimeDTOCreate {
 
-    private int showtimeid;
-    private String starttime;
-    private String endtime;
+    private Integer movieid; // Khóa ngoại tham chiếu đến bảng Movie
+    private Integer cinemaid; // Khóa ngoại tham chiếu đến bảng Cinema
+    private String startdate;
+    private String starttime;;
 
 }
