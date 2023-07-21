@@ -44,12 +44,11 @@ public class OrderDetailsController {
     @PutMapping("/createbills")
     public Map<String, List<BookTicket>> createNewOrder(@RequestBody BookingRequestDTO bookingRequestDTO)
             throws CustomMessageError {
-        System.out.println(bookingRequestDTO);
         List<Integer> seat = parseStringToList(bookingRequestDTO.getListSeatIds());
+        
         BookingDTO lBookingDTO = new BookingDTO();
         lBookingDTO.setShowtimeId(bookingRequestDTO.getShowtimeId());
         lBookingDTO.setListSeatIds(seat);
-        System.out.println(lBookingDTO);
         return orderDetailsService.createNewOrder(lBookingDTO);
         /*
          * try {

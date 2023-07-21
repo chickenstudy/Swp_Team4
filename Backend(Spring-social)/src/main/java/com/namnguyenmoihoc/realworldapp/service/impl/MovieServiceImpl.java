@@ -64,7 +64,6 @@ public class MovieServiceImpl implements MovieService {
             throws CustomNotFoundException {
                 
         Optional<Movie> movieOptional = movieRepository.findByMovieid(movieDTOUpdate.getMovieid());
-        System.out.println(movieOptional);
 
         if (movieOptional.isEmpty()) {
             throw new CustomNotFoundException(CustomError.builder().code("404").message("Movie not found").build());

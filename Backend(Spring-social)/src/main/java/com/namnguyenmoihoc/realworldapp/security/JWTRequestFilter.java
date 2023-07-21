@@ -82,7 +82,6 @@ public class JWTRequestFilter extends OncePerRequestFilter {
                 }
             }
         }
-        System.out.println(tokenPayload);
         filterChain.doFilter(request, response);
     }
 }
