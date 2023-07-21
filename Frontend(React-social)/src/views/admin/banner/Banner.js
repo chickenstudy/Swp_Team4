@@ -54,7 +54,8 @@ export default function Banner() {
         picture,
       },
     };
-    console.log(JSON.stringify(databanner));
+
+    
     fetch("http://localhost:8080/api/banner/create", {
       method: "POST",
       headers: { "content-type": "application/json" },
@@ -90,8 +91,7 @@ export default function Banner() {
         <Button
           variant="success rounded-0 my-3"
           onClick={handleShow}
-          type="submit"
-        >
+          type="submit">
           Add new banner
         </Button>
 
@@ -120,8 +120,7 @@ export default function Banner() {
 
       <table
         className="table table-bordered mx-auto"
-        style={{ maxWidth: "900px" }}
-      >
+        style={{ maxWidth: "900px" }}>
         <thead>
           <tr>
             <th className="bg-dark text-white">Id</th>
@@ -153,9 +152,8 @@ export default function Banner() {
                         .includes(item.bannerid)}
                       label="On screen"
                       onChange={(event) => {
-                        if (event.target.checked == true) {
+                        if (event.target.checked === true) {
                           banners.push(item.picture);
-
                           setBanners(banners);
                         } else {
                           banners.pop(item.picture);
@@ -169,8 +167,7 @@ export default function Banner() {
                     className=""
                     onClick={() => {
                       Removefunction(item.bannerid);
-                    }}
-                  >
+                    }}>
                     <RiDeleteBinLine
                       className="btn btn-danger my-1"
                       size={50}

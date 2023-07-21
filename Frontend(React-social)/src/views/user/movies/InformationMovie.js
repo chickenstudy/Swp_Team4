@@ -173,16 +173,14 @@ const InformationMovie = () => {
                     border: "2px solid rgb(206, 161, 11)",
                   }}
                   rel="noopener noreferrer"
-                  variant="dark"
-                >
+                  variant="dark">
                   View trailer
                 </Button>
 
                 <Modal
                   show={showVideoModal}
                   onHide={handleCloseVideoModal}
-                  size="lg"
-                >
+                  size="lg">
                   <Modal.Body>
                     <ReactPlayer
                       url={data?.movie?.trailer}
@@ -230,8 +228,7 @@ const InformationMovie = () => {
                       paddingLeft: "10px",
                     }}
                     onChange={handleDateChange}
-                    value={selectedDate}
-                  >
+                    value={selectedDate}>
                     <option value="">Choose a date</option>
                     {datelist.map((dateitem) => (
                       <option key={dateitem.date} value={dateitem.date}>
@@ -248,14 +245,12 @@ const InformationMovie = () => {
                       paddingLeft: "10px",
                     }}
                     onChange={handleCinemaChange}
-                    value={selectedCinema ? selectedCinema.cinemaid : ""}
-                  >
+                    value={selectedCinema ? selectedCinema.cinemaid : ""}>
                     <option value="">Choose a cinema</option>
                     {cinema.map((cinemaitem) => (
                       <option
                         key={cinemaitem.cinemaid}
-                        value={cinemaitem.cinemaid}
-                      >
+                        value={cinemaitem.cinemaid}>
                         {cinemaitem.name}
                       </option>
                     ))}
@@ -286,8 +281,7 @@ const InformationMovie = () => {
                                 )
                               }
                               style={{ border: "1px solid black" }}
-                              variant="light"
-                            >
+                              variant="light">
                               {showtimeitem}
                             </Button>
                           </span>
