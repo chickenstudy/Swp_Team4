@@ -1,5 +1,8 @@
 package com.namnguyenmoihoc.realworldapp.entity;
 
+import org.hibernate.annotations.DynamicInsert;
+import org.hibernate.annotations.DynamicUpdate;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
@@ -16,6 +19,8 @@ import lombok.Setter;
 @NoArgsConstructor
 @Builder
 @Table(name= "seat")
+@DynamicUpdate
+@DynamicInsert
 public class Seat {
     @Id
     private int seatid;

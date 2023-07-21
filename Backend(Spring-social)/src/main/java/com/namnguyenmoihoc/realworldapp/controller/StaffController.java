@@ -61,9 +61,14 @@ public class StaffController {
     }
 
     @PutMapping("/checkoutTicket")
-    public Map<String, BookTicket> checkoutTicket(@RequestBody CheckoutDTO checkoutString)
+    public Map<String, List<BookTicket>> checkoutTicket(@RequestBody CheckoutDTO checkoutString)
             throws CustomMessageError {
         return staffService.checkoutTicket(checkoutString);
+    }
+
+    @GetMapping("/clearSeat")
+    public void clearSeat() {
+        staffService.clearSeat();
     }
 
 }

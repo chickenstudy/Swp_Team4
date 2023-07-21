@@ -38,7 +38,6 @@ public class MovieController {
     public Map<String, MovieDTOResponseCreate> createMovie(
             @RequestBody Map<String, MovieDTOCreate> movieDTOCreateMap) throws UnsupportedEncodingException {
                  
-        System.out.println(movieDTOCreateMap);
         return movieService.createMovie(movieDTOCreateMap);
     }
 
@@ -52,7 +51,6 @@ public class MovieController {
             @RequestBody MovieDTOUpdate movieDTOUpdate)
             throws CustomNotFoundException {
         movieDTOUpdate.setMovieid(movieId);
-        System.out.println(movieDTOUpdate);
         return movieService.getUpdateMovie(movieDTOUpdate);
     }
 

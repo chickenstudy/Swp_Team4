@@ -46,7 +46,6 @@ public class BannerController {
             @RequestBody BannerDTOUpdate bannerDTOUpdate)
             throws CustomNotFoundException {
         bannerDTOUpdate.setBannerid(bannerid);
-        System.out.println(bannerDTOUpdate);
         return bannerService.getUpdateBanner(bannerDTOUpdate);
     }
 

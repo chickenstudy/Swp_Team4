@@ -41,7 +41,6 @@ public class ProfileController {
     public Map<String, ProfileDTOResponse> getUpdateAccount(@PathVariable int userid,
             @RequestBody UserDTOUpdateAccount userDTOUpdateAccount)
             throws CustomNotFoundException, IOException {
-        System.out.println(userDTOUpdateAccount);
         userDTOUpdateAccount.setId(userid);
         return userService.getUpdateAccount(userDTOUpdateAccount);
     }

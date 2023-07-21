@@ -16,17 +16,19 @@ import org.springframework.stereotype.Service;
 
 import com.namnguyenmoihoc.realworldapp.entity.Account;
 import com.namnguyenmoihoc.realworldapp.entity.BookTicket;
+import com.namnguyenmoihoc.realworldapp.entity.Seat;
 import com.namnguyenmoihoc.realworldapp.exception.custom.CustomMessageError;
 import com.namnguyenmoihoc.realworldapp.exception.custom.CustomNotFoundException;
 
 import com.namnguyenmoihoc.realworldapp.model.profileAccount.ProfileDTOResponse;
+import com.namnguyenmoihoc.realworldapp.model.seat.SeatDTOResponse;
 import com.namnguyenmoihoc.realworldapp.model.staff.StaffDTOCreate;
 import com.namnguyenmoihoc.realworldapp.model.staff.StaffDTOResponse;
 import com.namnguyenmoihoc.realworldapp.model.ticket.CheckoutDTO;
 import com.namnguyenmoihoc.realworldapp.model.user.CustomError;
-
+import com.namnguyenmoihoc.realworldapp.model.user.mapper.SeatMapper;
 import com.namnguyenmoihoc.realworldapp.model.user.mapper.StaffMapper;
-
+import com.namnguyenmoihoc.realworldapp.repository.SeatRepositorty;
 import com.namnguyenmoihoc.realworldapp.repository.StaffRepository;
 import com.namnguyenmoihoc.realworldapp.repository.TicketRepository;
 import com.namnguyenmoihoc.realworldapp.service.StaffService;
@@ -40,6 +42,7 @@ public class StaffServiceImpl implements StaffService {
     private final StaffRepository staffRepository;
     private final PasswordEncoder passwordEncoder;
     private final TicketRepository ticketRepository;
+    private final SeatRepositorty seatRepositorty;
 
     @Override
     public List<ProfileDTOResponse> getListStaff() {
@@ -103,33 +106,41 @@ public class StaffServiceImpl implements StaffService {
     }
 
     @Override
-    public Map<String, BookTicket> checkoutTicket(CheckoutDTO checkoutString)
+    public Map<String, List<BookTicket>> checkoutTicket(CheckoutDTO checkoutString)
             throws CustomMessageError {
         String checkoutCodeRequest = checkoutString.getTicketCodeString();
 
-        Optional<BookTicket> ticket = ticketRepository.findByTicketcode(checkoutCodeRequest);
-        
+        List<BookTicket> ticket = ticketRepository.findByTicketcode(checkoutCodeRequest);
+
         if (ticket.isEmpty()) {
             System.out.println("here ne");
-            throw new CustomMessageError(CustomError.builder().code("404").message("Can't found this ticket").build());
+            throw new CustomMessageError(CustomError.builder().code("404").message("Can't found this ticket!!!").build());
+        }
+        if (ticket.get(0).getTicketactive() == 0) {
+            throw new CustomMessageError(CustomError.builder().code("404").message("This ticket has been activated!!!").build());
         }
 
-        if (ticket.get().getTicketactive() == 0) {
-            System.out.println("here");
-            throw new CustomMessageError(
-                    CustomError.builder().code("404").message("This ticket is already checkout").build());
+        for (BookTicket t : ticket) {
+            t.setTicketactive((byte) 0);
+            ticketRepository.save(t);
         }
 
-        System.out.println("ticket code: " + ticket.get().getTicketcode());
-        BookTicket checkoutTicket = ticket.get();
-        checkoutTicket.setTicketactive((byte) 0);
-        ticketRepository.save(checkoutTicket);
-        return buidCheckoutTicketResponse(checkoutTicket);
+        return buidCheckoutTicketResponse(ticket);
     }
-    
-    private Map<String, BookTicket> buidCheckoutTicketResponse(BookTicket checkoutTicket) {
-        Map<String, BookTicket> wrapper = new HashMap<>();
+
+    private Map<String, List<BookTicket>> buidCheckoutTicketResponse(List<BookTicket> checkoutTicket) {
+        Map<String, List<BookTicket>> wrapper = new HashMap<>();
         wrapper.put("checkoutedTicket", checkoutTicket);
         return wrapper;
+    }
+
+    @Override
+    public void clearSeat() {
+        // TODO Auto-generated method stub
+        List<Seat> listSeats = seatRepositorty.findAll();
+        for (Seat seats : listSeats) {
+            seats.setActive((byte) 1);
+            seatRepositorty.save(seats);
+        }
     }
 }

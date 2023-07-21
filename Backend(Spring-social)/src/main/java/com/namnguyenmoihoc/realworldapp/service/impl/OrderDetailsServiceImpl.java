@@ -17,6 +17,7 @@ import org.springframework.stereotype.Service;
 import com.namnguyenmoihoc.realworldapp.entity.Account;
 import com.namnguyenmoihoc.realworldapp.entity.BookTicket;
 import com.namnguyenmoihoc.realworldapp.entity.OrderDetail;
+import com.namnguyenmoihoc.realworldapp.entity.Seat;
 import com.namnguyenmoihoc.realworldapp.entity.Showtime;
 import com.namnguyenmoihoc.realworldapp.exception.custom.BaseCustomException;
 import com.namnguyenmoihoc.realworldapp.exception.custom.CustomMessageError;
@@ -60,7 +61,7 @@ public class OrderDetailsServiceImpl implements OrderDetailsService{
 
     @Override
     @Transactional
-    public Map<String, List<BookTicket>> createNewOrder(BookingDTO bookingDTO) throws RuntimeException {
+    public Map<String, List<BookTicket>> createNewOrder(BookingDTO bookingDTO) throws RuntimeException, CustomMessageError {
         // TODO Auto-generated method stub
         //Lấy ra lịch
         Optional<Showtime> showtime = showtimeRepository.findById(bookingDTO.getShowtimeId());
@@ -83,19 +84,51 @@ public class OrderDetailsServiceImpl implements OrderDetailsService{
         
         OrderDetail createdBill = OrderDetail.builder().userid(user).purchasedate(billToCreate.getPurchasedate()).total(billToCreate.getTotal()).build();
         orderDataRepository.save(createdBill);
-        System.out.println("bill: " + createdBill);
+
         List<BookTicket> listTickets = new ArrayList<>();
         //Với mỗi ghế ngồi check xem đã có ai đặt chưa, nếu rồi thì throw, roll back luôn còn ko
         //thì đóng gói các thông tin ghế và lịch vào vé và lưu xuống db
-        bookingDTO.getListSeatIds().forEach(seatId->{
+        List<Integer> listSeats = bookingDTO.getListSeatIds();
+        String randomNumber = generateRandomNumber();
+
+        for (Integer seatId : listSeats) {
+            System.out.println(seatId);
+            //BookTicket ticket = ticketRepository.findBookTicketsByShowtimeidAndSeatid(showtime.get().getShowtimeid(),seatId).get(userid));
             if(!ticketRepository.findBookTicketsByShowtimeidAndSeatid(showtime.get().getShowtimeid(),seatId)
                     .isEmpty()){// Nếu đã có người đặt vé ghế đó ở lịch cụ thể đó thì
-                try {
-                    throw new CustomMessageError(CustomError.builder().code("000").message("Some one fast than you for this seat!!!").build());
-                } catch (CustomMessageError e) {
-                    // TODO Auto-generated catch block
-                    e.printStackTrace();
-                }
+                        throw new CustomMessageError(CustomError.builder().code("000").message("Some one fast than you for this seat!!!").build());
+            }
+            // đóng gói lịch, seat và bill vào từng vé rồi add vào list vé
+            Seat seat = new Seat();
+            BookTicket ticket = new BookTicket();
+            seat = seatRepository.findBySeatid(seatId).get();
+            seat.setActive((byte)0);
+            seatRepository.save(seat);
+
+            ticket.setShowtimeid(showtime.get());
+            ticket.setSeatid(seatRepository.findBySeatid(seatId).get());
+            ticket.setOrderid(createdBill);
+            ticket.setCreateddate(LocalDateTime.now());
+            ticket.setTicketcode(randomNumber);
+            ticket.setTicketactive((byte) 1);
+            ticketRepository.save(ticket);
+            listTickets.add(ticket);
+        }
+        return buidDTOResponse(listTickets);
+
+        /* 
+        bookingDTO.getListSeatIds().forEach(seatId->{
+            System.out.println(seatId);
+            //BookTicket ticket = ticketRepository.findBookTicketsByShowtimeidAndSeatid(showtime.get().getShowtimeid(),seatId).get(userid));
+            if(!ticketRepository.findBookTicketsByShowtimeidAndSeatid(showtime.get().getShowtimeid(),seatId)
+                    .isEmpty()){// Nếu đã có người đặt vé ghế đó ở lịch cụ thể đó thì
+                        
+                    try {
+                        throw new CustomMessageError(CustomError.builder().code("000").message("Some one fast than you for this seat!!!").build());
+                    } catch (CustomMessageError e) {
+                        // TODO Auto-generated catch block
+                        e.printStackTrace();
+                    }
             }
             // đóng gói lịch, seat và bill vào từng vé rồi add vào list vé
             BookTicket ticket = new BookTicket();
@@ -108,8 +141,7 @@ public class OrderDetailsServiceImpl implements OrderDetailsService{
             ticketRepository.save(ticket);
             listTickets.add(ticket);
         });
-        return buidDTOResponse(listTickets);
-       
+        */
     }
 
     private Map<String, List<BookTicket>> buidDTOResponse(List<BookTicket> ticket) {

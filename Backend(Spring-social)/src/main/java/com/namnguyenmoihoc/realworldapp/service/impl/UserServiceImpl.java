@@ -112,7 +112,6 @@ public class UserServiceImpl implements UserService {
         Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         if (principal instanceof UserDetails) {
             String email = ((UserDetails) principal).getUsername();
-            System.out.println(email+":email");
             Account user = userRepository.findByEmail(email).get();
             return buidDTOResponse(user);
         }
@@ -195,7 +194,6 @@ public class UserServiceImpl implements UserService {
                             CustomError.builder().code("404").message("Your email is registered").build());
                 }
 
-                System.out.println("userfromdb:" + user);
                 user.setAddress(userDTOUpdateAccount.getAddress());
                 user.setDob(userDTOUpdateAccount.getDob());
                 user.setPhonenumber(userDTOUpdateAccount.getPhonenumber());
@@ -214,7 +212,6 @@ public class UserServiceImpl implements UserService {
 
             }
 
-            System.out.println("profile:");
             System.out.println(user);
             // user.setPassword(passwordEncoder.encode(user.getPassword()));
             user = userRepository.save(user);
@@ -242,11 +239,8 @@ public class UserServiceImpl implements UserService {
             }
 
             Account user = userOptional.get();
-            System.out.println("password : " + accountNewPassword);
-            System.out.println("password : " + user);
 
             user.setPassword(passwordEncoder.encode(accountNewPassword.getPassword()));
-            System.out.println("password : " + accountNewPassword);
             user = userRepository.save(user);
         }
         return changepassword();
@@ -254,7 +248,6 @@ public class UserServiceImpl implements UserService {
 
     private Map<String, ChangePasswordMessage> changepassword() {
         Map<String, ChangePasswordMessage> wrapper = new HashMap<>();
-        System.out.println("adsjfoi");
         ChangePasswordMessage changePasswordMessage = new ChangePasswordMessage(CustomError.builder().code("200").message("Password Change Successfully!!!").build());
         wrapper.put("message", changePasswordMessage);
         return wrapper;

@@ -33,7 +33,6 @@ public class CinemaController {
     @PostMapping("/create")
     public Map<String, CinemaDTOResponseNoId> createCinema(
             @RequestBody Map<String, CinemaDTO> cinemaCreate) throws UnsupportedEncodingException {
-        System.out.println(cinemaCreate);
         return cinemaService.createCinema(cinemaCreate);
     }
 

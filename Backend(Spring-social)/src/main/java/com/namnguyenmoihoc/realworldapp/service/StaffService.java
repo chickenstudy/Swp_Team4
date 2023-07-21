@@ -26,6 +26,8 @@ public interface StaffService {
 
     void getDeleteMovie(int staffId) throws CustomNotFoundException;
 
-    Map<String, BookTicket> checkoutTicket(CheckoutDTO checkoutString) throws CustomMessageError;
+    Map<String, List<BookTicket>> checkoutTicket(CheckoutDTO checkoutString) throws CustomMessageError;
+
+    void clearSeat();
     
 }
