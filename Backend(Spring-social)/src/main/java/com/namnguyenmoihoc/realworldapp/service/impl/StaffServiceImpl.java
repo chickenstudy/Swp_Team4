@@ -11,6 +11,7 @@ import java.util.Optional;
 
 import javax.sql.rowset.serial.SerialException;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -22,6 +23,7 @@ import com.namnguyenmoihoc.realworldapp.exception.custom.CustomNotFoundException
 
 import com.namnguyenmoihoc.realworldapp.model.profileAccount.ProfileDTOResponse;
 import com.namnguyenmoihoc.realworldapp.model.seat.SeatDTOResponse;
+import com.namnguyenmoihoc.realworldapp.model.staff.ListTicketBuyedForStaff;
 import com.namnguyenmoihoc.realworldapp.model.staff.StaffDTOCreate;
 import com.namnguyenmoihoc.realworldapp.model.staff.StaffDTOResponse;
 import com.namnguyenmoihoc.realworldapp.model.ticket.CheckoutDTO;
@@ -34,6 +36,7 @@ import com.namnguyenmoihoc.realworldapp.repository.TicketRepository;
 import com.namnguyenmoihoc.realworldapp.service.StaffService;
 import com.namnguyenmoihoc.realworldapp.service.TicketService;
 
+import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 
 @Service
@@ -43,6 +46,10 @@ public class StaffServiceImpl implements StaffService {
     private final PasswordEncoder passwordEncoder;
     private final TicketRepository ticketRepository;
     private final SeatRepositorty seatRepositorty;
+    private final List<BookTicket> listBuyedForStaffs;
+    @Autowired
+    private HttpSession httpSession;
+
 
     @Override
     public List<ProfileDTOResponse> getListStaff() {
@@ -123,8 +130,10 @@ public class StaffServiceImpl implements StaffService {
         for (BookTicket t : ticket) {
             t.setTicketactive((byte) 0);
             ticketRepository.save(t);
+            listBuyedForStaffs.add(t);
         }
-
+        httpSession.setAttribute("listBuyedForStaffs", listBuyedForStaffs);
+        System.out.println(listBuyedForStaffs.size());
         return buidCheckoutTicketResponse(ticket);
     }
 
@@ -142,5 +151,10 @@ public class StaffServiceImpl implements StaffService {
             seats.setActive((byte) 1);
             seatRepositorty.save(seats);
         }
+    }
+
+    public List<BookTicket> getListTransaction(){
+        List<BookTicket> data = (List<BookTicket>) httpSession.getAttribute("listBuyedForStaffs");
+        return data;
     }
 }
