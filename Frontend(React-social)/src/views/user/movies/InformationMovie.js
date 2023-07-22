@@ -8,7 +8,7 @@ import Carousel from "react-bootstrap/Carousel";
 import { AiOutlineFieldTime } from "react-icons/ai";
 import axios from "axios";
 import ReactPlayer from "react-player";
-import { Modal, Toast } from "react-bootstrap";
+import { Modal } from "react-bootstrap";
 import "./informationMovie.css";
 import { useContext } from "react";
 import { ApplicationContext } from "../../../App";
@@ -125,7 +125,6 @@ const InformationMovie = () => {
   }, [id, selectedCinema, startTime, selectedDate]);
   const showtimeid = sessionStorage.setItem("showtimeid", data1?.id);
   const navigate = useNavigate();
-  console.log(user);
   if (user.length === 0) {
     // alert("Please login to book ticket");
     toast.error("Please login to book ticket");

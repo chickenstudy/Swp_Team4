@@ -5,9 +5,14 @@ import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import axios from "axios";
 import { Button, Form, FormControl } from "react-bootstrap";
+import e from "cors";
+import { ToastContainer, toast } from "react-toastify";
 
 export default function MoviesStaff() {
   const [movies, setMovies] = useState([]);
+  const [ticketcode, setTicketcode] = useState("");
+  const [data, setData] = useState([]);
+  const [error, setError] = useState(null);
   const navigate = useNavigate();
   const LoadDetail = (id) => {
     navigate(`/staffmanagement/movies/informationmovie/${id}`);
@@ -43,6 +48,34 @@ export default function MoviesStaff() {
   }, [searchTerm]);
   const handleInputChange = (event) => {
     setSearchTerm(event.target.value);
+  };
+  const handleTicketcode = () => {
+    const headers = {
+      "Content-Type": "application/json",
+    };
+
+    axios
+      .put(
+        `http://localhost:8080/api/staff/checkoutTicket`,
+        JSON.stringify(ticketcode),
+        { headers }
+      )
+      .then((response) => {
+        toast.success("Checkout ticket successfully!");
+        setData(response.data.checkoutedTicket);
+        setError(null);
+        console.log(response.data);
+      })
+      .catch((error) => {
+        if (error.response.status == 500) {
+          setError("Ticket code has been sold!");
+          setData([]);
+        } else if (error.response.status == 404) {
+          setError("Ticket code not found!");
+          setData([]);
+        }
+        console.error(error);
+      });
   };
 
   return (
@@ -161,44 +194,89 @@ export default function MoviesStaff() {
                     <h1>Code Ticket</h1>
                   </Form.Label>
                 </div>
-                <Form.Control type="text"></Form.Control>
+
+                <Row>
+                  <Col md={8}>
+                    <Form.Control
+                      type="number"
+                      style={{ width: "100%" }} // Đặt chiều rộng của input là 100% để lấp đầy cột
+                      onChange={(e) => {
+                        setTicketcode(e.target.value);
+                      }}
+                    />
+                    {error && <div className="text-danger mt-2">{error}</div>}
+                  </Col>
+                  <Col md={4}>
+                    {" "}
+                    {/* Dùng md={4} để cột chiếm 4/12 (1/3) của hàng */}
+                    <Button
+                      style={{ width: "100%" }}
+                      onClick={handleTicketcode}
+                    >
+                      Get
+                    </Button>
+                  </Col>
+                </Row>
                 <Form.Text className="text-muted">
                   <div style={{ textAlign: "center", paddingTop: "30px" }}>
                     <h3>Ticket Information </h3>
                   </div>
-                  <div style={{ paddingTop: "30px" }}>
-                    <p>
+                  {data.length > 0 ? (
+                    <div style={{ paddingTop: "30px" }}>
+                      {/* <p>
                       <span style={{ fontWeight: "bold" }}>Cinema:</span>
-                    </p>{" "}
-                    <p>
-                      <span style={{ fontWeight: "bold" }}>Movie: </span>
-                    </p>
-                    <p>
-                      <span style={{ fontWeight: "bold" }}>Date: </span>
-                    </p>
-                    <p>
-                      <span style={{ fontWeight: "bold" }}>Time: </span>
-                    </p>
-                    <p>
-                      <span>
-                        <h7>Seat booked:</h7>
-                      </span>{" "}
-                    </p>
-                    <p>
-                      <span>Number of ticket(s) booked:</span>
-                      <span id="count"> </span>
-                    </p>
-                    <p class="text">
-                      Total: <span id="total"></span>
-                      <span>,000 VND</span>
-                    </p>
-                  </div>
+                    </p>{" "} */}
+                      <p>
+                        <span style={{ fontWeight: "bold" }}>
+                          Movie:{data[0].showtimeid.movie.name}{" "}
+                        </span>
+                      </p>
+                      <p>
+                        <span style={{ fontWeight: "bold" }}>
+                          Date: {data[0].createddate}
+                        </span>
+                      </p>
+                      <p>
+                        <span style={{ fontWeight: "bold" }}>
+                          Order by: {data[0].orderid.userid.username}{" "}
+                        </span>
+                      </p>
+                      <p>
+                        <span>
+                          <h7>
+                            Seat booked:
+                            <br />
+                            {/* Row: {data[0].seatid.row}
+                          Col: {data[0].seatid.Col} */}
+                            {data.map((item) => {
+                              const { row, col } = item.seatid; // Lấy row và col từ seatid
+                              return (
+                                <div key={item.ticketid}>
+                                  <li>
+                                    Row: {row}, Col: {col}
+                                  </li>
+                                </div>
+                              );
+                            })}
+                            <br />
+                          </h7>
+                        </span>{" "}
+                      </p>
+                      <p class="text">
+                        Total: <span id="total"></span>
+                        <span>{data[0].orderid.total} VND</span>
+                      </p>
+                    </div>
+                  ) : (
+                    <p>No ticket information available.</p>
+                  )}
                 </Form.Text>
                 <Button className="btn btn-dark">Payment</Button>
               </Form.Group>
             </Form>
           </Col>
         </Row>
+        <ToastContainer />
       </div>
     </div>
   );

@@ -91,23 +91,28 @@ const InformationMovieStaff = () => {
   }, [id, selectedCinema, selectedDate]);
 
   useEffect(() => {
-    axios
-      .get("http://localhost:8080/api/showtime", {
-        params: {
-          movieid: id,
-          cinemaid: cinema_id,
-          starttime: startTime,
-          startdate: selectedDate,
-        },
-      })
-      .then((res) => {
-        setData1(res.data[0]);
-      })
-      .catch((err) => {
-        console.log(err.message);
-      });
+    if (!startTime) {
+      setError("Please select a showtime");
+    } else {
+      axios
+        .get("http://localhost:8080/api/showtime", {
+          params: {
+            movieid: id,
+            cinemaid: cinema_id,
+            starttime: startTime,
+            startdate: selectedDate,
+          },
+        })
+        .then((res) => {
+          setData1(res.data[0]);
+          setError(null);
+        })
+        .catch((err) => {
+          console.log(err.message);
+        });
+    }
   }, [id, selectedCinema, startTime, selectedDate]);
-  const showtimeid = sessionStorage.setItem("showtimeid", data1?.id);
+  sessionStorage.setItem("showtimeid", data1?.id);
 
   return (
     <>
@@ -166,7 +171,7 @@ const InformationMovieStaff = () => {
           </Row>
         </Row>
       </Container>
-      <SeatCinema />
+      {error == null ? <SeatCinema /> : <div></div>}
     </>
   );
 };

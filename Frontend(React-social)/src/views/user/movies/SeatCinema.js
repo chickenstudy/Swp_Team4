@@ -1,27 +1,40 @@
 import React, { useEffect, useState } from "react";
 import "./Seat.css";
-import { Button, Container, Modal } from "react-bootstrap";
+import { Button, Container, Modal, Toast } from "react-bootstrap";
 import axios from "axios";
 import SweetAlert from "react-bootstrap-sweetalert";
+import { CLOSING } from "ws";
+import { ToastContainer, toast } from "react-toastify";
+import { useNavigate } from "react-router-dom";
 export default function SeatCinema() {
   const [show, setShow] = useState(false);
   const [count, setCount] = useState(0);
   const [selectedSeats, setSelectedSeats] = useState([]);
   const [totalPrice, setTotalPrice] = useState(0);
-  const [seats, setSeats] = useState([]);
+  const [seats, setSeats] = useState([0]);
 
   const cinema = sessionStorage.getItem("cinema");
   const date = sessionStorage.getItem("date");
   const time = sessionStorage.getItem("time");
   const movie = sessionStorage.getItem("movie");
+  const showtimeid = sessionStorage.getItem("showtimeid");
+  const [seatid, setSeatid] = useState([]);
   const [showAlert, setShowAlert] = React.useState(false);
-
+  const [ticketcode, setTicketcode] = useState([]);
+  const roleID = sessionStorage.getItem("roleId");
+  const [error, setError] = useState(false);
+  const [error1, setError1] = useState(false);
+  const navigate = useNavigate();
   function handleSuccess() {
     setShowAlert(true);
   }
 
   function onConfirm() {
     setShowAlert(false);
+    if (roleID == 3) {
+      window.location.href = "/";
+    }
+    window.location.href = "/staffmanagement/movies";
   }
   useEffect(() => {
     calculateTotalPrice();
@@ -51,15 +64,34 @@ export default function SeatCinema() {
 
     if (isSelected) {
       const updatedSeats = selectedSeats.filter(
-        (seat) => !(seat.row === row && seat.col === col)
+        (seat) => !(seat.row == row && seat.col == col)
       );
+
+      const deselectedSeat = seats.find(
+        (seat) =>
+          seatid.includes(seat.seatid) && seat.row == row && seat.col == col
+      );
+      if (deselectedSeat) {
+        setSeatid(seatid.filter((id) => id !== deselectedSeat.seatid));
+      }
       setSelectedSeats(updatedSeats);
       setCount(count - 1);
     } else {
-      const newSeat = { row, col };
-      const updatedSeats = [...selectedSeats, newSeat];
-      setSelectedSeats(updatedSeats);
-      setCount(count + 1);
+      // Cập nhật mảng selectedSeatIds sau khi chọn ghế
+
+      const selected = seats.find((seat) => seat.row == row && seat.col == col);
+      if (selected) {
+        const newSeat = {
+          row,
+          col,
+        };
+        setSeatid([...seatid, selected.seatid]);
+
+        // const newSeat = { row, col };
+        const updatedSeats = [...selectedSeats, newSeat];
+        setSelectedSeats(updatedSeats);
+        setCount(count + 1);
+      }
     }
   };
 
@@ -145,7 +177,39 @@ export default function SeatCinema() {
     setShow(false);
   };
   const handleShow = () => setShow(true);
-
+  const handlePayment = () => {
+    const data = {
+      showtimeId: showtimeid,
+      listSeatIds: JSON.stringify(seatid),
+    };
+    console.log(data.listSeatIds);
+    if (selectedSeats == null || selectedSeats.length === 0) {
+      toast.error("Please choose seat!");
+      setError(true);
+    } else if (data.showtimeId == null) {
+      toast.error("Please choose showtime!");
+      setError(true);
+      navigate("/");
+    } else {
+      axios
+        .put("http://localhost:8080/api/order/bills/createbills", data, {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
+          },
+        })
+        .then((response) => {
+          setTicketcode(response.data.ticket[0].ticketcode);
+          console.log(
+            "Bill created successfully!",
+            response.data.ticket[0].ticketcode
+          );
+        })
+        .catch((error) => {
+          // toast.error("Please choose seat!");
+          console.error("Error creating bill:", error);
+        });
+    }
+  };
   return (
     <div
       style={{
@@ -194,24 +258,39 @@ export default function SeatCinema() {
         </div>
       </Container>
       {/* hien thi thong bao mua ve thanh cong  */}
-      <SweetAlert
-        show={showAlert}
-        title="Order Successfull!"
-        onConfirm={onConfirm}
-        type="success"
-        style={{ display: "block", width: "37em", marginTop: "150px" }}
-      >
-        <h3>Your ticket have been ordered successfully</h3>
-        <p>Movie: {movie}</p>
-        <p>Ticket code: </p>
-        <p>Total: {totalPrice},000 VND</p>
-        <p>
-          If you have any trouble, please contact us at <br></br>
-          <a style={{ color: "gray" }}>hoidap@groovycineplex.vn</a> or hotline{" "}
-          <a style={{ color: "gray", whiteSpace: "nowrap" }}>0123456789</a>
-        </p>
-      </SweetAlert>
-
+      {roleID === 3 && !error ? (
+        <SweetAlert
+          show={showAlert}
+          title="Order Successfull!"
+          onConfirm={onConfirm}
+          type="success"
+          style={{ display: "block", width: "37em", marginTop: "150px" }}
+        >
+          <h3>Your ticket have been ordered successfully</h3>
+          <p>Movie: {movie}</p>
+          <p>
+            Ticket code: <a style={{ color: "red" }}>{ticketcode}</a>
+          </p>
+          <p>Total: {totalPrice},000 VND</p>
+          <p>
+            If you have any trouble, please contact us at <br></br>
+            <a style={{ color: "gray" }}>hoidap@groovycineplex.vn</a> or hotline{" "}
+            <a style={{ color: "gray", whiteSpace: "nowrap" }}>0123456789</a>
+          </p>
+        </SweetAlert>
+      ) : roleID == 2 && !error ? (
+        <SweetAlert
+          show={showAlert}
+          title="Order Successfull!"
+          onConfirm={onConfirm}
+          type="success"
+          style={{ display: "block", width: "37em", marginTop: "150px" }}
+        >
+          <p>oke </p>
+        </SweetAlert>
+      ) : (
+        <p></p>
+      )}
       <>
         <Button className="open-button" onClick={handleShow}>
           Pay Now
@@ -270,6 +349,7 @@ export default function SeatCinema() {
                 {
                   handleClose();
                   handleSuccess();
+                  handlePayment();
                 }
               }}
             >
@@ -281,6 +361,7 @@ export default function SeatCinema() {
             </Button>
           </Modal.Footer>
         </Modal>
+        <ToastContainer />
       </>
     </div>
   );
