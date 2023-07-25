@@ -8,7 +8,7 @@ import Carousel from "react-bootstrap/Carousel";
 import { AiOutlineFieldTime } from "react-icons/ai";
 import axios from "axios";
 import ReactPlayer from "react-player";
-import { Modal, Toast } from "react-bootstrap";
+import { Modal } from "react-bootstrap";
 import "./informationMovie.css";
 import { useContext } from "react";
 import { ApplicationContext } from "../../../App";
@@ -54,7 +54,7 @@ const InformationMovie = () => {
     );
     setSelectedCinema(selectedCinema || null);
   };
-  const movieId = sessionStorage.setItem("movieid", id);
+  sessionStorage.setItem("movieid", id);
   const [startTime, setStartTime] = useState("");
   const handleTicketClick = (date, cinema, showtime, movieName, cinemaid) => {
     // Save values to session storage
@@ -123,10 +123,9 @@ const InformationMovie = () => {
         console.log(err.message);
       });
   }, [id, selectedCinema, startTime, selectedDate]);
-  const showtimeid = sessionStorage.setItem("showtimeid", data1?.id);
+  sessionStorage.setItem("showtimeid", data1?.id);
   const navigate = useNavigate();
-  console.log(user);
-  if (user.length === 0) {
+  if (user.length == 0) {
     // alert("Please login to book ticket");
     toast.error("Please login to book ticket");
   } else if (selected === true) {
@@ -173,14 +172,16 @@ const InformationMovie = () => {
                     border: "2px solid rgb(206, 161, 11)",
                   }}
                   rel="noopener noreferrer"
-                  variant="dark">
+                  variant="dark"
+                >
                   View trailer
                 </Button>
 
                 <Modal
                   show={showVideoModal}
                   onHide={handleCloseVideoModal}
-                  size="lg">
+                  size="lg"
+                >
                   <Modal.Body>
                     <ReactPlayer
                       url={data?.movie?.trailer}
@@ -228,8 +229,11 @@ const InformationMovie = () => {
                       paddingLeft: "10px",
                     }}
                     onChange={handleDateChange}
-                    value={selectedDate}>
-                    <option value="">Choose a date</option>
+                    value={selectedDate}
+                  >
+                    <option value="" hidden>
+                      Choose a date
+                    </option>
                     {datelist.map((dateitem) => (
                       <option key={dateitem.date} value={dateitem.date}>
                         {dateitem.date}
@@ -245,12 +249,16 @@ const InformationMovie = () => {
                       paddingLeft: "10px",
                     }}
                     onChange={handleCinemaChange}
-                    value={selectedCinema ? selectedCinema.cinemaid : ""}>
-                    <option value="">Choose a cinema</option>
+                    value={selectedCinema ? selectedCinema.cinemaid : ""}
+                  >
+                    <option value="" hidden>
+                      Choose a cinema
+                    </option>
                     {cinema.map((cinemaitem) => (
                       <option
                         key={cinemaitem.cinemaid}
-                        value={cinemaitem.cinemaid}>
+                        value={cinemaitem.cinemaid}
+                      >
                         {cinemaitem.name}
                       </option>
                     ))}
@@ -281,7 +289,8 @@ const InformationMovie = () => {
                                 )
                               }
                               style={{ border: "1px solid black" }}
-                              variant="light">
+                              variant="light"
+                            >
                               {showtimeitem}
                             </Button>
                           </span>

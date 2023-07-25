@@ -1,14 +1,15 @@
 import React, { useState } from "react";
-import { Modal, Form, Button, Row, Col } from "react-bootstrap";
+import { Modal, Form, Button, Row, Col, ToastContainer } from "react-bootstrap";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { InputGroup, FormControl } from "react-bootstrap";
 import "../../styles/SignUp.css";
+import { toast } from "react-toastify";
+import { useRef } from "react";
 
 export default function SignUp() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [confirmPassword, setConfirmPassword] = useState("");
   const [sex, setSex] = useState("");
   const [address, setAddress] = useState("");
   const [picture, setPicture] = useState(null);
@@ -21,7 +22,7 @@ export default function SignUp() {
   const [showModal, setShowModal] = useState(false);
   const [isEmailVerified, setIsEmailVerified] = useState(false);
   const [otp, setOtp] = useState("");
-
+  const rpwd = useRef("");
   const [confirmationMessage, setConfirmationMessage] = useState("");
 
   const handleSexChange = (event) => {
@@ -73,45 +74,41 @@ export default function SignUp() {
     ) {
       setError1("Your email is Null");
     }
-    if (password === confirmPassword) {
-      const data = {
-        user: {
-          email,
-          password,
-          sex,
-          address,
-          picture,
-          username,
-          phoneNumber,
-          dob,
-        },
-      };
+    const data = {
+      user: {
+        email,
+        password,
+        sex,
+        address,
+        picture,
+        username,
+        phoneNumber,
+        dob,
+      },
+    };
 
-      axios
-        .post("http://localhost:8080/api/user/register", data)
-        .then((response) => {
-          console.log(response.message);
+    axios
+      .post("http://localhost:8080/api/user/register", data)
+      .then((response) => {
+        console.log(response.message);
 
-          if (response.status === 200) {
-            alert("Sign up successful!");
-            window.location.href = "/";
-          }
-        })
-        .catch((error) => {
-          console.error(error);
-          if (
-            error.response &&
-            error.response.data &&
-            error.response.data.message
-          ) {
-            setError1("Your email is Null");
-          } else {
-            setError1("Your email is registered");
-          }
-        });
-    } else {
-      setError("Passwords do not match.");
-    }
+        if (response.status === 200) {
+          alert("Sign up successful!");
+          window.location.href = "/";
+        }
+      })
+      .catch((error) => {
+        console.error(error);
+        if (
+          error.response &&
+          error.response.data &&
+          error.response.data.message
+        ) {
+          setError1("Your email is Null");
+        } else {
+          setError1("Your email is registered");
+        }
+      });
   };
 
   const handlePictureChange = (event) => {
@@ -137,7 +134,14 @@ export default function SignUp() {
 
     setError2(null);
   };
-
+  const handleMatchPassword = (e) => {
+    if (rpwd.current.value != password) {
+      setError("Passwords do not match.");
+      rpwd.current.focus();
+    } else {
+      setError(null);
+    }
+  };
   const handleClose = () => {
     setShowModal(false);
     setEmail("");
@@ -157,13 +161,13 @@ export default function SignUp() {
     setError2("");
     setIsEmailVerified(false);
   };
-
   return (
     <>
       <Button
         variant="none"
         onClick={handleShow}
-        style={{ color: "rgb(245, 245, 245)" }}>
+        style={{ color: "rgb(245, 245, 245)" }}
+      >
         Sign Up
       </Button>
 
@@ -222,7 +226,8 @@ export default function SignUp() {
                       <Button
                         onClick={handleOtpVerification}
                         className="btn btn-dark mt-3"
-                        disabled={!otp}>
+                        disabled={!otp}
+                      >
                         Verify OTP
                       </Button>
                     </Form.Group>
@@ -231,7 +236,8 @@ export default function SignUp() {
                       className="btn btn-dark"
                       onClick={handleEmailVerification}
                       disabled={!email}
-                      size="sm">
+                      size="sm"
+                    >
                       Send OTP
                     </Button>
                   )}
@@ -257,8 +263,11 @@ export default function SignUp() {
                     <Form.Control
                       type="password"
                       placeholder="Confirm Password"
-                      value={confirmPassword}
-                      onChange={(e) => setConfirmPassword(e.target.value)}
+                      // value={confirmPassword}
+                      ref={rpwd}
+                      onBlur={() => {
+                        handleMatchPassword();
+                      }}
                     />
                     {error && (
                       <Form.Text className="text-danger">{error}</Form.Text>
@@ -275,7 +284,8 @@ export default function SignUp() {
                       as="select"
                       custom
                       value={sex}
-                      onChange={handleSexChange}>
+                      onChange={handleSexChange}
+                    >
                       <option value="">Choose option</option>
                       <option value={1}>Male</option>
                       <option value={0}>Female</option>

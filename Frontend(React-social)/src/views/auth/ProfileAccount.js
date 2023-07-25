@@ -10,11 +10,8 @@ import {
   MDBCardText,
   MDBCardBody,
   MDBCardImage,
-  MDBBtn,
   MDBBreadcrumb,
   MDBBreadcrumbItem,
-  MDBProgress,
-  MDBProgressBar,
   MDBIcon,
   MDBListGroup,
   MDBListGroupItem,
@@ -37,41 +34,62 @@ export default function ProfileAccount() {
   const [phonenumber, setPhoneNumber] = useState("");
   const [dob, setDob] = useState("");
   const [error, setError] = useState("");
+  const [age, setAge] = useState(0);
+
   const navigate = useNavigate();
   const handleSexChange = (event) => {
     setSex(event.target.value);
   };
+  const isOver18 = (dob) => {
+    const currentDate = new Date();
+    const inputDate = new Date(dob);
+    const ageDiff = currentDate.getFullYear() - inputDate.getFullYear();
+    const monthDiff = currentDate.getMonth() - inputDate.getMonth();
+    if (
+      monthDiff < 0 ||
+      (monthDiff === 0 && currentDate.getDate() < inputDate.getDate())
+    ) {
+      return ageDiff - 1;
+    }
+    return ageDiff;
+  };
 
   const handleUpdate = () => {
-    const data = {
-      username,
-      email,
-      password,
-      sex,
-      address,
-      picture,
-      phonenumber,
-      dob,
-    };
+    const userAge = isOver18(dob);
+    if (userAge < 18) {
+      toast.error("You must be over 18 years old to Update");
+      return;
+    } else {
+      const data = {
+        username,
+        email,
+        password,
+        sex,
+        address,
+        picture,
+        phonenumber,
+        dob,
+      };
 
-    axios
-      .put(`http://localhost:8080/api/user/profiles/update/${userId}`, data, {
-        headers: {
-          Authorization: `Bearer ${jwt}`,
-        },
-      })
-      .then((res) => {
-        toast.success("Update success", {
-          onClose: () => {
-            navigate("/profile");
-            // Thực hiện các xử lý sau khi cập nhật thành công
+      axios
+        .put(`http://localhost:8080/api/user/profiles/update/${userId}`, data, {
+          headers: {
+            Authorization: `Bearer ${jwt}`,
           },
-        }); // Thực hiện các xử lý sau khi cập nhật thành công
-      })
-      .catch((error) => {
-        console.error(error);
-        // Xử lý lỗi nếu có
-      });
+        })
+        .then((res) => {
+          toast.success("Update success", {
+            onClose: () => {
+              navigate("/profile");
+              // Thực hiện các xử lý sau khi cập nhật thành công
+            },
+          }); // Thực hiện các xử lý sau khi cập nhật thành công
+        })
+        .catch((error) => {
+          console.error(error);
+          // Xử lý lỗi nếu có
+        });
+    }
   };
 
   const handlePictureChange = (event) => {
@@ -98,9 +116,7 @@ export default function ProfileAccount() {
     setError(null);
   };
   useEffect(() => {
-    if (!user || !user.username || !user.email) {
-      navigate("/");
-    }
+    if (!(user?.username && user?.email)) navigate("/");
   }, [user, navigate]);
   useEffect(() => {
     axios

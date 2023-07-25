@@ -5,6 +5,7 @@ import java.sql.SQLException;
 import java.util.List;
 import java.util.Map;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -13,8 +14,10 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.namnguyenmoihoc.realworldapp.entity.BookTicket;
 import com.namnguyenmoihoc.realworldapp.exception.custom.CustomMessageError;
 import com.namnguyenmoihoc.realworldapp.exception.custom.CustomNotFoundException;
@@ -23,8 +26,12 @@ import com.namnguyenmoihoc.realworldapp.model.staff.StaffDTOCreate;
 import com.namnguyenmoihoc.realworldapp.model.staff.StaffDTOResponse;
 import com.namnguyenmoihoc.realworldapp.model.ticket.CheckoutDTO;
 import com.namnguyenmoihoc.realworldapp.service.StaffService;
+import com.namnguyenmoihoc.realworldapp.service.impl.StaffServiceImpl;
 
+import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 
 @RestController
 @RequestMapping("/api/staff")
@@ -32,6 +39,9 @@ import lombok.RequiredArgsConstructor;
 @CrossOrigin
 public class StaffController {
     private final StaffService staffService;
+    private final HttpSession httpSession;
+    @Autowired
+    private final StaffServiceImpl staffServiceImpl;
 
     @PostMapping("/create")
     public Map<String, ProfileDTOResponse> createStaff(
@@ -71,4 +81,12 @@ public class StaffController {
         staffService.clearSeat();
     }
 
+    @GetMapping("/transactionHistory")
+    public List<BookTicket> getDataListJson() {
+        // Truy xuất List từ session
+        List<BookTicket> dataList = staffServiceImpl.getListTransaction();
+        
+        return dataList;
+       
+    }
 }
