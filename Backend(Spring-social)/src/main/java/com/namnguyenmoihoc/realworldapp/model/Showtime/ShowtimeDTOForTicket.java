@@ -3,16 +3,9 @@ package com.namnguyenmoihoc.realworldapp.model.Showtime;
 import java.time.LocalDate;
 import java.time.LocalTime;
 
-import org.hibernate.annotations.OnDelete;
-import org.hibernate.annotations.OnDeleteAction;
-
-import com.namnguyenmoihoc.realworldapp.entity.Cinema;
-import com.namnguyenmoihoc.realworldapp.entity.Movie;
 import com.namnguyenmoihoc.realworldapp.model.cinema.CinemaDTO;
 import com.namnguyenmoihoc.realworldapp.model.movie.MovieDTO;
 
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;

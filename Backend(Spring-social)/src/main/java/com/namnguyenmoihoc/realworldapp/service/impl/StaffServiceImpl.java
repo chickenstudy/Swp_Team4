@@ -3,7 +3,6 @@ package com.namnguyenmoihoc.realworldapp.service.impl;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.util.ArrayList;
-
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -20,21 +19,16 @@ import com.namnguyenmoihoc.realworldapp.entity.BookTicket;
 import com.namnguyenmoihoc.realworldapp.entity.Seat;
 import com.namnguyenmoihoc.realworldapp.exception.custom.CustomMessageError;
 import com.namnguyenmoihoc.realworldapp.exception.custom.CustomNotFoundException;
-
 import com.namnguyenmoihoc.realworldapp.model.profileAccount.ProfileDTOResponse;
-import com.namnguyenmoihoc.realworldapp.model.seat.SeatDTOResponse;
-import com.namnguyenmoihoc.realworldapp.model.staff.ListTicketBuyedForStaff;
 import com.namnguyenmoihoc.realworldapp.model.staff.StaffDTOCreate;
 import com.namnguyenmoihoc.realworldapp.model.staff.StaffDTOResponse;
 import com.namnguyenmoihoc.realworldapp.model.ticket.CheckoutDTO;
 import com.namnguyenmoihoc.realworldapp.model.user.CustomError;
-import com.namnguyenmoihoc.realworldapp.model.user.mapper.SeatMapper;
 import com.namnguyenmoihoc.realworldapp.model.user.mapper.StaffMapper;
 import com.namnguyenmoihoc.realworldapp.repository.SeatRepositorty;
 import com.namnguyenmoihoc.realworldapp.repository.StaffRepository;
 import com.namnguyenmoihoc.realworldapp.repository.TicketRepository;
 import com.namnguyenmoihoc.realworldapp.service.StaffService;
-import com.namnguyenmoihoc.realworldapp.service.TicketService;
 
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;

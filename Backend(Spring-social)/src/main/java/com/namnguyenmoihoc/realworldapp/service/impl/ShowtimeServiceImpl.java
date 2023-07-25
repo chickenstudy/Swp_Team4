@@ -44,6 +44,15 @@ public class ShowtimeServiceImpl implements ShowtimeService {
         return startTimes.stream().map(localTime -> localTime.format(DateTimeFormatter.ofPattern("HH:mm")))
                 .collect(Collectors.toList());
     }
+    @Override
+    public List<String> getStartDates(Integer movieid) {
+    
+        List<LocalDate> startDates = showtimeRepository.getStartDateMovie(movieid);
+        return startDates.stream()
+                .map(localDate -> localDate.format(DateTimeFormatter.ofPattern("yyyy-MM-dd")))
+                .collect(Collectors.toList());
+    }
+    
 
     @Override
     public List<ShowtimeDTO> getSchedules(Integer movieid, Integer cinemaid, String startdate, String starttime) {
@@ -105,5 +114,7 @@ public class ShowtimeServiceImpl implements ShowtimeService {
 
         return response;
     }
+
+    
 
 }

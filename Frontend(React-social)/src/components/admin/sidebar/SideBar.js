@@ -44,7 +44,7 @@ function SideBar() {
         <Button
           variant="outline-light"
           className="logout-btn"
-          style={{ position: "relative", left: "18px", top: "380px" }}
+          style={{ position: "relative", left: "28px", top: "420px" }}
           onClick={makeSignOutClick}>
           <BsBoxArrowRight className="logout-icon" />
           Logout
