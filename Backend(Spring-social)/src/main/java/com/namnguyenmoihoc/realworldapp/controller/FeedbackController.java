@@ -33,6 +33,7 @@ public class FeedbackController {
     private final FeedbackService feedbackService;
 
     @GetMapping("/listFeedback/{movieid}")
+
     public Map<String, List<FeedbackDTO>> getListFeedback(@PathVariable(value = "movieid") int movieid)
             throws CustomNotFoundException {
 
@@ -40,6 +41,7 @@ public class FeedbackController {
     }
 
     @PostMapping("/comment/{movieid}")
+ 
     public Map<String, FeedbackDTO> getFeedback(@PathVariable(value = "movieid") int movieid,
             @RequestBody Map<String, FeedbackDTOCreate> feedbackDTOCreate)
             throws CustomNotFoundException {
