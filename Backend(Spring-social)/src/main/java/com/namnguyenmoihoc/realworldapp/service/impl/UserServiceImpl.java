@@ -249,27 +249,47 @@ public class UserServiceImpl implements UserService {
 
     private Map<String, ChangePasswordMessage> changepassword() {
         Map<String, ChangePasswordMessage> wrapper = new HashMap<>();
-        ChangePasswordMessage changePasswordMessage = new ChangePasswordMessage(CustomError.builder().code("200").message("Password Change Successfully!!!").build());
+        ChangePasswordMessage changePasswordMessage = new ChangePasswordMessage(
+                CustomError.builder().code("200").message("Password Change Successfully!!!").build());
         wrapper.put("message", changePasswordMessage);
         return wrapper;
     }
 
     @Override
-public UserDTOResponseEmail getUserIdByEmail(String email) throws CustomNotFoundException {
-    Optional<Account> userOptional = userRepository.findByEmail(email);
+    public UserDTOResponseEmail getUserIdByEmail(String email) throws CustomNotFoundException {
+        Optional<Account> userOptional = userRepository.findByEmail(email);
 
-    if (userOptional.isEmpty()) {
-        throw new CustomNotFoundException(
-                CustomError.builder().code("404").message("User with email '" + email + "' not found.").build());
+        if (userOptional.isEmpty()) {
+            throw new CustomNotFoundException(
+                    CustomError.builder().code("404").message("User with email '" + email + "' not found.").build());
+        }
+
+        Long userId = (long) userOptional.get().getId();
+        UserDTOResponseEmail userDTOResponseEmail = new UserDTOResponseEmail();
+        userDTOResponseEmail.setUserId(userId);
+
+        return userDTOResponseEmail;
     }
 
-    Long userId = (long) userOptional.get().getId();
-    UserDTOResponseEmail userDTOResponseEmail = new UserDTOResponseEmail();
-    userDTOResponseEmail.setUserId(userId);
-    
+    @Override
+    public Map<String, ChangePasswordMessage> forgotpassword(int userid, AccountDTONewPassword accountNewPassword)
+            throws CustomNotFoundException {
+        // TODO Auto-generated method stub
+        if (accountNewPassword.getPassword().isEmpty()) {
+            throw new CustomNotFoundException(CustomError.builder().code("404").message("Password null").build());
+        }
 
-    return userDTOResponseEmail;
-}
+        Optional<Account> userOptional = userRepository.findById(userid);
+        if (userOptional.isEmpty()) {
+            throw new CustomNotFoundException(CustomError.builder().code("404").message("User not found").build());
+        }
 
+        Account user = userOptional.get();
+
+        user.setPassword(passwordEncoder.encode(accountNewPassword.getPassword()));
+        user = userRepository.save(user);
+        return changepassword();
+
+    }
 
 }

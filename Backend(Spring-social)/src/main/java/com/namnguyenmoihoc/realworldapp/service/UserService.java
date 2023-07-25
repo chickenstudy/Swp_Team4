@@ -36,7 +36,7 @@ public interface UserService {
     public  Map<String, ChangePasswordMessage> changePassword(int userid, AccountDTONewPassword accountNewPassword) throws CustomNotFoundException;
     public UserDTOResponseEmail getUserIdByEmail(String email) throws CustomNotFoundException;
 
+    public Map<String, ChangePasswordMessage> forgotpassword(int userid, AccountDTONewPassword accountNewPassword) throws CustomNotFoundException;
 
     //public UserRolesDTOResponse findAll();
-    
 }

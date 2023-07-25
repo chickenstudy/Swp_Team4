@@ -54,4 +54,10 @@ public class ProfileController {
         return userService.getUserIdByEmail(email);
     }
 
+    @PutMapping("/update/forgotpassword/{userid}")
+    public  Map<String, ChangePasswordMessage> forgotpassword(@PathVariable int userid, @RequestBody AccountDTONewPassword accountNewPassword)
+            throws CustomNotFoundException, IOException {
+        return userService.forgotpassword(userid, accountNewPassword);
+    }
+
 }
