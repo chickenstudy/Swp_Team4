@@ -123,9 +123,9 @@ const InformationMovie = () => {
         console.log(err.message);
       });
   }, [id, selectedCinema, startTime, selectedDate]);
-  const showtimeid = sessionStorage.setItem("showtimeid", data1?.id);
+  sessionStorage.setItem("showtimeid", data1?.id);
   const navigate = useNavigate();
-  if (user.length === 0) {
+  if (user.length == 0) {
     // alert("Please login to book ticket");
     toast.error("Please login to book ticket");
   } else if (selected === true) {

@@ -54,7 +54,7 @@ export default function Banner() {
         picture,
       },
     };
-    console.log(JSON.stringify(databanner));
+
     fetch("http://localhost:8080/api/banner/create", {
       method: "POST",
       headers: { "content-type": "application/json" },

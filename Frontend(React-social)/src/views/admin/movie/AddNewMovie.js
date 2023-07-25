@@ -38,6 +38,7 @@ const AddNewMovie = () => {
   };
 
   const navigate = useNavigate();
+
   const handlesubmit = (e) => {
     e.preventDefault();
     const data = {
@@ -53,6 +54,7 @@ const AddNewMovie = () => {
         description,
       },
     };
+    
     console.log(JSON.stringify(data));
     fetch("http://localhost:8080/api/movie/create", {
       method: "POST",

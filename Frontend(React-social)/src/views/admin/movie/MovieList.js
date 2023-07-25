@@ -84,7 +84,7 @@ const MovieList = () => {
                       />
                     }
                   </td>
-                  <td style={{ width: "110px" }}>{item.name}</td>
+                  <td style={{ width: "110px" }}><h6>{item.name}</h6></td>
                   <td style={{ width: "100px" }}>{item.type}</td>
                   <td style={{ width: "90px" }}>{item.country}</td>
                   <td style={{ width: "90px" }}>{item.show_date}</td>

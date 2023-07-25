@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import "./Seat.css";
 import { Button, Container, Modal, Toast } from "react-bootstrap";
 import axios from "axios";
@@ -6,7 +6,9 @@ import SweetAlert from "react-bootstrap-sweetalert";
 import { CLOSING } from "ws";
 import { ToastContainer, toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
+import { ApplicationContext } from "../../../App";
 export default function SeatCinema() {
+  const { user } = useContext(ApplicationContext);
   const [show, setShow] = useState(false);
   const [count, setCount] = useState(0);
   const [selectedSeats, setSelectedSeats] = useState([]);
@@ -23,7 +25,6 @@ export default function SeatCinema() {
   const [ticketcode, setTicketcode] = useState([]);
   const roleID = sessionStorage.getItem("roleId");
   const [error, setError] = useState(false);
-  const [error1, setError1] = useState(false);
   const navigate = useNavigate();
   function handleSuccess() {
     setShowAlert(true);
@@ -177,6 +178,11 @@ export default function SeatCinema() {
     setShow(false);
   };
   const handleShow = () => setShow(true);
+  if (user.length == 0) {
+    alert("Please login to book ticket!");
+    navigate("/");
+  }
+
   const handlePayment = () => {
     const data = {
       showtimeId: showtimeid,
@@ -258,7 +264,7 @@ export default function SeatCinema() {
         </div>
       </Container>
       {/* hien thi thong bao mua ve thanh cong  */}
-      {roleID === 3 && !error ? (
+      {roleID == 3 && !error ? (
         <SweetAlert
           show={showAlert}
           title="Order Successfull!"
