@@ -49,7 +49,7 @@ function Account() {
         </IconButton>
       </Tooltip>
       <Menu
-        sx={{ mt: "30px" }}
+        sx={{ mt: "10px" }}
         id="menu-appbar"
         anchorEl={anchorElUser}
         anchorOrigin={{
@@ -83,6 +83,27 @@ function Account() {
                   <Typography>Change password</Typography>
                 </Link>
               </Grid>
+              {user.roleID == 1 && ( // Render "Manage" MenuItem if user.roleId is 1
+                <Grid item>
+                  <Link
+                    to="/listmovie"
+                    style={{ textDecoration: "none", color: "black" }}
+                  >
+                    <Typography>Manage to admin</Typography>
+                  </Link>
+                </Grid>
+              )}
+              {user.roleID == 2 && ( // Render "Manage" MenuItem if user.roleId is 1
+                <Grid item>
+                  <Link
+                    to="/staffmanagement/movies"
+                    style={{ textDecoration: "none", color: "black" }}
+                  >
+                    <Typography>Staff Srceen</Typography>
+                  </Link>
+                </Grid>
+              )}
+
               <Grid item>
                 <Typography onClick={makeSignOut}>Log Out</Typography>
               </Grid>

@@ -34,7 +34,7 @@ export default function Menu() {
           </span>
           <span>
             {Array.isArray(user) && user.length == 0 ? (
-              <p></p>
+              <span></span>
             ) : (
               <Link to="/history" style={{ color: "rgb(245, 245, 245)" }}>
                 TICKET HISTORY

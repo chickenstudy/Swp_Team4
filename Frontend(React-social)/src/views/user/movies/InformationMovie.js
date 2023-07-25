@@ -8,7 +8,7 @@ import Carousel from "react-bootstrap/Carousel";
 import { AiOutlineFieldTime } from "react-icons/ai";
 import axios from "axios";
 import ReactPlayer from "react-player";
-import { Modal } from "react-bootstrap";
+import { Dropdown, Modal } from "react-bootstrap";
 import "./informationMovie.css";
 import { useContext } from "react";
 import { ApplicationContext } from "../../../App";
@@ -25,23 +25,7 @@ const InformationMovie = () => {
   const [selectedDate, setSelectedDate] = useState("");
   const [selectedCinema, setSelectedCinema] = useState("");
   const [selected, setSelected] = useState(false);
-  const datelist = [
-    {
-      date: "2023-07-19",
-    },
-    {
-      date: "2023-07-20",
-    },
-    {
-      date: "2023-07-21",
-    },
-    {
-      date: "2023-07-22",
-    },
-    {
-      date: "2023-07-23",
-    },
-  ];
+  const [datelist, setDatelist] = useState([]);
 
   const handleDateChange = (event) => {
     setSelectedDate(event.target.value);
@@ -76,6 +60,17 @@ const InformationMovie = () => {
         console.log(err.message);
       });
   }, [id]);
+  useEffect(() => {
+    axios
+      .get(`http://localhost:8080/api/showtime/startdate?movieid=${id}`)
+
+      .then((res) => {
+        setDatelist(res.data);
+      })
+      .catch((err) => {
+        console.log(err.message);
+      });
+  }, []);
 
   useEffect(() => {
     axios
@@ -138,19 +133,154 @@ const InformationMovie = () => {
   const handleCloseVideoModal = () => {
     setShowVideoModal(false);
   };
-  const [comments, setComments] = useState([]);
+
+  const [feedbackList, setFeedbackList] = useState([]);
+
+  // Function để lấy danh sách bình luận từ API
+  const fetchFeedback = () => {
+    axios
+      .get(`http://localhost:8080/api/feedback/listFeedback/${id}`)
+      .then((res) => {
+        setFeedbackList(res.data.feedback);
+      })
+      .catch((err) => {
+        console.log(err.message);
+      });
+  };
+
+  useEffect(() => {
+    fetchFeedback();
+  }, [id]);
 
   // State to store user's comment input
   const [commentInput, setCommentInput] = useState("");
 
   // Function to handle form submission and add comment to the comments state
+
   const handleSubmitComment = (event) => {
+    if (user.length == 0) {
+      toast.error("Please login to comment");
+    }
     event.preventDefault();
     if (commentInput.trim() !== "") {
-      setComments([...comments, commentInput]);
-      setCommentInput("");
+      // Create the comment object with content and userid
+      const commentData = {
+        feedback: {
+          content: commentInput,
+          userid: user.userId, // Replace with the actual user ID (if available) or remove this line if you handle the user ID differently
+        },
+      };
+
+      // Send the comment data to the API
+      axios
+        .post(`http://localhost:8080/api/feedback/comment/${id}`, commentData)
+        .then((res) => {
+          // If the comment is successfully added to the database, update the feedbackList state with the new comment
+          setFeedbackList((prevFeedback) => [
+            ...prevFeedback,
+            res.data.feedback,
+          ]);
+          setCommentInput(""); // Clear the comment input field after successful submission
+        })
+        .catch((err) => {
+          console.log(err.message);
+          // Handle error if the comment cannot be added
+        });
     }
   };
+  const [editedContent, setEditedContent] = useState("");
+
+  const [editingCommentId, setEditingCommentId] = useState(null);
+
+  const handleSubmitEditedComment = (commentId) => {
+    if (user.length === 0) {
+      toast.error("Please login to update the comment");
+    } else {
+      if (editedContent.trim() !== "") {
+        const updatedFeedback = {
+          ...feedbackList.find((feedback) => feedback.feedbackid === commentId),
+          content: editedContent,
+        };
+
+        axios
+          .put(
+            `http://localhost:8080/api/feedback/updateComment/${commentId}`,
+            { feedback: updatedFeedback }
+          )
+          .then((res) => {
+            // Update the feedbackList state with the updated comment
+            setFeedbackList((prevFeedback) => {
+              const updatedList = prevFeedback.map((feedback) =>
+                feedback.feedbackid === commentId ? updatedFeedback : feedback
+              );
+              return updatedList;
+            });
+            toast.success("Comment updated successfully");
+          })
+          .catch((err) => {
+            console.log(err.message);
+          })
+          .finally(() => {
+            // Reset the temporary edited content and comment ID
+            setEditedContent("");
+            setEditingCommentId(null);
+          });
+      } else {
+        toast.error("Please enter a valid comment");
+      }
+    }
+  };
+  const canEditComment = (currentUser, commentOwner) => {
+    // Replace this with your actual logic for checking authorization.
+    // For example, you can compare the usernames of the current user and the comment owner.
+    console.log(currentUser);
+    console.log(commentOwner);
+    return currentUser == commentOwner;
+  };
+  // Function to handle cancelling the edit process
+  const handleCancelEdit = () => {
+    // Reset the temporary edited content and comment ID
+    setEditedContent("");
+    setEditingCommentId(null);
+  };
+  const handleDeleteComment = (commentId) => {
+    if (user.length == 0) {
+      toast.error("Please login to delete the comment");
+    } else {
+      // Find the index of the comment in the feedbackList array
+      const commentIndex = feedbackList.findIndex(
+        (feedback) => feedback.feedbackid === commentId
+      );
+
+      // Check if the comment exists in the feedbackList
+      if (commentIndex !== -1) {
+        // Check if the user is the owner of the comment
+        if (user.username === feedbackList[commentIndex].username) {
+          // Send the delete request to the API
+          axios
+            .delete(
+              `http://localhost:8080/api/feedback/deleteComment/${commentId}`
+            )
+            .then((res) => {
+              // Update the feedbackList state by removing the deleted comment
+              setFeedbackList((prevFeedback) => {
+                const updatedList = [...prevFeedback];
+                updatedList.splice(commentIndex, 1);
+                return updatedList;
+              });
+              toast.success("Comment deleted successfully");
+            })
+            .catch((err) => {
+              console.log(err.message);
+            });
+        } else {
+          toast.error("You are not authorized to delete this comment");
+        }
+      }
+    }
+  };
+
+  // ...
   return (
     <div id="">
       <div className="movie_trailer detail_typeA">
@@ -215,13 +345,13 @@ const InformationMovie = () => {
                   <AiOutlineFieldTime size={25} /> {data?.movie?.times}
                 </p>
                 <p>
-                  <strong>Thể loại</strong> {data?.movie?.type}
+                  <strong>Category:</strong> {data?.movie?.type}
                 </p>
                 <p>
-                  <strong>Quốc gia</strong> {data?.movie?.country}
+                  <strong>Country:</strong> {data?.movie?.country}
                 </p>
                 <p>
-                  <strong>Ngày công chiếu </strong>
+                  <strong>Release date: </strong>
                   {data?.movie?.show_date}
                 </p>
               </div>
@@ -231,7 +361,7 @@ const InformationMovie = () => {
               <p className="my-2">{data?.movie?.description}</p>
             </div>
             <div className="showtimes">
-              <h3>LỊCH CHIẾU</h3>
+              <h3>SHOWTIMES:</h3>
 
               <Row className="mt-4">
                 <Col md={3}>
@@ -248,8 +378,8 @@ const InformationMovie = () => {
                       Choose a date
                     </option>
                     {datelist.map((dateitem) => (
-                      <option key={dateitem.date} value={dateitem.date}>
-                        {dateitem.date}
+                      <option key={dateitem} value={dateitem}>
+                        {dateitem}
                       </option>
                     ))}
                   </select>
@@ -320,7 +450,6 @@ const InformationMovie = () => {
         <Row>
           <Col xs={2}></Col>
           <Col xs={8}>
-            {" "}
             <div className="comment-section my-4">
               <h3>Comment </h3>
               <form onSubmit={handleSubmitComment}>
@@ -329,18 +458,57 @@ const InformationMovie = () => {
                     type="text"
                     value={commentInput}
                     onChange={(e) => setCommentInput(e.target.value)}
-                    placeholder="Nhập bình luận của bạn..."
+                    placeholder="Enter your comment..."
                     className="form-control mr-2"
                   />
-                  <button type="submit" className="btn btn-primary">
-                    Gửi
-                  </button>
+                  <Button type="submit" className="btn btn-dark">
+                    Send
+                  </Button>
                 </div>
               </form>
+
               <div className="comments mt-3">
-                {comments.map((comment, index) => (
-                  <div key={index} className="my-2">
-                    {comment}
+                {feedbackList.reverse().map((feedback) => (
+                  <div key={feedback.feedbackid} className="my-2">
+                    {/* Hiển thị ảnh và tên người dùng */}
+                    <div className="d-flex align-items-center mb-2">
+                      <img
+                        src={feedback.picture} // Thay URL_AVATAR bằng đường dẫn tới thư mục chứa ảnh avatar của người dùng
+                        alt="Avatar"
+                        style={{
+                          width: "30px",
+                          height: "30px",
+                          borderRadius: "50%",
+                          marginRight: "10px",
+                        }}
+                      />
+                      <strong>{feedback.username}</strong>
+                      {user.username == feedback.username && (
+                        <div className="comment-options">
+                          <Dropdown>
+                            <Dropdown.Toggle
+                              variant="light"
+                              id={`commentDropdown${feedback.feedbackid}`}
+                            >
+                              <i className="fas fa-ellipsis-h"></i>
+                            </Dropdown.Toggle>
+                            <Dropdown.Menu>
+                              <Dropdown.Item
+                                onClick={() =>
+                                  handleDeleteComment(feedback.feedbackid)
+                                }
+                              >
+                                Delete
+                              </Dropdown.Item>
+                            </Dropdown.Menu>
+                          </Dropdown>
+                        </div>
+                      )}
+                    </div>
+                    {/* Hiển thị ngày bình luận */}
+                    <div>{feedback.createddate}</div>
+                    {/* Hiển thị nội dung bình luận */}
+                    <div>{feedback.content}</div>
                   </div>
                 ))}
               </div>

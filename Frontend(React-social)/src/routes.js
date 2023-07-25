@@ -25,6 +25,8 @@ import DashboardStaff from "./views/staff/dashboard/DashboardStaff";
 import InformationMoviesStaff from "./views/staff/movies/InformationMoviesStaff";
 import ChangePassword from "./views/auth/ChangePassword";
 import History from "./views/user/cinemas/History";
+import ForgotPassword from "./views/auth/ForgotPassword";
+import ChangePasswordUser from "./views/auth/ChangePasswordUser";
 //---------- USER ROUTE ---------
 export const UserRoutes = [
   {
@@ -58,22 +60,26 @@ export const UserRoutes = [
     component: ChangePassword,
     layout: UserLayout,
   },
+  {
+    path: "/user/change-password",
+    component: ChangePasswordUser,
+    layout: UserLayout,
+  },
 
   {
     path: "/seat",
     component: SeatCinema,
     layout: null,
   },
+  {
+    path: "/forgotpassword",
+    component: ForgotPassword,
+    layout: UserLayout,
+  },
 ];
 
 //---------- ADMIN ROUTE ---------
 export const AdminRoutes = [
-  {
-    path: "/admin",
-    component: Dashboard,
-    layout: AdminLayout,
-    isProtected: true,
-  },
   {
     path: "/listmovie",
     component: MovieList,
@@ -129,7 +135,6 @@ export const AdminRoutes = [
     layout: AdminLayout,
     isProtected: true,
   },
-
 ];
 
 // Staff Routes

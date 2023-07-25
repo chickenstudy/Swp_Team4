@@ -16,14 +16,13 @@ function Menu() {
   return (
     <Navbar expand="lg" className="bg-body-tertiary">
       <Container fluid>
-        <Navbar.Brand href="/staffmanagement">
+        <Navbar.Brand href="/staffmanagement/movies">
           <span>
             <img src={logo} style={{ width: "50px" }}></img>
           </span>
         </Navbar.Brand>
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav className="me-auto my-2 my-lg-0" style={{ maxHeight: "100px" }}>
-            <Nav.Link href="/staffmanagement">Dashbroad</Nav.Link>
             <Nav.Link href="/staffmanagement/movies">Movies</Nav.Link>
           </Nav>
         </Navbar.Collapse>

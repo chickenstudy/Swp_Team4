@@ -21,24 +21,7 @@ const InformationMovieStaff = () => {
   sessionStorage.setItem("cinemaid", cinema_id);
   const [error, setError] = useState(null);
 
-  const datelist = [
-    {
-      date: "2023-07-19",
-    },
-    {
-      date: "2023-07-20",
-    },
-    {
-      date: "2023-07-21",
-    },
-    {
-      date: "2023-07-22",
-    },
-    {
-      date: "2023-07-23",
-    },
-  ];
-
+  const [datelist, setDatelist] = useState([]);
   const handleDateChange = (event) => {
     setSelectedDate(event.target.value);
   };
@@ -64,6 +47,18 @@ const InformationMovieStaff = () => {
         console.log(err.message);
       });
   }, [id]);
+  useEffect(() => {
+    axios
+      .get(`http://localhost:8080/api/showtime/startdate?movieid=${id}`)
+
+      .then((res) => {
+        setDatelist(res.data);
+        console.log(res.data);
+      })
+      .catch((err) => {
+        console.log(err.message);
+      });
+  }, []);
 
   useEffect(() => {
     axios
@@ -134,10 +129,12 @@ const InformationMovieStaff = () => {
                 onChange={handleDateChange}
                 value={selectedDate}
               >
-                <option value="">Choose a date</option>
+                <option value="" hidden>
+                  Choose a date
+                </option>
                 {datelist.map((dateitem) => (
-                  <option key={dateitem.date} value={dateitem.date}>
-                    {dateitem.date}
+                  <option key={dateitem} value={dateitem}>
+                    {dateitem}
                   </option>
                 ))}
               </select>

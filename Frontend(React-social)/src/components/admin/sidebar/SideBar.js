@@ -17,10 +17,6 @@ function SideBar() {
   return (
     <aside className="sidebar">
       <Nav>
-        <NavLink to="/admin" className="nav-link" activeClassName="active">
-          DASHBOARD
-        </NavLink>
-
         <NavLink to="/listmovie" className="nav-link" activeClassName="active">
           <p>LIST MOVIE</p>
         </NavLink>
@@ -36,8 +32,6 @@ function SideBar() {
         <NavLink to="/banner" className="nav-link" activeClassName="active">
           <p>BANNER</p>
         </NavLink>
-
-      
       </Nav>
 
       <div className="logout-button">
@@ -45,7 +39,8 @@ function SideBar() {
           variant="outline-light"
           className="logout-btn"
           style={{ position: "relative", left: "28px", top: "420px" }}
-          onClick={makeSignOutClick}>
+          onClick={makeSignOutClick}
+        >
           <BsBoxArrowRight className="logout-icon" />
           Logout
         </Button>

@@ -31,7 +31,7 @@ app.post("/send-otp", (req, res) => {
   const mailOptions = {
     from: "Cinema-system",
     to: email,
-    subject: "Cinema System Team4 Send OTP Confirmation",
+    subject: "Cinema System Team_4 Send OTP Confirmation",
     text: `Your OTP is: ${otp}`,
   };
 
