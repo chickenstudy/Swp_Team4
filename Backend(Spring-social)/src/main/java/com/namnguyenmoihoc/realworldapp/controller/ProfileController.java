@@ -9,12 +9,14 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.namnguyenmoihoc.realworldapp.exception.custom.ChangePasswordMessage;
 import com.namnguyenmoihoc.realworldapp.exception.custom.CustomNotFoundException;
 import com.namnguyenmoihoc.realworldapp.model.profileAccount.ProfileDTOResponse;
 import com.namnguyenmoihoc.realworldapp.model.user.dto.AccountDTONewPassword;
+import com.namnguyenmoihoc.realworldapp.model.user.dto.UserDTOResponseEmail;
 import com.namnguyenmoihoc.realworldapp.model.user.dto.UserDTOUpdateAccount;
 import com.namnguyenmoihoc.realworldapp.service.UserService;
 
@@ -45,6 +47,11 @@ public class ProfileController {
     public  Map<String, ChangePasswordMessage> changePassword(@PathVariable int userid, @RequestBody AccountDTONewPassword accountNewPassword)
             throws CustomNotFoundException, IOException {
         return userService.changePassword(userid, accountNewPassword);
+    }
+
+    @GetMapping("/userid")
+    public UserDTOResponseEmail getUserIdByEmail(@RequestParam("email") String email) throws CustomNotFoundException {      
+        return userService.getUserIdByEmail(email);
     }
 
 }

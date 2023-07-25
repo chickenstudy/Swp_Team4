@@ -57,9 +57,6 @@ public class UserController {
         return userService.getCurrentUser();
     }
 
-    @GetMapping("/userid")
-    public UserDTOResponseEmail getUserIdByEmail(@RequestParam("email") String email) throws CustomNotFoundException {      
-        return userService.getUserIdByEmail(email);
-    }
+    
 
 }
