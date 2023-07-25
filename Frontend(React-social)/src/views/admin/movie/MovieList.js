@@ -67,12 +67,11 @@ const MovieList = () => {
                 <th className="bg-dark text-white">Name</th>
                 <th className="bg-dark text-white">Genre</th>
                 <th className="bg-dark text-white">Country</th>
-                <th className="bg-dark text-white">Show Date</th>
                 <th className="action bg-dark text-white">Actions</th>
               </tr>
             </thead>
             <tbody>
-              {data.map((item) => (
+              {data.reverse().map((item) => (
                 <tr key={item.id}>
                   <td style={{ width: "10px" }}>{item.id}</td>
                   <td style={{ width: "110px" }}>
@@ -87,7 +86,6 @@ const MovieList = () => {
                   <td style={{ width: "110px" }}><h6>{item.name}</h6></td>
                   <td style={{ width: "100px" }}>{item.type}</td>
                   <td style={{ width: "90px" }}>{item.country}</td>
-                  <td style={{ width: "90px" }}>{item.show_date}</td>
                   <td style={{ width: "110px" }} className="action">
                     <div>
                       <a

@@ -1,6 +1,9 @@
+/* eslint-disable jsx-a11y/anchor-is-valid */
 import React, { useEffect, useState } from "react";
-import { Col, Row, Table } from "react-bootstrap";
+import { Col, Row } from "react-bootstrap";
 import { Link } from "react-router-dom";
+import { RiDeleteBinLine } from "react-icons/ri";
+
 
 export const CinemaContext = React.createContext([]);
 
@@ -10,8 +13,6 @@ export default function Cinema() {
   };
 
   const [cinema, setCinema] = useState([]);
-  const [categories, setCategories] = useState([]);
-  const [supplier, setSupplier] = useState([]);
 
   // call api
   useEffect(() => {
@@ -25,8 +26,9 @@ export default function Cinema() {
         console.log(err.message);
       });
   }, []);
+
   const handleDelete = (cinemaid) => {
-    if (window.confirm("Muon xoa-id: " + cinemaid + "?")) {
+    if (window.confirm("Do you want to remove this cinema")) {
       fetch("http://localhost:8080/api/cinema/deleteCinema/" + cinemaid, {
         method: "DELETE",
       })
@@ -51,46 +53,54 @@ export default function Cinema() {
 
         <Row>
           <Col style={{ textAlign: "right" }}>
-            <Link to={"/cinema/create"}> Create new Cinema </Link>
+            <Link
+              to={"/cinema/create"}
+              className="btn btn-success rounded-0 mb-2">
+              {" "}
+              Create new Cinema{" "}
+            </Link>
           </Col>
         </Row>
 
         <Row>
           <Col>
-            <Table>
+            <table className="table table-bordered">
               <thead>
                 <tr>
-                  <th>Id</th>
-                  <th>Name</th>
-                  <th>Location</th>
-                  <th colSpan={2}>Actions</th>
+                  <th className="bg-dark text-white">Id</th>
+                  <th className="bg-dark text-white">Name</th>
+                  <th className="bg-dark text-white">Location</th>
+                  <th className="bg-dark text-white" colSpan={2}>
+                    Actions
+                  </th>
                 </tr>
               </thead>
               <tbody>
-                {cinema.map((p) => (
+                {cinema.reverse().map((p) => (
                   <tr key={p.cinemaid}>
                     <td>{p.cinemaid}</td>
                     <td>
-                      {
-                        <Link to={"/cinema/detail/" + p.cinemaid}>
                           {p.name}
-                        </Link>
-                      }
                     </td>
                     <td>{p.location}</td>
                     <td>
-                      <Link to={"/cinema/edit/" + p.cinemaid}>Edit</Link> |{" "}
-                      <Link
-                        to={"/cinema"}
-                        onClick={() => handleDelete(p.cinemaid)}
+                     
+                      <a
+                        className=""
+                        onClick={() => {
+                          handleDelete(p.cinemaid);
+                        }}
                       >
-                        Delete
-                      </Link>
+                        <RiDeleteBinLine
+                          className="btn btn-danger mx-1"
+                          size={50}
+                        />
+                      </a>
                     </td>
                   </tr>
                 ))}
               </tbody>
-            </Table>
+            </table>
           </Col>
         </Row>
       </Col>

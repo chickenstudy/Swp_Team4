@@ -126,12 +126,12 @@ export default function Banner() {
           <tr>
             <th className="bg-dark text-white">Id</th>
             <th className="bg-dark text-white w-100">Banner</th>
-            <th className="bg-dark text-white">Action</th>
+            <th className="bg-dark text-white"></th>
           </tr>
         </thead>
         <tbody>
           {data &&
-            data.map((b) => (
+            data.reverse().map((b) => (
               <tr key={b.bannerid}>
                 <td>{b.bannerid}</td>
                 <td className="">
@@ -144,26 +144,7 @@ export default function Banner() {
                   }
                 </td>
                 <td style={{ width: "100%" }}>
-                  <Form>
-                    <Form.Check
-                      type="switch"
-                      id={b.bannerid}
-                      checked={banners
-                        .map((banner) => banner.bannerid)
-                        .includes(b.bannerid)}
-                      label="On screen"
-                      onChange={(event) => {
-                        if (event.target.checked == true) {
-                          banners.push(b.picture);
-
-                          setBanners(banners);
-                        } else {
-                          banners.pop(b.picture);
-                          setBanners(banners);
-                        }
-                      }}
-                    />{" "}
-                  </Form>
+                  
 
                   <a
                     className=""

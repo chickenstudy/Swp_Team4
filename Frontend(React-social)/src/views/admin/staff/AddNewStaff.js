@@ -68,7 +68,7 @@ export default function AddNewStaff() {
                 <div className="row">
                   <div className="col-lg-12 my-1">
                     <div className="form-group">
-                      <label>Name</label>
+                      <label>Name <span style={{ color: "red" }}>*</span></label>
                       <input
                         required
                         value={username}
@@ -80,7 +80,7 @@ export default function AddNewStaff() {
 
                   <div className="col-lg-12 my-1">
                     <div className="form-group">
-                      <label>Avatar</label>
+                      <label>Avatar </label>
                       <div>
                         <input
                           type="file"
@@ -97,8 +97,9 @@ export default function AddNewStaff() {
 
                   <div className="col-lg-12 my-1">
                     <div className="form-group">
-                      <label>Email</label>
+                      <label>Email <span style={{ color: "red" }}>*</span></label>
                       <input
+                      required
                         value={email}
                         onChange={(e) => setEmail(e.target.value)}
                         className="form-control"></input>
@@ -107,8 +108,9 @@ export default function AddNewStaff() {
 
                   <div className="col-lg-12 my-1">
                     <div className="form-group">
-                      <label>Password</label>
+                      <label>Password <span style={{ color: "red" }}>*</span></label>
                       <input
+                      required
                         type="password"
                         value={password}
                         onChange={(e) => setPassword(e.target.value)}
@@ -118,8 +120,9 @@ export default function AddNewStaff() {
 
                   <div className="col-lg-12 my-1">
                     <div className="form-group">
-                      <label>Sex</label>
+                      <label>Sex <span style={{ color: "red" }}>*</span></label>
                       <div
+                      required
                         value={sex}
                         onChange={(e) => setSex(e.target.value)}
                         className="form-control">
@@ -137,6 +140,7 @@ export default function AddNewStaff() {
                     <div className="form-group">
                       <label>Address</label>
                       <input
+                      
                         value={address}
                         onChange={(e) => setAddress(e.target.value)}
                         className="form-control"></input>

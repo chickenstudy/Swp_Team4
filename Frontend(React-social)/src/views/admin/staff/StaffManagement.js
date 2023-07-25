@@ -60,7 +60,7 @@ export default function StaffManagement() {
         </thead>
         <tbody>
           {data &&
-            data.map((item) => (
+            data.reverse().map((item) => (
               <tr key={item.id}>
                 <td>{item.id}</td>
                 <td style={{ width: "120px" }}>

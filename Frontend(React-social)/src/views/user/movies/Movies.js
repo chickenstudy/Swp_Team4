@@ -96,8 +96,7 @@ export default function Movies() {
           <Row>
             <Col
               md={2}
-              className="d-flex justify-content-center align-items-center"
-            ></Col>
+              className="d-flex justify-content-center align-items-center"></Col>
 
             <Col md={8}>
               <Row>
@@ -118,8 +117,7 @@ export default function Movies() {
                               width: "135px",
                               border: "2px solid rgb(206, 161, 11)",
                             }}
-                            variant="dark"
-                          >
+                            variant="dark">
                             <a style={{ textDecoration: "none" }}>Đặt vé</a>
                           </button>
                         </div>
@@ -130,8 +128,7 @@ export default function Movies() {
                           borderBottom: "1px solid #ddd",
                           wordWrap: "break-word",
                           paddingLeft: "2px",
-                        }}
-                      >
+                        }}>
                         {item.name}
                       </dt>
                       <dd style={{ paddingLeft: "2px" }}>
@@ -145,8 +142,7 @@ export default function Movies() {
 
             <Col
               md={2}
-              className="d-flex justify-content-center align-items-center"
-            ></Col>
+              className="d-flex justify-content-center align-items-center"></Col>
           </Row>
         ) : (
           <p>No results search.</p>
@@ -156,8 +152,7 @@ export default function Movies() {
         <Row>
           <Col
             md={2}
-            className="d-flex justify-content-center align-items-center"
-          >
+            className="d-flex justify-content-center align-items-center">
             {isDesktop && (
               <img
                 src={picture}
@@ -192,8 +187,7 @@ export default function Movies() {
                               width: "135px",
                               border: "2px solid rgb(206, 161, 11)",
                             }}
-                            variant="dark"
-                          >
+                            variant="dark">
                             <a style={{ textDecoration: "none" }}>
                               Book ticket
                             </a>
@@ -206,8 +200,7 @@ export default function Movies() {
                           borderBottom: "1px solid #ddd",
                           wordWrap: "break-word",
                           paddingLeft: "2px",
-                        }}
-                      >
+                        }}>
                         {item.name}
                       </dt>
                       <dd style={{ paddingLeft: "2px" }}>
@@ -220,8 +213,7 @@ export default function Movies() {
           </Col>
           <Col
             md={2}
-            className="d-flex justify-content-center align-items-center"
-          >
+            className="d-flex justify-content-center align-items-center">
             {isDesktop && (
               <img
                 src={picture1}
