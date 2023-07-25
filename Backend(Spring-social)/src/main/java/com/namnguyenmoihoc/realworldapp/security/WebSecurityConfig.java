@@ -38,6 +38,7 @@ public class WebSecurityConfig{
                 .requestMatchers("/api/user/login").permitAll()
                 .requestMatchers("/api/user/register").permitAll()
                 .requestMatchers("/api/user/*").permitAll()
+                .requestMatchers("/api/feedback/*").permitAll()
                 //.requestMatchers("/api/user/profile/*").authenticated()
                 .and()
                 .sessionManagement()
