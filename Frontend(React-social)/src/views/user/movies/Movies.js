@@ -134,9 +134,7 @@ export default function Movies() {
                       >
                         {item.name}
                       </dt>
-                      <dd style={{ paddingLeft: "2px" }}>
-                        {item.times} | {item.show_date}
-                      </dd>
+                      <dd style={{ paddingLeft: "2px" }}>{item.times} |</dd>
                     </div>
                   </Col>
                 ))}
@@ -210,9 +208,7 @@ export default function Movies() {
                       >
                         {item.name}
                       </dt>
-                      <dd style={{ paddingLeft: "2px" }}>
-                        {item.times} | {item.show_date}
-                      </dd>
+                      <dd style={{ paddingLeft: "2px" }}>{item.times}</dd>
                     </div>
                   </Col>
                 ))}

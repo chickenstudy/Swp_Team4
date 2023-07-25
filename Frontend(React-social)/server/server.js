@@ -29,9 +29,9 @@ app.post("/send-otp", (req, res) => {
 
   // Cấu hình email
   const mailOptions = {
-    from: "gaphongdoa@gmail.com",
+    from: "Cinema-system",
     to: email,
-    subject: "OTP Confirmation",
+    subject: "Cinema System Team4 Send OTP Confirmation",
     text: `Your OTP is: ${otp}`,
   };
 

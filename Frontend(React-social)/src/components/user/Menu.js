@@ -33,9 +33,13 @@ export default function Menu() {
             </Link>
           </span>
           <span>
-            <Link to="/history" style={{ color: "rgb(245, 245, 245)" }}>
-              TICKET HISTORY
-            </Link>
+            {Array.isArray(user) && user.length == 0 ? (
+              <p></p>
+            ) : (
+              <Link to="/history" style={{ color: "rgb(245, 245, 245)" }}>
+                TICKET HISTORY
+              </Link>
+            )}
           </span>
         </div>
         <div className="col-4" style={{ textAlign: "center" }}></div>

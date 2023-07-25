@@ -138,6 +138,19 @@ const InformationMovie = () => {
   const handleCloseVideoModal = () => {
     setShowVideoModal(false);
   };
+  const [comments, setComments] = useState([]);
+
+  // State to store user's comment input
+  const [commentInput, setCommentInput] = useState("");
+
+  // Function to handle form submission and add comment to the comments state
+  const handleSubmitComment = (event) => {
+    event.preventDefault();
+    if (commentInput.trim() !== "") {
+      setComments([...comments, commentInput]);
+      setCommentInput("");
+    }
+  };
   return (
     <div id="">
       <div className="movie_trailer detail_typeA">
@@ -303,6 +316,36 @@ const InformationMovie = () => {
             </div>
           </Col>
           <Col xs={2}></Col>
+        </Row>
+        <Row>
+          <Col xs={2}></Col>
+          <Col xs={8}>
+            {" "}
+            <div className="comment-section my-4">
+              <h3>Comment </h3>
+              <form onSubmit={handleSubmitComment}>
+                <div className="d-flex">
+                  <input
+                    type="text"
+                    value={commentInput}
+                    onChange={(e) => setCommentInput(e.target.value)}
+                    placeholder="Nhập bình luận của bạn..."
+                    className="form-control mr-2"
+                  />
+                  <button type="submit" className="btn btn-primary">
+                    Gửi
+                  </button>
+                </div>
+              </form>
+              <div className="comments mt-3">
+                {comments.map((comment, index) => (
+                  <div key={index} className="my-2">
+                    {comment}
+                  </div>
+                ))}
+              </div>
+            </div>
+          </Col>
         </Row>
       </Container>
       <ToastContainer />
