@@ -7,4 +7,10 @@ public class CustomNotFoundException extends BaseCustomException{
         super(customError);
         //TODO Auto-generated constructor stub
     }
+
+    public CustomNotFoundException(String message) {
+        super(CustomError.builder().code("404").message(message).build());
+    }
+
+    
 }

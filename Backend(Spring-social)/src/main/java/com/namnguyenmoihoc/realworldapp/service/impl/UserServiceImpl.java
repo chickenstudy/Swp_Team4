@@ -28,6 +28,7 @@ import com.namnguyenmoihoc.realworldapp.model.user.dto.AccountDTONewPassword;
 import com.namnguyenmoihoc.realworldapp.model.user.dto.UserDTOCreateAccount;
 import com.namnguyenmoihoc.realworldapp.model.user.dto.UserDTOLoginRequest;
 import com.namnguyenmoihoc.realworldapp.model.user.dto.UserDTOResponse;
+import com.namnguyenmoihoc.realworldapp.model.user.dto.UserDTOResponseEmail;
 import com.namnguyenmoihoc.realworldapp.model.user.dto.UserDTOUpdateAccount;
 import com.namnguyenmoihoc.realworldapp.model.user.mapper.RoleMapper;
 import com.namnguyenmoihoc.realworldapp.model.user.mapper.UserMapper;
@@ -252,5 +253,23 @@ public class UserServiceImpl implements UserService {
         wrapper.put("message", changePasswordMessage);
         return wrapper;
     }
+
+    @Override
+public UserDTOResponseEmail getUserIdByEmail(String email) throws CustomNotFoundException {
+    Optional<Account> userOptional = userRepository.findByEmail(email);
+
+    if (userOptional.isEmpty()) {
+        throw new CustomNotFoundException(
+                CustomError.builder().code("404").message("User with email '" + email + "' not found.").build());
+    }
+
+    Long userId = (long) userOptional.get().getId();
+    UserDTOResponseEmail userDTOResponseEmail = new UserDTOResponseEmail();
+    userDTOResponseEmail.setUserId(userId);
+    
+
+    return userDTOResponseEmail;
+}
+
 
 }

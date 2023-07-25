@@ -17,9 +17,8 @@ const InformationMovieStaff = () => {
   const [showtime, setShowtime] = useState([]);
   const [selectedDate, setSelectedDate] = useState("");
   const [selectedCinema, setSelectedCinema] = useState("");
-  const cinema = sessionStorage.setItem("cinema", cinema_name);
-  const cinema1 = sessionStorage.setItem("cinemaid", cinema_id);
-
+  sessionStorage.setItem("cinema", cinema_name);
+  sessionStorage.setItem("cinemaid", cinema_id);
   const [error, setError] = useState(null);
 
   const datelist = [
@@ -44,7 +43,7 @@ const InformationMovieStaff = () => {
     setSelectedDate(event.target.value);
   };
 
-  const movieId = sessionStorage.setItem("movieid", id);
+  sessionStorage.setItem("movieid", id);
   const [startTime, setStartTime] = useState("");
   const handleTicketClick = (date, cinema_name, showtime, movieName) => {
     // Save values to session storage
@@ -92,23 +91,28 @@ const InformationMovieStaff = () => {
   }, [id, selectedCinema, selectedDate]);
 
   useEffect(() => {
-    axios
-      .get("http://localhost:8080/api/showtime", {
-        params: {
-          movieid: id,
-          cinemaid: cinema_id,
-          starttime: startTime,
-          startdate: selectedDate,
-        },
-      })
-      .then((res) => {
-        setData1(res.data[0]);
-      })
-      .catch((err) => {
-        console.log(err.message);
-      });
+    if (!startTime) {
+      setError("Please select a showtime");
+    } else {
+      axios
+        .get("http://localhost:8080/api/showtime", {
+          params: {
+            movieid: id,
+            cinemaid: cinema_id,
+            starttime: startTime,
+            startdate: selectedDate,
+          },
+        })
+        .then((res) => {
+          setData1(res.data[0]);
+          setError(null);
+        })
+        .catch((err) => {
+          console.log(err.message);
+        });
+    }
   }, [id, selectedCinema, startTime, selectedDate]);
-  const showtimeid = sessionStorage.setItem("showtimeid", data1?.id);
+  sessionStorage.setItem("showtimeid", data1?.id);
 
   return (
     <>
@@ -167,7 +171,7 @@ const InformationMovieStaff = () => {
           </Row>
         </Row>
       </Container>
-      <SeatCinema />
+      {error == null ? <SeatCinema /> : <div></div>}
     </>
   );
 };

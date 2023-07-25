@@ -1,3 +1,4 @@
+/* eslint-disable jsx-a11y/alt-text */
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 
@@ -54,7 +55,7 @@ const AddNewMovie = () => {
         description,
       },
     };
-    
+
     console.log(JSON.stringify(data));
     fetch("http://localhost:8080/api/movie/create", {
       method: "POST",
@@ -62,7 +63,7 @@ const AddNewMovie = () => {
       body: JSON.stringify(data),
     })
       .then((res) => {
-        alert("Saved successfully.");
+        alert("Add new movie successfully.");
         navigate("/listmovie");
       })
       .catch((err) => {
@@ -83,20 +84,30 @@ const AddNewMovie = () => {
                 <div className="row">
                   <div className="col-lg-12 my-1">
                     <div className="form-group">
-                      <label>Name</label>
+                      <label>
+                        Name <span style={{ color: "red" }}>*</span>
+                      </label>
                       <input
                         required
                         value={name}
                         onMouseDown={(e) => valchange(true)}
                         onChange={(e) => setName(e.target.value)}
                         className="form-control"></input>
+                      {name.length === 0 && (
+                        <label style={{ color: "red" }}>
+                          Please enter the name.
+                        </label>
+                      )}
                     </div>
                   </div>
 
                   <div className="col-lg-12 my-1">
                     <div className="form-group">
-                      <label>Genre</label>
+                      <label>
+                        Genre <span style={{ color: "red" }}>*</span>
+                      </label>
                       <input
+                        required
                         value={type}
                         onChange={(e) => setType(e.target.value)}
                         className="form-control"></input>
@@ -105,9 +116,12 @@ const AddNewMovie = () => {
 
                   <div className="col-lg-12 my-1">
                     <div className="form-group">
-                      <label>Poster</label>
+                      <label>
+                        Poster <span style={{ color: "red" }}>*</span>
+                      </label>
                       <div>
                         <input
+                          required
                           type="file"
                           accept="image/*"
                           onChange={handlePosterChange}
@@ -148,8 +162,11 @@ const AddNewMovie = () => {
                   </div>
                   <div className="col-lg-12 my-1">
                     <div className="form-group">
-                      <label>Times</label>
+                      <label>
+                        Times <span style={{ color: "red" }}>*</span>
+                      </label>
                       <input
+                      required
                         value={times}
                         onChange={(e) => setTimes(e.target.value)}
                         className="form-control"></input>
@@ -158,25 +175,17 @@ const AddNewMovie = () => {
 
                   <div className="col-lg-12 my-1">
                     <div className="form-group">
-                      <label>Country</label>
+                      <label>
+                        Country <span style={{ color: "red" }}>*</span>
+                      </label>
                       <input
+                      required
                         value={country}
                         onChange={(e) => setCountry(e.target.value)}
                         className="form-control"></input>
                     </div>
                   </div>
 
-                  <div className="col-lg-12 my-1">
-                    <div className="form-group">
-                      <label>Show date</label>
-                      <input
-                        type="date"
-                        value={show_date}
-                        onChange={(e) => setShowDate(e.target.value)}
-                        className="form-control"
-                      />
-                    </div>
-                  </div>
 
                   <div className="col-lg-12 my-1">
                     <div className="form-group">

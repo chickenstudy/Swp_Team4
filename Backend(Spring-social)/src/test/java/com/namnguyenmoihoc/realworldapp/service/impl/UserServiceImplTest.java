@@ -1,54 +1,53 @@
-package com.namnguyenmoihoc.realworldapp.service.impl;
+// package com.namnguyenmoihoc.realworldapp.service.impl;
 
 
-import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.InjectMocks;
-import org.mockito.Mock;
-import org.mockito.junit.jupiter.MockitoExtension;
-import org.springframework.security.crypto.password.PasswordEncoder;
+// import org.junit.jupiter.api.Test;
+// import org.junit.jupiter.api.extension.ExtendWith;
+// import org.mockito.InjectMocks;
+// import org.mockito.Mock;
+// import org.mockito.junit.jupiter.MockitoExtension;
+// import org.springframework.security.crypto.password.PasswordEncoder;
 
 
+// import com.namnguyenmoihoc.realworldapp.repository.RoleRepository;
+// import com.namnguyenmoihoc.realworldapp.repository.UserRepository;
+// import com.namnguyenmoihoc.realworldapp.service.UserService;
+// import com.namnguyenmoihoc.realworldapp.util.JWTTokenUtil;
 
-import com.namnguyenmoihoc.realworldapp.repository.RoleRepository;
-import com.namnguyenmoihoc.realworldapp.repository.UserRepository;
-import com.namnguyenmoihoc.realworldapp.service.UserService;
-import com.namnguyenmoihoc.realworldapp.util.JWTTokenUtil;
+// @ExtendWith(MockitoExtension.class)
+// public class UserServiceImplTest {
+//     @InjectMocks
+//     UserServiceImpl userServiceImpl;
 
-@ExtendWith(MockitoExtension.class)
-public class UserServiceImplTest {
-    @InjectMocks
-    UserServiceImpl userServiceImpl;
+//     @Mock
+//     private UserRepository userRepository;
 
-    @Mock
-    private UserRepository userRepository;
+//     @Mock
+//     private JWTTokenUtil jwtTokenUtil;
 
-    @Mock
-    private JWTTokenUtil jwtTokenUtil;
+//     @Mock
+//     private PasswordEncoder passwordEncoder;
 
-    @Mock
-    private PasswordEncoder passwordEncoder;
+//     @Mock
+//     private UserService userService;
 
-    @Mock
-    private UserService userService;
+//     @Mock
+//     private RoleRepository roleRepository;
 
-    @Mock
-    private RoleRepository roleRepository;
+//     @Test
+//     void testAuthenticate() {
 
-    @Test
-    void testAuthenticate() {
+//     }
 
-    }
+//     @Test
+//     void testGetCurrentUser() {
 
-    @Test
-    void testGetCurrentUser() {
+//     }
 
-    }
+//     @Test
+//     void testGetProfile() {
 
-    @Test
-    void testGetProfile() {
-
-    }
+//     }
 
     // @Test
     // void testGetRole() {
@@ -84,10 +83,10 @@ public class UserServiceImplTest {
 
     // }
 
-    @Test
-    void testGetUpdateAccount() {
+//     @Test
+//     void testGetUpdateAccount() {
 
-    }
+//     }
 
     // @Test
     // void testRegisterUser() throws ParseException, SerialException, CustomNotFoundException, SQLException, IOException {
@@ -119,4 +118,4 @@ public class UserServiceImplTest {
     //     assertEquals(userDTOResponseExpected.getEmail(), userDTOResponseActual.getEmail());
 
     // }
-}
+

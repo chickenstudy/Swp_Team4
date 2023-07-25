@@ -55,7 +55,6 @@ export default function Banner() {
       },
     };
 
-    
     fetch("http://localhost:8080/api/banner/create", {
       method: "POST",
       headers: { "content-type": "application/json" },
@@ -91,7 +90,8 @@ export default function Banner() {
         <Button
           variant="success rounded-0 my-3"
           onClick={handleShow}
-          type="submit">
+          type="submit"
+        >
           Add new banner
         </Button>
 
@@ -120,54 +120,38 @@ export default function Banner() {
 
       <table
         className="table table-bordered mx-auto"
-        style={{ maxWidth: "900px" }}>
+        style={{ maxWidth: "900px" }}
+      >
         <thead>
           <tr>
             <th className="bg-dark text-white">Id</th>
             <th className="bg-dark text-white w-100">Banner</th>
-            <th className="bg-dark text-white">Action</th>
+            <th className="bg-dark text-white"></th>
           </tr>
         </thead>
         <tbody>
           {data &&
-            data.map((item) => (
-              <tr key={item.bannerid}>
-                <td>{item.bannerid}</td>
+            data.reverse().map((b) => (
+              <tr key={b.bannerid}>
+                <td>{b.bannerid}</td>
                 <td className="">
                   {
                     <img
-                      src={item.picture}
+                      src={b.picture}
                       alt="Image"
                       style={{ width: "100%" }}
                     />
                   }
                 </td>
                 <td style={{ width: "100%" }}>
-                  <Form>
-                    <Form.Check
-                      type="switch"
-                      id={item.bannerid}
-                      checked={banners
-                        .map((banner) => banner.bannerid)
-                        .includes(item.bannerid)}
-                      label="On screen"
-                      onChange={(event) => {
-                        if (event.target.checked === true) {
-                          banners.push(item.picture);
-                          setBanners(banners);
-                        } else {
-                          banners.pop(item.picture);
-                          setBanners(banners);
-                        }
-                      }}
-                    />{" "}
-                  </Form>
+                  
 
                   <a
                     className=""
                     onClick={() => {
-                      Removefunction(item.bannerid);
-                    }}>
+                      Removefunction(b.bannerid);
+                    }}
+                  >
                     <RiDeleteBinLine
                       className="btn btn-danger my-1"
                       size={50}

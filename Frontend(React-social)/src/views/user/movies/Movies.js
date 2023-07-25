@@ -188,7 +188,9 @@ export default function Movies() {
                               border: "2px solid rgb(206, 161, 11)",
                             }}
                             variant="dark">
-                            <a style={{ textDecoration: "none" }}>Đặt vé</a>
+                            <a style={{ textDecoration: "none" }}>
+                              Book ticket
+                            </a>
                           </button>
                         </div>
                       </div>

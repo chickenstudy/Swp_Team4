@@ -47,7 +47,7 @@ const DetailMovie = () => {
         console.log(err.message);
       });
   }, []);
-
+  console.log(cinemaid);
   // Hàm xử lý sự kiện khi người dùng thay đổi tùy chọn
   const handleCinemaChange = (event) => {
     setCinemaId(event.target.value);
@@ -117,7 +117,8 @@ const DetailMovie = () => {
                   }}
                   target="_blank"
                   rel="noopener noreferrer"
-                  variant="dark">
+                  variant="dark"
+                >
                   View trailer
                 </Button>
               </div>
@@ -140,7 +141,8 @@ const DetailMovie = () => {
             </div>
             <div
               className="summary my-4"
-              style={{ borderBottom: "1px solid grey" }}>
+              style={{ borderBottom: "1px solid grey" }}
+            >
               <h3>Summary</h3>
               <p className="my-2">{movie?.movie?.description}</p>
             </div>
@@ -165,11 +167,13 @@ const DetailMovie = () => {
                       onChange={handleCinemaChange}
                       required
                       className="form-control"
-                      style={{ padding: "10px" }}>
+                      style={{ padding: "10px" }}
+                    >
                       {cinema.map((cinemaItem) => (
                         <option
                           key={cinemaItem.cinemaId}
-                          value={cinemaItem.cinemaid}>
+                          value={cinemaItem.cinemaid}
+                        >
                           {cinemaItem.name}
                         </option>
                       ))}
@@ -179,6 +183,7 @@ const DetailMovie = () => {
                   <label class="form-label">Date</label>
 
                   <input
+                    required
                     className="form-control"
                     type="date"
                     style={{ padding: "10px" }}
@@ -187,6 +192,7 @@ const DetailMovie = () => {
                   <br />
                   <label class="form-label">Time</label>
                   <input
+                    required
                     className=" form-control"
                     type="time"
                     style={{ padding: "10px" }}
