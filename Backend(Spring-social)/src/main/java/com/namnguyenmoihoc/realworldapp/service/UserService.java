@@ -16,6 +16,7 @@ import com.namnguyenmoihoc.realworldapp.model.user.dto.AccountDTONewPassword;
 import com.namnguyenmoihoc.realworldapp.model.user.dto.UserDTOCreateAccount;
 import com.namnguyenmoihoc.realworldapp.model.user.dto.UserDTOLoginRequest;
 import com.namnguyenmoihoc.realworldapp.model.user.dto.UserDTOResponse;
+import com.namnguyenmoihoc.realworldapp.model.user.dto.UserDTOResponseEmail;
 import com.namnguyenmoihoc.realworldapp.model.user.dto.UserDTOUpdateAccount;
 
 public interface UserService {
@@ -33,6 +34,8 @@ public interface UserService {
     public Map<String, ProfileDTOResponse> getUpdateAccount(UserDTOUpdateAccount userDTOUpdateAccount) throws CustomNotFoundException, IOException;
 
     public  Map<String, ChangePasswordMessage> changePassword(int userid, AccountDTONewPassword accountNewPassword) throws CustomNotFoundException;
+    public UserDTOResponseEmail getUserIdByEmail(String email) throws CustomNotFoundException;
+
 
     //public UserRolesDTOResponse findAll();
     
