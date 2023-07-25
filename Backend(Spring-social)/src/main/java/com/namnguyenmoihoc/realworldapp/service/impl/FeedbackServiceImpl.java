@@ -12,7 +12,9 @@ import org.springframework.stereotype.Service;
 import com.namnguyenmoihoc.realworldapp.entity.Account;
 import com.namnguyenmoihoc.realworldapp.entity.Feedback;
 import com.namnguyenmoihoc.realworldapp.entity.Movie;
+import com.namnguyenmoihoc.realworldapp.exception.custom.ChangePasswordMessage;
 import com.namnguyenmoihoc.realworldapp.exception.custom.CustomNotFoundException;
+import com.namnguyenmoihoc.realworldapp.exception.custom.Message;
 import com.namnguyenmoihoc.realworldapp.model.feedback.dto.FeedbackDTO;
 import com.namnguyenmoihoc.realworldapp.model.feedback.dto.FeedbackDTOCreate;
 import com.namnguyenmoihoc.realworldapp.model.feedback.mapper.FeedbackMapper;
@@ -83,6 +85,42 @@ public class FeedbackServiceImpl implements FeedbackService {
         Map<String, FeedbackDTO> wrapper = new HashMap<>();
         FeedbackDTO feedbackDTO = FeedbackMapper.toUserDTOResponse(feedbacks);
         wrapper.put("feedback", feedbackDTO);
+        return wrapper;
+    }
+
+    @Override
+    public Map<String, Message> deleteComment(int feadbackid) throws CustomNotFoundException {
+        // TODO Auto-generated method stub
+        Optional<Feedback> feedbackOptional = feedbackRepository.findById(feadbackid);
+
+        if (feedbackOptional.isEmpty()) {
+            throw new CustomNotFoundException(CustomError.builder().code("404").message("Feedback not found").build());
+        }
+        feedbackRepository.deleteById(feadbackid);
+        return successMessage();
+    }
+
+    @Override
+    public Map<String, FeedbackDTO> updateComment(int feadbackid, String content) throws CustomNotFoundException {
+        // TODO Auto-generated method stub
+        Optional<Feedback> feedbackOptional = feedbackRepository.findById(feadbackid);
+
+        if (feedbackOptional.isEmpty()) {
+            throw new CustomNotFoundException(CustomError.builder().code("404")
+            .message("Feedback not found").build());
+        }
+
+        Feedback newFeedbackContent = feedbackOptional.get();
+        newFeedbackContent.setContent(content);
+        feedbackRepository.save(newFeedbackContent);
+        return buidDTOResponse(newFeedbackContent);
+    }
+
+    private Map<String, Message> successMessage() {
+        Map<String, Message> wrapper = new HashMap<>();
+        Message successMessage = new Message(
+                CustomError.builder().code("200").message("Delete Feedback Success!!!").build());
+        wrapper.put("message", successMessage);
         return wrapper;
     }
 
