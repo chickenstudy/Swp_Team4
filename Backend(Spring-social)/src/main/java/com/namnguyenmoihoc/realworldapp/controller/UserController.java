@@ -58,6 +58,7 @@ public class UserController {
     }
 
     @GetMapping("/userid")
+    @CrossOrigin
     public UserDTOResponseEmail getUserIdByEmail(@RequestParam("email") String email) throws CustomNotFoundException {      
         return userService.getUserIdByEmail(email);
     }
