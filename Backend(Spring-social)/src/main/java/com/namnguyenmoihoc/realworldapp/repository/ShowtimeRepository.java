@@ -21,8 +21,8 @@ public interface ShowtimeRepository extends JpaRepository<Showtime, Integer> {
                         @Query("SELECT s FROM Showtime s WHERE s.movie.movieid = :movieid AND s.cinema.cinemaid = :cinemaid AND s.starttime >= :starttime AND s.startdate = :startdate")
                         List<Showtime> getSchedulesByMovie(@Param("movieid") Integer movieid, @Param("cinemaid") Integer cinemaid, @Param("startdate") LocalDate startdate, @Param("starttime") LocalTime starttime);
                         
-          @Query("SELECT DISTINCT s.startdate FROM Showtime s WHERE s.movie.movieid=:movieid AND s.cinema.cinemaid= :cinemaid")
-          List<LocalDate> getStartDateMovie(@Param("movieid") Integer movieid, @Param("cinemaid") Integer cinemaid);
+          @Query("SELECT DISTINCT s.startdate FROM Showtime s WHERE s.movie.movieid=:movieid")
+          List<LocalDate> getStartDateMovie(@Param("movieid") Integer movieid);
 
 
         

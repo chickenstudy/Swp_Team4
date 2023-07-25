@@ -48,8 +48,8 @@ public class ShowtimeController {
   }
 
   @GetMapping("/startdate")
-  public List<String> getStartDate(@RequestParam Integer movieid, @RequestParam Integer cinemaid) {
-    return showtimeService.getStartDates(movieid, cinemaid);
+  public List<String> getStartDate(@RequestParam Integer movieid) {
+    return showtimeService.getStartDates(movieid);
   }
 
 }
