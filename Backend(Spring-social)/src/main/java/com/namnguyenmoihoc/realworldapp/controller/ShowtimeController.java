@@ -1,6 +1,5 @@
 package com.namnguyenmoihoc.realworldapp.controller;
 
-
 import java.io.UnsupportedEncodingException;
 import java.time.LocalDate;
 
@@ -35,16 +34,22 @@ public class ShowtimeController {
 
     return showtimeService.createShowtime(showtimeDTO);
   }
+
   @GetMapping("/starttime")
   public List<String> getStartTimes(@RequestParam Integer movieid, @RequestParam Integer cinemaid,
       @RequestParam String startdate) {
-    return showtimeService.getStartTimes(movieid, cinemaid,LocalDate.parse(startdate));
+    return showtimeService.getStartTimes(movieid, cinemaid, LocalDate.parse(startdate));
   }
-  
+
   @GetMapping
   public List<ShowtimeDTO> getSchedules(@RequestParam Integer movieid, @RequestParam Integer cinemaid,
-                                        @RequestParam String startdate, @RequestParam String starttime) {
-      return showtimeService.getSchedules(movieid, cinemaid, startdate, starttime);
+      @RequestParam String startdate, @RequestParam String starttime) {
+    return showtimeService.getSchedules(movieid, cinemaid, startdate, starttime);
+  }
+
+  @GetMapping("/startdate")
+  public List<String> getStartDate(@RequestParam Integer movieid, @RequestParam Integer cinemaid) {
+    return showtimeService.getStartDates(movieid, cinemaid);
   }
 
 }

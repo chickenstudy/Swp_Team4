@@ -15,4 +15,6 @@ public interface ShowtimeService {
     List<ShowtimeDTO> getSchedules(Integer movieid, Integer cinemaid, String startdate, String starttime);
     Map<String, ShowtimeDTOCreate> createShowtime(Map<String, ShowtimeDTOCreate> showtimeDTO);
 
+    List<String> getStartDates(Integer movieid, Integer cinemaid);
+
 }
