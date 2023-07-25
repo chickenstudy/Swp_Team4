@@ -179,6 +179,7 @@ const DetailMovie = () => {
                   <label class="form-label">Date</label>
 
                   <input
+                    required
                     className="form-control"
                     type="date"
                     style={{ padding: "10px" }}
@@ -187,6 +188,7 @@ const DetailMovie = () => {
                   <br />
                   <label class="form-label">Time</label>
                   <input
+                    required
                     className=" form-control"
                     type="time"
                     style={{ padding: "10px" }}
