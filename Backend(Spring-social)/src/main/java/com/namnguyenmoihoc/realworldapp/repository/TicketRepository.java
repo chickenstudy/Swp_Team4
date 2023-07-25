@@ -1,14 +1,12 @@
 package com.namnguyenmoihoc.realworldapp.repository;
 
+import java.util.List;
+
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
 import com.namnguyenmoihoc.realworldapp.entity.BookTicket;
-import com.namnguyenmoihoc.realworldapp.entity.OrderDetail;
-
-import java.util.List;
-import java.util.Optional;
 
 public interface TicketRepository extends JpaRepository<BookTicket, Integer>{
     
